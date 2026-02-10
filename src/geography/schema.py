@@ -9,3 +9,13 @@ class GeographyResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class GeographyCreateRequest(BaseModel):
+    name: str
+    geo_type: str
+    geoid: Optional[str] = None
+
+class GeographyUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    geo_type: Optional[str] = None
+    geoid: Optional[str] = None

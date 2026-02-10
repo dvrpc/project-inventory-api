@@ -37,12 +37,22 @@ def update_agency(agency_id: int, agency: AgencyResponse, db: Session = Depends(
     if not db_agency:
         raise HTTPException(status_code=404, detail="Agency not found")
     
-    db_agency.name = agency.name
-    db_agency.address = agency.address
-    db_agency.email = agency.email
-    db_agency.phone = agency.phone
+    update_data = agency.model_dump(exclude_unset=True)
+
+    for field, value in update_data.items():
+        setattr(db_agency, field, value)
     
     db.commit()
     db.refresh(db_agency)
     return db_agency
+
+@router.delete("/{agency_id}")
+def delete_agency(agency_id: int, db: Session = Depends(get_db)):
+    db_agency = db.query(Agency).filter(Agency.agency_id == agency_id).one_or_none()
+    if not db_agency:
+        raise HTTPException(status_code=404, detail="Agency not found")
+    
+    db.delete(db_agency)
+    db.commit()
+    return {"detail": "Agency deleted successfully"}
 
