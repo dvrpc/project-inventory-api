@@ -1,0 +1,37 @@
+# Byte-code files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.whl
+
+# Virtual environment
+.venv/
+venv/
+env/
+.env
+
+# specific file that might indicate a virtual environment
+.python-version 
+
+# IDE-specific files and directories
+.idea/  # For PyCharm
+.vscode/ # For VS Code
+*.suo
+*.user
+*.log
+*.lock
+
+# OS-specific files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Data and testing
+# Uncomment the following lines if you want to ignore data or test output
+# data/
+# tests/__pycache__/ 
+
+# Python build/distribution files
+dist/
+build/
+*.egg-info/
