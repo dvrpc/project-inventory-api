@@ -11,6 +11,9 @@ venv/
 env/
 .env
 
+# Scripts
+scripts/
+
 # specific file that might indicate a virtual environment
 .python-version 
 

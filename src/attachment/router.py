@@ -1,59 +1,42 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter,Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from .schema import AttachmentResponse, AttachmentCreateRequest, AttachmentUpdateRequest
-from .models import Attachment
+from .service import get, get_all, create, update, delete
 from database.core import get_db
 
 router = APIRouter()
 
 @router.get("/", response_model=List[AttachmentResponse])
 def get_attachments(db: Session = Depends(get_db)):
-    return db.query(Attachment).all()
+    return get_all(db)
 
 @router.get("/{attachment_id}", response_model=AttachmentResponse)
 def get_attachment(attachment_id: int, db: Session = Depends(get_db)):
-    attachment = db.query(Attachment).filter(Attachment.attachment_id == attachment_id).one_or_none()
+    attachment = get(db, attachment_id)
     if not attachment:
         raise HTTPException(status_code=404, detail="Attachment not found")
     return attachment
 
-@router.post("/", response_model=AttachmentResponse)
-def create_attachment(attachment: AttachmentCreateRequest, db: Session = Depends(get_db)):
-    db_attachment = Attachment(
-        project_id=attachment.project_id,
-        file_name=attachment.file_name,
-        mime_type=attachment.mime_type,
-        file_size=attachment.file_size,
-        file_content=attachment.file_content
-    )
-    db.add(db_attachment)
-    db.commit()
-    db.refresh(db_attachment)
-    return db_attachment
+@router.post("/", response_model=AttachmentResponse, status_code=201)
+def create_attachment(attachment_in: AttachmentCreateRequest, db: Session = Depends(get_db)):
+    return create(db, attachment_in)
 
 @router.put("/{attachment_id}", response_model=AttachmentResponse)
-def update_attachment(attachment_id: int, attachment: AttachmentUpdateRequest, db: Session = Depends(get_db)):
-    db_attachment = db.query(Attachment).filter(Attachment.attachment_id == attachment_id).one_or_none()
-    if not db_attachment:
+def update_attachment(attachment_id: int, attachment_in: AttachmentUpdateRequest, db: Session = Depends(get_db)):
+    attachment = get(db, attachment_id)
+    if not attachment:
         raise HTTPException(status_code=404, detail="Attachment not found")
     
-    update_data = attachment.model_dump(exclude_unset=True)
-
-    for field, value in update_data.items():
-        setattr(db_attachment, field, value)
-
-    
-    db.commit()
-    db.refresh(db_attachment)
-    return db_attachment
+    return update(db, attachment, attachment_in)
 
 @router.delete("/{attachment_id}")
 def delete_attachment(attachment_id: int, db: Session = Depends(get_db)):
-    db_attachment = db.query(Attachment).filter(Attachment.attachment_id == attachment_id).one_or_none()
-    if not db_attachment:
+    attachment = get(db, attachment_id)
+
+    if not attachment:
         raise HTTPException(status_code=404, detail="Attachment not found")
     
-    db.delete(db_attachment)
-    db.commit()
+    delete(db, attachment)
     return {"detail": "Attachment deleted successfully"}
+

@@ -1,55 +1,42 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter,Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from .schema import RecommendationResponse, RecommendationCreateRequest, RecommendationUpdateRequest
-from .models import Recommendation
+from .service import get, get_all, create, update, delete
 from database.core import get_db
 
 router = APIRouter()
 
 @router.get("/", response_model=List[RecommendationResponse])
 def get_recommendations(db: Session = Depends(get_db)):
-    return db.query(Recommendation).all()
+    return get_all(db)
 
 @router.get("/{recommendation_id}", response_model=RecommendationResponse)
 def get_recommendation(recommendation_id: int, db: Session = Depends(get_db)):
-    recommendation = db.query(Recommendation).filter(Recommendation.recommendation_id == recommendation_id).one_or_none()
+    recommendation = get(db, recommendation_id)
     if not recommendation:
         raise HTTPException(status_code=404, detail="Recommendation not found")
     return recommendation
 
-@router.post("/", response_model=RecommendationResponse)
-def create_recommendation(recommendation: RecommendationCreateRequest, db: Session = Depends(get_db)):
-    db_recommendation = Recommendation(
-        project_id=recommendation.project_id,
-        description=recommendation.description
-    )
-    db.add(db_recommendation)
-    db.commit()
-    db.refresh(db_recommendation)
-    return db_recommendation
+@router.post("/", response_model=RecommendationResponse, status_code=201)
+def create_recommendation(recommendation_in: RecommendationCreateRequest, db: Session = Depends(get_db)):
+    return create(db, recommendation_in)
 
 @router.put("/{recommendation_id}", response_model=RecommendationResponse)
-def update_recommendation(recommendation_id: int, recommendation: RecommendationUpdateRequest, db: Session = Depends(get_db)):
-    db_recommendation = db.query(Recommendation).filter(Recommendation.recommendation_id == recommendation_id).one_or_none()
-    if not db_recommendation:
+def update_recommendation(recommendation_id: int, recommendation_in: RecommendationUpdateRequest, db: Session = Depends(get_db)):
+    recommendation = get(db, recommendation_id)
+    if not recommendation:
         raise HTTPException(status_code=404, detail="Recommendation not found")
     
-    update_data = recommendation.model_dump(exclude_unset=True)
-
-    for field, value in update_data.items():
-        setattr(db_recommendation, field, value)
-    
-    db.commit()
-    db.refresh(db_recommendation)
-    return db_recommendation
+    return update(db, recommendation, recommendation_in)
 
 @router.delete("/{recommendation_id}")
 def delete_recommendation(recommendation_id: int, db: Session = Depends(get_db)):
-    db_recommendation = db.query(Recommendation).filter(Recommendation.recommendation_id == recommendation_id).one_or_none()
-    if not db_recommendation:
+    recommendation = get(db, recommendation_id)
+
+    if not recommendation:
         raise HTTPException(status_code=404, detail="Recommendation not found")
     
-    db.delete(db_recommendation)
-    db.commit()
+    delete(db, recommendation)
     return {"detail": "Recommendation deleted successfully"}
+
