@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
-from geography.router import router as geography_router
-from agency.router import router as agency_router
-from attachment.router import router as attachment_router
-from contact.router import router as contact_router
-from external_product.router import router as external_product_router
-from need.router import router as need_router
-from product.router import router as product_router
-from project.router import router as project_router
-from project_geography.router import router as project_geography_router
-from recommendation.router import router as recommendation_router
+from .geography.router import router as geography_router
+from .agency.router import router as agency_router
+from .attachment.router import router as attachment_router
+from .contact.router import router as contact_router
+from .external_product.router import router as external_product_router
+from .need.router import router as need_router
+from .product.router import router as product_router
+from .project.router import router as project_router
+from .project_geography.router import router as project_geography_router
+from .recommendation.router import router as recommendation_router
 
 api_router = APIRouter()
 

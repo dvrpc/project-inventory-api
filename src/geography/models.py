@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from database.core import Base
+from src.database.core import Base
 
 class Geography(Base):
     __tablename__ = "geography"

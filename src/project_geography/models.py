@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, ForeignKey, PrimaryKeyConstraint
-from database.core import Base
+from src.database.core import Base
 
 class ProjectGeography(Base):
     __tablename__ = "project_geography"

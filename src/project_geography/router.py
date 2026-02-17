@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from .schema import ProjectGeographyResponse, ProjectGeographyCreateRequest
 from .service import get, get_all, get_all_by_project, create, delete
-from database.core import get_db
+from src.database.core import get_db
 
 router = APIRouter()
 

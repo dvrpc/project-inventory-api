@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
-from database.core import Base
-from models import TimeStampMixin
+from src.database.core import Base
+from src.models import TimeStampMixin
 
 class Agency(Base, TimeStampMixin):
     __tablename__ = "agency"

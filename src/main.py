@@ -1,21 +1,32 @@
 from fastapi import FastAPI, Request
-from api import api_router
+from .api import api_router
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+import logging 
 
 app = FastAPI()
 
 app.include_router(api_router)
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelname)s: %(message)s")
+log = logging.getLogger(__name__)
+
 @app.exception_handler(IntegrityError)
 async def integrity_exception_handler(request: Request, exc: IntegrityError):
     error_message = str(exc.orig)
+    log.error(error_message)
 
 
     if "ORA-02290" in error_message:
         return JSONResponse(
             status_code=422,
             content={"detail": "Check constraint violated"},
+        )
+    
+    if "ORA-02291" in error_message:
+        return JSONResponse(
+            status_code=422,
+            content={"detail": "Foreign key value has no matching primary key value"},
         )
 
     if "ORA-00001" in error_message:
@@ -32,6 +43,7 @@ async def integrity_exception_handler(request: Request, exc: IntegrityError):
 
 @app.exception_handler(SQLAlchemyError)
 async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
+    print(exc)
     return JSONResponse(
         status_code=500,
         content={"detail": "Database error."},

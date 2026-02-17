@@ -14,12 +14,12 @@ class AgencyResponse(BaseModel):
 
 class AgencyCreateRequest(BaseModel):
     name: str
-    address: Optional[str]
-    email: Optional[EmailStr]
-    phone: Optional[str]
+    address: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
 
 class AgencyUpdateRequest(BaseModel):
-    name: Optional[str]
-    address: Optional[str]
-    email: Optional[EmailStr]
-    phone: Optional[str]
+    name: Optional[str] = None
+    address: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None

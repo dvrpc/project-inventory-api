@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from .schema import ContactResponse, ContactCreateRequest, ContactUpdateRequest
 from .service import get, get_all, create, update, delete
-from database.core import get_db
+from src.database.core import get_db
 
 router = APIRouter()
 

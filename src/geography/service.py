@@ -2,7 +2,6 @@
 from sqlalchemy.orm import Session
 from .schema import GeographyCreateRequest, GeographyUpdateRequest
 from .models import Geography
-import oracledb
 from fastapi import HTTPException
 
 def get(db : Session, geography_id: int):
