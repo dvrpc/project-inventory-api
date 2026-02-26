@@ -4,7 +4,7 @@ from .schema import ExternalProductCreateRequest, ExternalProductUpdateRequest
 from .models import ExternalProduct
 
 def get(db : Session, external_product_id: int):
-    return db.query(ExternalProduct).filter(ExternalProduct.external_product_id == external_product_id).one_or_none()
+    return db.query(ExternalProduct).filter(ExternalProduct.product_id == external_product_id).one_or_none()
 
 def get_all(db: Session):
     return db.query(ExternalProduct).all()

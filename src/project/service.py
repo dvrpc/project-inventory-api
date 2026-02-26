@@ -13,8 +13,13 @@ def map_project(project: Project) -> ProjectResponse:
         internal=project.internal,
         created_at=project.created_at,
         updated_at=project.updated_at,
-        product=selected_product
+        product=selected_product,
+        needs=project.needs,
+        recommendations=project.recommendations
     )
+
+def get_unmapped(db : Session, project_id: int):
+    return db.query(Project).filter(Project.project_id == project_id).one_or_none()
 
 def get(db : Session, project_id: int):
     project = (

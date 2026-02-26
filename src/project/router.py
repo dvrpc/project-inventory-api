@@ -2,7 +2,7 @@ from fastapi import APIRouter,Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from .schema import ProjectResponse, ProjectCreateRequest, ProjectUpdateRequest
-from .service import get, get_all, create, update, delete
+from .service import get, get_unmapped, get_all, create, update, delete
 from src.database.core import get_db
 
 router = APIRouter()
@@ -32,7 +32,7 @@ def update_project(project_id: int, project_in: ProjectUpdateRequest, db: Sessio
 
 @router.delete("/{project_id}")
 def delete_project(project_id: int, db: Session = Depends(get_db)):
-    project = get(db, project_id)
+    project = get_unmapped(db, project_id)
 
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")

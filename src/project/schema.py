@@ -1,8 +1,10 @@
-from pydantic import BaseModel, computed_field
-from typing import Optional, Union
+from pydantic import BaseModel, Field
+from typing import Optional, Union, List
 from datetime import datetime
+from src.need.schema import NeedResponse
 from src.product.schema import ProductResponse
 from src.external_product.schema import ExternalProductResponse
+from src.recommendation.schema import RecommendationResponse
 
 class ProjectResponse(BaseModel):
     project_id: int
@@ -11,6 +13,8 @@ class ProjectResponse(BaseModel):
     updated_at: datetime
 
     product: Optional[Union[ProductResponse, ExternalProductResponse]]
+    needs: List[NeedResponse] = Field(default_factory=list)
+    recommendations: List[RecommendationResponse] = Field(default_factory=list)
 
     class Config:
         from_attributes = True

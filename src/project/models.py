@@ -13,4 +13,6 @@ class Project(Base, TimeStampMixin):
 
     product = relationship("Product")
     external_product = relationship("ExternalProduct")
+    needs = relationship("Need", back_populates="projects")
+    recommendations = relationship("Recommendation", back_populates="projects")
 

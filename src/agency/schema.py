@@ -1,7 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 
-
 class AgencyResponse(BaseModel):
     agency_id: int
     name: str
