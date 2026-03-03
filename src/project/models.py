@@ -16,3 +16,6 @@ class Project(Base, TimeStampMixin):
     needs = relationship("Need", back_populates="projects")
     recommendations = relationship("Recommendation", back_populates="projects")
 
+    geographies = relationship("Geography", secondary="project_geography", back_populates="projects")
+    project_geographies = relationship("ProjectGeography", back_populates="project")
+

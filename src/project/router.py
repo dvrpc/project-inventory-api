@@ -1,15 +1,16 @@
 from fastapi import APIRouter,Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
-from .schema import ProjectResponse, ProjectCreateRequest, ProjectUpdateRequest
+from typing import List, Optional
+from .schema import ProjectResponse, ProjectCreateRequest, ProjectUpdateRequest, ProjectFilters
 from .service import get, get_unmapped, get_all, create, update, delete
 from src.database.core import get_db
 
 router = APIRouter()
 
+# router.py
 @router.get("/", response_model=List[ProjectResponse])
-def get_projects(db: Session = Depends(get_db)):
-    return get_all(db)
+def get_projects(filters: ProjectFilters = Depends(ProjectFilters.as_query), db: Session = Depends(get_db)):
+    return get_all(db, filters)
 
 @router.get("/{project_id}", response_model=ProjectResponse)
 def get_project(project_id: int, db: Session = Depends(get_db)):
