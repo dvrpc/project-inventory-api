@@ -13,8 +13,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelna
 log = logging.getLogger(__name__)
 
 origins = [
-    "http://127.0.0.1:5173/",
     "http://127.0.0.1:5173",
+    "http://localhost:5173",
 
 ]
 

@@ -1,0 +1,5164 @@
+{
+    "type": "FeatureCollection",
+    "name": "mcd_phicpa_centroids",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401543440",
+                "mun_name": "Mantua Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.168558950399373,
+                    39.761829750985399
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400777630",
+                "mun_name": "Waterford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.820724048883093,
+                    39.741552133990666
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400781740",
+                "mun_name": "Winslow Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.902892474542284,
+                    39.702665437487831
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400503370",
+                "mun_name": "Bass River Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.444848748738792,
+                    39.659129079344545
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400577150",
+                "mun_name": "Washington Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.571587461046192,
+                    39.683004313048436
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401530180",
+                "mun_name": "Harrison Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.207466521864077,
+                    39.726675610785108
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401571850",
+                "mun_name": "Swedesboro Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.311782337687859,
+                    39.745805687282648
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400712280",
+                "mun_name": "Cherry Hill Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.994600655662907,
+                    39.903403869796755
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400566810",
+                "mun_name": "Shamong Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.72720433599595,
+                    39.778140599992227
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202922000",
+                "mun_name": "East Vincent Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.59455453717392,
+                    40.168369950039271
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160116",
+                "mun_name": "Lower Far Northeast"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.997173911476878,
+                    40.080266922123513
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401559070",
+                "mun_name": "Pitman Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.130576617985028,
+                    39.733495824747493
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400712550",
+                "mun_name": "Chesilhurst Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.878525171067338,
+                    39.730683616369156
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401526340",
+                "mun_name": "Glassboro Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.111330951166977,
+                    39.701358299373283
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401569030",
+                "mun_name": "South Harrison Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.256607154893985,
+                    39.696838348553442
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401521060",
+                "mun_name": "Elk Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.153175373712159,
+                    39.665581198247992
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401513360",
+                "mun_name": "Clayton Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.078264623288504,
+                    39.66271644089116
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209115192",
+                "mun_name": "Collegeville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.458115088589992,
+                    40.187211216185077
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209177304",
+                "mun_name": "Trappe Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.475356976866877,
+                    40.199178930784733
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209155512",
+                "mun_name": "North Wales Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.274464389752197,
+                    40.211176055138601
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401524840",
+                "mun_name": "Franklin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.018981033072137,
+                    39.595372999554286
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209102264",
+                "mun_name": "Ambler Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.221584431615739,
+                    40.156387985987138
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400757660",
+                "mun_name": "Pennsauken Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.056396832942497,
+                    39.964995990590218
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401551390",
+                "mun_name": "Newfield Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.016656389457921,
+                    39.548415932092887
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209144920",
+                "mun_name": "Lower Gwynedd Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.237325178793895,
+                    40.188057446736579
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402133150",
+                "mun_name": "Hopewell Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.763820610379568,
+                    40.389293031299218
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402160900",
+                "mun_name": "Princeton"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.669327655903288,
+                    40.356223562117869
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179280",
+                "mun_name": "Upper Salford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.440681455522622,
+                    40.295240369215222
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209186496",
+                "mun_name": "Worcester Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.352267040026689,
+                    40.189867676094131
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209141432",
+                "mun_name": "Lansdale Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.281197836607376,
+                    40.241640431911705
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401547250",
+                "mun_name": "Monroe Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.971985455555725,
+                    39.659907873302437
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400708170",
+                "mun_name": "Brooklawn Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.120838080289403,
+                    39.878786854844698
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400543740",
+                "mun_name": "Maple Shade Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.995009501076538,
+                    39.95199229954094
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400522110",
+                "mun_name": "Evesham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.894668307157104,
+                    39.860421757380685
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402139510",
+                "mun_name": "Lawrence Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.720533407016646,
+                    40.295369022875349
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400555800",
+                "mun_name": "Palmyra Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.036285889935755,
+                    40.002668880184949
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209165568",
+                "mun_name": "Rockledge Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.089844173101966,
+                    40.082234670503631
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209115848",
+                "mun_name": "Conshohocken Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.303391418672405,
+                    40.07718375767044
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209108568",
+                "mun_name": "Bridgeport Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.343689911273771,
+                    40.104031093945103
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209100156",
+                "mun_name": "Abington Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.114563221260298,
+                    40.110802874778429
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209173088",
+                "mun_name": "Springfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.201756140045063,
+                    40.098294047906755
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402180240",
+                "mun_name": "West Windsor Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.626644128042571,
+                    40.289696064577775
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400563510",
+                "mun_name": "Riverside Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.956362417139729,
+                    40.035829002479531
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209144912",
+                "mun_name": "Lower Frederick Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.481442041708021,
+                    40.280436432340686
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209145096",
+                "mun_name": "Lower Salford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.392825696731492,
+                    40.263926264768642
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209138000",
+                "mun_name": "Jenkintown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.129695454983576,
+                    40.096304934321729
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209127280",
+                "mun_name": "Franconia Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.358937554425012,
+                    40.305538263390503
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202968288",
+                "mun_name": "Schuylkill Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.498238085385097,
+                    40.108612490595227
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209135808",
+                "mun_name": "Horsham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.16644325724684,
+                    40.19927489867743
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209150640",
+                "mun_name": "Montgomery Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.231838132285148,
+                    40.241095734076936
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179056",
+                "mun_name": "Upper Gwynedd Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.28906026086679,
+                    40.214331827521363
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209159392",
+                "mun_name": "Perkiomen Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.464335175204695,
+                    40.231512630196079
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209177152",
+                "mun_name": "Towamencin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.338726897483568,
+                    40.241736658716221
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209182736",
+                "mun_name": "West Conshohocken Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.318895544063722,
+                    40.070230045235149
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209133120",
+                "mun_name": "Hatfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.289564683117803,
+                    40.275738484391844
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209184624",
+                "mun_name": "Whitemarsh Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.248201983741254,
+                    40.104198020297204
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209161664",
+                "mun_name": "Plymouth Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.29762672602142,
+                    40.111444628773427
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209154656",
+                "mun_name": "Norristown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.339860378076779,
+                    40.122383747857995
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201777704",
+                "mun_name": "Trumbauersville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.379661857596346,
+                    40.41299922976129
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209183696",
+                "mun_name": "West Norriton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.379254697278668,
+                    40.130995108895263
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209112968",
+                "mun_name": "Cheltenham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.138167038555935,
+                    40.078062642204706
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209168328",
+                "mun_name": "Schwenksville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.466127043243119,
+                    40.257336278993684
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209166576",
+                "mun_name": "Royersford Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.537930843060025,
+                    40.186142015655371
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179008",
+                "mun_name": "Upper Dublin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.181291393795689,
+                    40.150171505434656
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209121600",
+                "mun_name": "East Norriton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.336486523984007,
+                    40.150610097027183
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209184888",
+                "mun_name": "Whitpain Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.276820770430533,
+                    40.157800954880415
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201749120",
+                "mun_name": "Middletown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.906098126379106,
+                    40.179058202670426
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400569990",
+                "mun_name": "Springfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.710282074790399,
+                    40.036917812653193
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209131088",
+                "mun_name": "Green Lane Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.470691327237489,
+                    40.336379600028138
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209171856",
+                "mun_name": "Souderton Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.322331518176668,
+                    40.310996320058564
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179040",
+                "mun_name": "Upper Frederick Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.508335867506887,
+                    40.30803314683326
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400520050",
+                "mun_name": "Edgewater Park Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.911643728547133,
+                    40.054095967749348
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201708760",
+                "mun_name": "Bristol Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.85260939699198,
+                    40.103378002441353
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201736192",
+                "mun_name": "Hulmeville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.907509674949992,
+                    40.14191273251847
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400505740",
+                "mun_name": "Beverly City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.922328409594869,
+                    40.065207435643266
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201741416",
+                "mun_name": "Langhorne Manor Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.917308377295882,
+                    40.165766768124513
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201705616",
+                "mun_name": "Bensalem Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.943261516380048,
+                    40.108668647648216
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201758936",
+                "mun_name": "Penndel Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.914555209030567,
+                    40.155296794182021
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201754688",
+                "mun_name": "Northampton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.00147990982633,
+                    40.210408095237987
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201708768",
+                "mun_name": "Bristol Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.866721837246473,
+                    40.121578732287055
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209171016",
+                "mun_name": "Skippack Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.419042578836951,
+                    40.21642487463216
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209133112",
+                "mun_name": "Hatfield Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.298988653491932,
+                    40.277245406770234
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209153664",
+                "mun_name": "New Hanover Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.556540111595382,
+                    40.314436969341315
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400506700",
+                "mun_name": "Bordentown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.709851016814127,
+                    40.142051823189007
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400512670",
+                "mun_name": "Chesterfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.645938613084112,
+                    40.116551416445233
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400553070",
+                "mun_name": "North Hanover Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.586976785541125,
+                    40.079741833860069
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402129310",
+                "mun_name": "Hamilton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.676361190033788,
+                    40.204616999133485
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402157600",
+                "mun_name": "Pennington Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.790745141416281,
+                    40.326245759607673
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402122185",
+                "mun_name": "Ewing Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.800553210727315,
+                    40.265026165452227
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201779128",
+                "mun_name": "Upper Makefield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.924979609323188,
+                    40.29404195242742
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201770744",
+                "mun_name": "Silverdale Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.271895366652004,
+                    40.347135661469572
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201786920",
+                "mun_name": "Yardley Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.838478321732836,
+                    40.240794870184843
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201754184",
+                "mun_name": "Newtown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.932291319708952,
+                    40.228983315966296
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179176",
+                "mun_name": "Upper Moreland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.102070935852396,
+                    40.157195517553369
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201779296",
+                "mun_name": "Upper Southampton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.036262150585102,
+                    40.172267207070234
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209145008",
+                "mun_name": "Lower Moreland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.05418478582105,
+                    40.134571470635336
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201780952",
+                "mun_name": "Warminster Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.091500591906183,
+                    40.204293460145678
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400772240",
+                "mun_name": "Tavistock Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.02726010041134,
+                    39.875757395458407
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209109696",
+                "mun_name": "Bryn Athyn Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.067432479715052,
+                    40.141120285420342
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201745112",
+                "mun_name": "Lower Southampton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.990253533657096,
+                    40.154131219297604
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400568610",
+                "mun_name": "Southampton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.717127776275845,
+                    39.913644563356648
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201781048",
+                "mun_name": "Warrington Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.15805576343692,
+                    40.248906177008351
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201737304",
+                "mun_name": "Ivyland Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.073249077071566,
+                    40.208242339637607
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400581440",
+                "mun_name": "Willingboro Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.888089635177209,
+                    40.028070763181617
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400557480",
+                "mun_name": "Pemberton Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.685699569559262,
+                    39.971321837053452
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400710000",
+                "mun_name": "Camden City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.10756483477202,
+                    39.936180171624528
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201754192",
+                "mun_name": "Newtown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.939294086112398,
+                    40.242094788513327
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400745510",
+                "mun_name": "Merchantville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.050338950575451,
+                    39.950231720167643
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402131620",
+                "mun_name": "Hightstown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.525282417118561,
+                    40.268586733899255
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402163850",
+                "mun_name": "Robbinsville Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.590989714253993,
+                    40.221984928484538
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402174000",
+                "mun_name": "Trenton City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.764133736726166,
+                    40.22367919790937
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201751144",
+                "mun_name": "Morrisville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.779966160933199,
+                    40.20736105871552
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400508920",
+                "mun_name": "Burlington City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.852387530560719,
+                    40.07848629861769
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201741392",
+                "mun_name": "Langhorne Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.921089832650324,
+                    40.177640983377735
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201744968",
+                "mun_name": "Lower Makefield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.85503703949982,
+                    40.230830881259529
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400508950",
+                "mun_name": "Burlington Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.839532687547617,
+                    40.064066080324579
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209133088",
+                "mun_name": "Hatboro Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.105487515013792,
+                    40.177456311612659
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400702200",
+                "mun_name": "Audubon Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.072105148189422,
+                    39.890597411662796
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400702230",
+                "mun_name": "Audubon Park Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.088941531000273,
+                    39.896933044420628
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400728800",
+                "mun_name": "Haddon Heights Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.064508321996655,
+                    39.879121020037246
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400748750",
+                "mun_name": "Mount Ephraim Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.091664478685246,
+                    39.88060800007927
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401578800",
+                "mun_name": "West Deptford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.185323475118338,
+                    39.843091323753534
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400703250",
+                "mun_name": "Barrington Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.051360518347607,
+                    39.868953663757736
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204515232",
+                "mun_name": "Collingdale Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.277644828977714,
+                    39.915060985729461
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401580120",
+                "mun_name": "Westville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.129929619969957,
+                    39.870065957614813
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400517440",
+                "mun_name": "Delran Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.949397081511918,
+                    40.017085582208871
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400512940",
+                "mun_name": "Cinnaminson Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.992928253558091,
+                    40.000792671039235
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400572060",
+                "mun_name": "Tabernacle Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.655137643332537,
+                    39.819247884180818
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400517080",
+                "mun_name": "Delanco Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.946763588533344,
+                    40.049184954368123
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400548900",
+                "mun_name": "Mount Holly Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.786289853936637,
+                    39.994991323874025
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400518790",
+                "mun_name": "Eastampton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.755333480202395,
+                    40.000973169904647
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400563660",
+                "mun_name": "Riverton Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.014799373852966,
+                    40.011567754839959
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400547880",
+                "mun_name": "Moorestown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.941199892560562,
+                    39.978450114612379
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400549020",
+                "mun_name": "Mount Laurel Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.904705436582489,
+                    39.948361660895301
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400529010",
+                "mun_name": "Hainesport Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.836944163194985,
+                    39.976719230997091
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209144976",
+                "mun_name": "Lower Merion Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.280716938288492,
+                    40.028229450217253
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204541440",
+                "mun_name": "Lansdowne Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.276036530107859,
+                    39.940772195060205
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204586968",
+                "mun_name": "Yeadon Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.252681057780535,
+                    39.932426204182015
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204515432",
+                "mun_name": "Colwyn Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.253146308599,
+                    39.911820281797866
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204518152",
+                "mun_name": "Darby Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.261254933205848,
+                    39.920922649641518
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204521384",
+                "mun_name": "East Lansdowne Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.260786589341635,
+                    39.943962959541899
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179136",
+                "mun_name": "Upper Merion Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.379152660891336,
+                    40.090304669047057
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209152664",
+                "mun_name": "Narberth Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.263444765698523,
+                    40.007792172121896
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400739420",
+                "mun_name": "Lawnside Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.02889807865769,
+                    39.867307312572699
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400704750",
+                "mun_name": "Bellmawr Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.094044324891328,
+                    39.866557571588821
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400776220",
+                "mun_name": "Voorhees Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.954874544657855,
+                    39.845021216744534
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202972920",
+                "mun_name": "Spring City Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.546604345026793,
+                    40.176876129410687
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400545210",
+                "mun_name": "Medford Lakes Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.805366162444216,
+                    39.858176449906225
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401517710",
+                "mun_name": "Deptford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.11815629502081,
+                    39.815705970120447
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400542060",
+                "mun_name": "Lumberton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.803557722135523,
+                    39.956867087218463
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400714260",
+                "mun_name": "Collingswood Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.075858928341489,
+                    39.91608239791276
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400582420",
+                "mun_name": "Woodland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.515339127296173,
+                    39.840923486026398
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400782450",
+                "mun_name": "Woodlynne Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.095543315058819,
+                    39.916673506323669
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400728770",
+                "mun_name": "Haddonfield Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.034530974862193,
+                    39.895468939119787
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202950232",
+                "mun_name": "Modena Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.80238227279132,
+                    39.961824832157021
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400753880",
+                "mun_name": "Oaklyn Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.081286769202549,
+                    39.902434086347029
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204575648",
+                "mun_name": "Swarthmore Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.348721760331699,
+                    39.902309825114237
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202923440",
+                "mun_name": "Elverson Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.830351338984457,
+                    40.155886142599208
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400726820",
+                "mun_name": "Gloucester City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.117339234875416,
+                    39.892450032517097
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204526408",
+                "mun_name": "Folcroft Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.276891304501206,
+                    39.889107006928377
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202935528",
+                "mun_name": "Honey Brook Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.911157727978988,
+                    40.093679530416559
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204579248",
+                "mun_name": "Upper Providence Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.39842738026428,
+                    39.937400261381256
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204554224",
+                "mun_name": "Newtown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.410619591202689,
+                    39.992073638673901
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204576792",
+                "mun_name": "Tinicum Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.269722021216381,
+                    39.864436828372156
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921104",
+                "mun_name": "East Fallowfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.818353647252138,
+                    39.950868409575079
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201759384",
+                "mun_name": "Perkasie Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.291988012550476,
+                    40.372175599827976
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204518160",
+                "mun_name": "Darby Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.276682890768271,
+                    39.902995478273596
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204566192",
+                "mun_name": "Rose Valley Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.385226395834735,
+                    39.894781768724712
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204522296",
+                "mun_name": "Eddystone Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.333519127717352,
+                    39.855755405477893
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401582120",
+                "mun_name": "Woodbury City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.152399322125049,
+                    39.837854722705011
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400726760",
+                "mun_name": "Gloucester Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.036289806780204,
+                    39.792403324578387
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401528185",
+                "mun_name": "Greenwich Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.288997669768037,
+                    39.82951168948739
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202946792",
+                "mun_name": "Malvern Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.514425152447956,
+                    40.032911084767207
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204553104",
+                "mun_name": "Nether Providence Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.369693335163419,
+                    39.897168415613578
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401557150",
+                "mun_name": "Paulsboro Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.239579975613893,
+                    39.84023504000379
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204500676",
+                "mun_name": "Aldan Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.288100174733742,
+                    39.922420562813642
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401549680",
+                "mun_name": "National Park Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.185324810533814,
+                    39.867642632847833
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202972072",
+                "mun_name": "South Coatesville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.813503209687866,
+                    39.96900944056992
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160107",
+                "mun_name": "Lower North"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.165699857860204,
+                    39.983308984566158
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204564800",
+                "mun_name": "Ridley Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.327802934020241,
+                    39.884878242886145
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204569752",
+                "mun_name": "Sharon Hill Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.267866530021095,
+                    39.907421092513445
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204533144",
+                "mun_name": "Haverford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.316366424181211,
+                    39.986754889623391
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204566928",
+                "mun_name": "Rutledge Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.327419017755631,
+                    39.900948369885676
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160102",
+                "mun_name": "Lower Southwest"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.229020797997862,
+                    39.898105489004728
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160113",
+                "mun_name": "Upper Far Northeast"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.022013060847172,
+                    40.106609506590715
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204555664",
+                "mun_name": "Norwood Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.2964302091614,
+                    39.886501229681336
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204548480",
+                "mun_name": "Media Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.388976091392166,
+                    39.919755173534682
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204547616",
+                "mun_name": "Marple Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.365819477391128,
+                    39.965369206597671
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204551176",
+                "mun_name": "Morton Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.326781962572497,
+                    39.911579376350289
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400742630",
+                "mun_name": "Magnolia Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.036398204039529,
+                    39.856194116750714
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400765160",
+                "mun_name": "Runnemede Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.074088770557978,
+                    39.852126060382858
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204514264",
+                "mun_name": "Clifton Heights Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.295805718048641,
+                    39.930155205503688
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400768340",
+                "mun_name": "Somerdale Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.021713705291006,
+                    39.845425842972709
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209145072",
+                "mun_name": "Lower Pottsgrove Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.597613788044612,
+                    40.253637680104106
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209119672",
+                "mun_name": "Douglass Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.591116421269476,
+                    40.343619421706336
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202980616",
+                "mun_name": "Wallace Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.772084093974485,
+                    40.087531962854925
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209162416",
+                "mun_name": "Pottstown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.644409323402485,
+                    40.250761227704473
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209183912",
+                "mun_name": "West Pottsgrove Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.673414671973973,
+                    40.2591342460249
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983832",
+                "mun_name": "West Pikeland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.622677959137874,
+                    40.088329640114019
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204503336",
+                "mun_name": "Aston Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.434809211456653,
+                    39.871819915293415
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921576",
+                "mun_name": "East Nantmeal Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.738698588913223,
+                    40.134485596022245
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921624",
+                "mun_name": "East Nottingham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.97052717153241,
+                    39.762190437028671
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983712",
+                "mun_name": "West Nottingham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.053866018053611,
+                    39.739728032864456
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209143312",
+                "mun_name": "Limerick Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.534374256539692,
+                    40.232312790547475
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204563264",
+                "mun_name": "Radnor Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.367510428713004,
+                    40.028736684007711
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204562792",
+                "mun_name": "Prospect Park Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.307535322307515,
+                    39.885946807260076
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204564832",
+                "mun_name": "Ridley Park Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.325116095048415,
+                    39.878453362525924
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202945040",
+                "mun_name": "Lower Oxford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.989968458913324,
+                    39.805633569386863
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202985352",
+                "mun_name": "Willistown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.491456585644542,
+                    40.000937965701993
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202960120",
+                "mun_name": "Phoenixville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.520064413399993,
+                    40.135888192867874
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202977344",
+                "mun_name": "Tredyffrin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.45400223011589,
+                    40.066311701707662
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204522584",
+                "mun_name": "Edgmont Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.461869532489857,
+                    39.952579734189847
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204529720",
+                "mun_name": "Glenolden Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.291936155485899,
+                    39.899650710068201
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921696",
+                "mun_name": "East Pikeland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.563171567696884,
+                    40.132550297140206
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202922056",
+                "mun_name": "East Whiteland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.554709377188885,
+                    40.047369903370409
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179240",
+                "mun_name": "Upper Pottsgrove Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.63635800904467,
+                    40.282208409306939
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202967080",
+                "mun_name": "Sadsbury Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.907798863978144,
+                    39.978770764970314
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209145080",
+                "mun_name": "Lower Providence Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.426770977367198,
+                    40.148502556735011
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179256",
+                "mun_name": "Upper Providence Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.488895741984535,
+                    40.165383792731618
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400726070",
+                "mun_name": "Gibbsboro Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.965724433982444,
+                    39.833204894126986
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401541160",
+                "mun_name": "Logan Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.354794773123359,
+                    39.79196196266367
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202939352",
+                "mun_name": "Kennett Square Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.711259872006977,
+                    39.843830953408798
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202912744",
+                "mun_name": "Charlestown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.558710456057881,
+                    40.085128861576294
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921928",
+                "mun_name": "Easttown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.440265014141801,
+                    40.028127264056309
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921192",
+                "mun_name": "East Goshen Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.547830866538234,
+                    39.993466574072009
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204515488",
+                "mun_name": "Concord Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.513448481427801,
+                    39.874129618039561
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204506024",
+                "mun_name": "Bethel Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.488637650817793,
+                    39.845975378376338
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204544888",
+                "mun_name": "Lower Chichester Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.43242541831134,
+                    39.821883414949944
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204573032",
+                "mun_name": "Springfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.336096207358622,
+                    39.928206178526551
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204579000",
+                "mun_name": "Upper Darby Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.289076771007032,
+                    39.949025542240641
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983968",
+                "mun_name": "West Sadsbury Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.956084018020533,
+                    39.972953291134388
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202927376",
+                "mun_name": "Franklin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.825376229212054,
+                    39.762102453729298
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202934448",
+                "mun_name": "Highland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.895919103109904,
+                    39.92358042642941
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202910824",
+                "mun_name": "Caln Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.76180677990105,
+                    40.001396571660571
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202914712",
+                "mun_name": "Coatesville City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.819823553874869,
+                    39.985028905800561
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921480",
+                "mun_name": "East Marlborough Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.723122882480894,
+                    39.879765273177526
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202944440",
+                "mun_name": "London Britain Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.786692947400354,
+                    39.749807739440968
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202984160",
+                "mun_name": "West Vincent Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.647675418601224,
+                    40.125607676811022
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202984192",
+                "mun_name": "West Whiteland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.623897476728246,
+                    40.022700248550791
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204576576",
+                "mun_name": "Thornbury Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.516336981319583,
+                    39.918216506741636
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204578776",
+                "mun_name": "Upper Chichester Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.442005299200574,
+                    39.841430115570702
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204558176",
+                "mun_name": "Parkside Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.377980165538446,
+                    39.867468426207239
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202920920",
+                "mun_name": "East Caln Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.682366561599508,
+                    40.01465006717433
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204513212",
+                "mun_name": "Chester Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.400103535070571,
+                    39.850439005470413
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204509080",
+                "mun_name": "Brookhaven Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.391834994952006,
+                    39.871538290459739
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204513232",
+                "mun_name": "Chester Heights Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.469711168886491,
+                    39.892627018891524
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204512442",
+                "mun_name": "Chadds Ford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.569844992794998,
+                    39.86601946768338
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204577288",
+                "mun_name": "Trainer Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.403206733827915,
+                    39.824167084528924
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202906544",
+                "mun_name": "Birmingham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.598851598718596,
+                    39.899192424787692
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202961800",
+                "mun_name": "Pocopson Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.663427672825804,
+                    39.907638988790573
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202982936",
+                "mun_name": "West Fallowfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.957215724679131,
+                    39.89857057182347
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202923032",
+                "mun_name": "Elk Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.90828033683475,
+                    39.734872438308287
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983464",
+                "mun_name": "West Marlborough Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.805596670702229,
+                    39.891616995441531
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983664",
+                "mun_name": "West Nantmeal Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.823775767737217,
+                    40.120475536889039
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202920864",
+                "mun_name": "East Brandywine Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.750155662906224,
+                    40.036498492994824
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202958808",
+                "mun_name": "Penn Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.874139266736819,
+                    39.822580184888331
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202920824",
+                "mun_name": "East Bradford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.646853811739959,
+                    39.958948033065624
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202935536",
+                "mun_name": "Honey Brook Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.888671764674228,
+                    40.09009394342398
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202979480",
+                "mun_name": "Uwchlan Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.667896797951997,
+                    40.052169565867899
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202984104",
+                "mun_name": "Westtown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.555993470677933,
+                    39.941974358602295
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204547344",
+                "mun_name": "Marcus Hook Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.416023640973023,
+                    39.812928593146367
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202939344",
+                "mun_name": "Kennett Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.680836327283259,
+                    39.837570089540762
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983080",
+                "mun_name": "West Goshen Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.592674406468703,
+                    39.975589428291215
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202944480",
+                "mun_name": "London Grove Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.81553758868553,
+                    39.832763627113088
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202959136",
+                "mun_name": "Pennsbury Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.623919333387889,
+                    39.865978396717303
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202903384",
+                "mun_name": "Atglen Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.97540987185134,
+                    39.947261883079328
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202982704",
+                "mun_name": "West Chester Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.605797682889843,
+                    39.960127246736526
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202976568",
+                "mun_name": "Thornbury Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.555309445143607,
+                    39.921034634248421
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202979544",
+                "mun_name": "Valley Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.85031016786381,
+                    39.984820123664043
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202981160",
+                "mun_name": "Warwick Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.753914382807125,
+                    40.17565379049519
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400732220",
+                "mun_name": "Hi-Nella Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.021936534251765,
+                    39.836550986101614
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400771220",
+                "mun_name": "Stratford Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.015479853328287,
+                    39.82899003724058
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201776304",
+                "mun_name": "Telford Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.324370018802512,
+                    40.328604971757393
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202982664",
+                "mun_name": "West Caln Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.886674388971016,
+                    40.023755047321352
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202903656",
+                "mun_name": "Avondale Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.781935811486264,
+                    39.82476463234039
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202957480",
+                "mun_name": "Oxford Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.979993012988302,
+                    39.785830649760747
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202958032",
+                "mun_name": "Parkesburg Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.917677637120008,
+                    39.95919984642358
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400705470",
+                "mun_name": "Berlin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.925622112537752,
+                    39.805402883330373
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201777744",
+                "mun_name": "Tullytown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.810961451997215,
+                    40.14012109111038
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202982576",
+                "mun_name": "West Brandywine Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.81197417453356,
+                    40.041170737423677
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400740440",
+                "mun_name": "Lindenwold Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.989850287577909,
+                    39.817246658681668
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401577180",
+                "mun_name": "Washington Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.072335243720602,
+                    39.746959927132785
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400543290",
+                "mun_name": "Mansfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.714928272305897,
+                    40.085382058872291
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401582840",
+                "mun_name": "Woolwich Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.317012154607497,
+                    39.740029413467774
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402133180",
+                "mun_name": "Hopewell Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.806851174519508,
+                    40.346232720944137
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400739210",
+                "mun_name": "Laurel Springs Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.005244133715664,
+                    39.821316051649156
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401582180",
+                "mun_name": "Woodbury Heights Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.151221521946312,
+                    39.815981726616563
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401519180",
+                "mun_name": "East Greenwich Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.239613742506805,
+                    39.790322675118077
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209121200",
+                "mun_name": "East Greenville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.505857791922423,
+                    40.405631774373347
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400713420",
+                "mun_name": "Clementon Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.985006164355326,
+                    39.804576625303959
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202919752",
+                "mun_name": "Downingtown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.701960450515358,
+                    40.007562255236039
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202979208",
+                "mun_name": "Upper Oxford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.953245203430697,
+                    39.842609566177913
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400705440",
+                "mun_name": "Berlin Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.937410370960208,
+                    39.791513927066504
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202953784",
+                "mun_name": "Newlin Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.737351685240014,
+                    39.923932225573388
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201719784",
+                "mun_name": "Doylestown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.127929785069512,
+                    40.313974313310652
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202979352",
+                "mun_name": "Upper Uwchlan Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.706987339882986,
+                    40.081662686255974
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202983104",
+                "mun_name": "West Grove Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.828430456608075,
+                    39.820666064539431
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202982544",
+                "mun_name": "West Bradford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.715806423263828,
+                    39.96335779573338
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202944456",
+                "mun_name": "Londonderry Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.879113008026664,
+                    39.873595993126607
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202953816",
+                "mun_name": "New London Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.879684443072208,
+                    39.774302673557564
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202953608",
+                "mun_name": "New Garden Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.751763040919499,
+                    39.811943278422014
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204549136",
+                "mun_name": "Middletown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.431153125366819,
+                    39.909444714418989
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201720104",
+                "mun_name": "Dublin Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.203669753361325,
+                    40.372875053451452
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204513208",
+                "mun_name": "Chester City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.371438837035114,
+                    39.845168510737658
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209176304",
+                "mun_name": "Telford Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.330900914984909,
+                    40.322673322689766
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209167528",
+                "mun_name": "Salford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.402174074870416,
+                    40.338609046307987
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201704976",
+                "mun_name": "Bedminster Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.193957272375727,
+                    40.422389193123884
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201781144",
+                "mun_name": "Warwick Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.081856145396898,
+                    40.250378531757057
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201786624",
+                "mun_name": "Wrightstown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.997497017220383,
+                    40.270456047505547
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201712504",
+                "mun_name": "Chalfont Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.209493192991019,
+                    40.289353994973084
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201753712",
+                "mun_name": "New Hope Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.957479739416726,
+                    40.361697176060041
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201709816",
+                "mun_name": "Buckingham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.05811896421018,
+                    40.31876209968469
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201721760",
+                "mun_name": "East Rockhill Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.283305948116492,
+                    40.408448461686504
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209163808",
+                "mun_name": "Red Hill Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.483750088917034,
+                    40.376904396842221
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201753304",
+                "mun_name": "New Britain Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.206929329703371,
+                    40.308450022778068
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201764584",
+                "mun_name": "Richlandtown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.321144689377377,
+                    40.472329504787815
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201769248",
+                "mun_name": "Sellersville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.308002727240435,
+                    40.359866713320926
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3401578110",
+                "mun_name": "Wenonah Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.148574268449494,
+                    39.791322691253164
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201753296",
+                "mun_name": "New Britain Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.180628699745128,
+                    40.298116964353106
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400506670",
+                "mun_name": "Bordentown City"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.708691293489835,
+                    40.149273660246863
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400523250",
+                "mun_name": "Fieldsboro Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.731419658877357,
+                    40.136352384898721
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201725112",
+                "mun_name": "Falls Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.791571871843956,
+                    40.168650934075174
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400523850",
+                "mun_name": "Florence Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.788671858044481,
+                    40.097965712628728
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209159120",
+                "mun_name": "Pennsburg Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.496425707370875,
+                    40.393593190175629
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209147592",
+                "mun_name": "Marlborough Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.449431274506452,
+                    40.356937592949819
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400728740",
+                "mun_name": "Haddon Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.062573104196105,
+                    39.90642677719778
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204549504",
+                "mun_name": "Millbourne Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.25261624952627,
+                    39.96375827102203
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201773016",
+                "mun_name": "Springfield Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.300114167388855,
+                    40.524660487413911
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201749384",
+                "mun_name": "Milford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.415344154991402,
+                    40.428978561606137
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201783960",
+                "mun_name": "West Rockhill Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.348763874981202,
+                    40.368595579636057
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4209179064",
+                "mun_name": "Upper Hanover Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.5105895079937,
+                    40.395572189414239
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201761616",
+                "mun_name": "Plumstead Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.116407394488704,
+                    40.387907660574513
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201771752",
+                "mun_name": "Solebury Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.002971816223393,
+                    40.367426728720815
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201719792",
+                "mun_name": "Doylestown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.139372452464755,
+                    40.296281901234131
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400557510",
+                "mun_name": "Pemberton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.599949591635621,
+                    39.956194123641005
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400545120",
+                "mun_name": "Medford Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.823082879080047,
+                    39.863913133059178
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201764536",
+                "mun_name": "Richland Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.336136613927053,
+                    40.44866306638724
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160110",
+                "mun_name": "University Southwest"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.210747920527467,
+                    39.946711160411326
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160103",
+                "mun_name": "Central"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.158857148342506,
+                    39.953917273196936
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160104",
+                "mun_name": "North Delaware"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.028163958964925,
+                    40.033563731489508
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160118",
+                "mun_name": "Central Northeast"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.062888905512608,
+                    40.064158811876695
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160114",
+                "mun_name": "Lower Northeast"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.0892399213907,
+                    40.030380098683601
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160105",
+                "mun_name": "Lower South"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.176991215870856,
+                    39.901696290723663
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160106",
+                "mun_name": "West Park"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.225493068919249,
+                    39.985907482421879
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400578200",
+                "mun_name": "Westampton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.821287366561336,
+                    40.016842746635767
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201734952",
+                "mun_name": "Hilltown Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.253449787090432,
+                    40.341673600416186
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201763048",
+                "mun_name": "Quakertown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.345825430528564,
+                    40.439906031485677
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4204578712",
+                "mun_name": "Upland Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.38011049361026,
+                    39.856374330357731
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201720480",
+                "mun_name": "Durham Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.217440857461909,
+                    40.571477348299716
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201764856",
+                "mun_name": "Riegelsville Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.198680852081324,
+                    40.596388718006658
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201754576",
+                "mun_name": "Nockamixon Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.17255508539013,
+                    40.522429558792375
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201733224",
+                "mun_name": "Haycock Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.250514167841999,
+                    40.477758369866962
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201776784",
+                "mun_name": "Tinicum Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.106971196971926,
+                    40.482543461928572
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4201708592",
+                "mun_name": "Bridgeton Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.119068758993109,
+                    40.555173496267891
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3402119780",
+                "mun_name": "East Windsor Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.529415247077054,
+                    40.260587788640272
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400582960",
+                "mun_name": "Wrightstown Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.631931635347371,
+                    40.025482094590139
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160111",
+                "mun_name": "West"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.231572665795909,
+                    39.964686366632471
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160108",
+                "mun_name": "Lower Northwest"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.22273523635296,
+                    40.042513301528778
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160101",
+                "mun_name": "North"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.140703127239007,
+                    40.00800534099951
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160112",
+                "mun_name": "South"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.164983320241234,
+                    39.924639931238325
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160115",
+                "mun_name": "Upper North"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.145267329565044,
+                    40.048573762221146
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160117",
+                "mun_name": "Upper Northwest"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.191318848078083,
+                    40.053374753295351
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4210160109",
+                "mun_name": "River Wards"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.096057736743532,
+                    39.987896351604469
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202954936",
+                "mun_name": "North Coventry Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.681809971034426,
+                    40.219934839888346
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202972088",
+                "mun_name": "South Coventry Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.678041404340732,
+                    40.180312210582912
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "4202921008",
+                "mun_name": "East Coventry Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.616160115299365,
+                    40.201339504553538
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400758770",
+                "mun_name": "Pine Hill Borough"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.98345385261976,
+                    39.787730814761716
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "3400551510",
+                "mun_name": "New Hanover Township"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.57407741661909,
+                    40.015879927561677
+                ]
+            }
+        }
+    ]
+}

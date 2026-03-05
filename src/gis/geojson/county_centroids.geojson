@@ -1,0 +1,138 @@
+{
+    "type": "FeatureCollection",
+    "name": "county_centroids",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "34007",
+                "co_name": "Camden"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.95972352887695,
+                    39.803595089125274
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "34015",
+                "co_name": "Gloucester"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.140882632254119,
+                    39.717039832852031
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "34021",
+                "co_name": "Mercer"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.701705984066336,
+                    40.283448853116333
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "34005",
+                "co_name": "Burlington"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.6678711696688,
+                    39.877605249122681
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "42017",
+                "co_name": "Bucks"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.106422616832916,
+                    40.336813359883472
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "42029",
+                "co_name": "Chester"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.748699626560693,
+                    39.973029480569252
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "42045",
+                "co_name": "Delaware"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.398810100620139,
+                    39.916582524294192
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "42101",
+                "co_name": "Philadelphia"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.134266262460145,
+                    40.007624331677846
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "geoid": "42091",
+                "co_name": "Montgomery"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.36708928086901,
+                    40.210804643453692
+                ]
+            }
+        }
+    ]
+}

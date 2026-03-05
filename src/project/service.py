@@ -41,15 +41,24 @@ def get(db : Session, project_id: int):
 
     return map_project(project)
 
+def apply_bbox_filter(query, bbox: str):
+    coords = bbox.split(",")
+    geoids = get_geoids_in_bounding_box(
+        float(coords[0]), float(coords[1]), float(coords[2]), float(coords[3])
+    )
+    return query.join(Project.geographies).filter(Geography.geoid.in_(geoids))
+
 def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[ProjectResponse]:
     query = db.query(Project)
-    if filters.bbox:
-        coords = filters.bbox.split(",")
-        geoids = get_geoids_in_bounding_box(float(coords[0]), float(coords[1]), float(coords[2]), float(coords[3]))
-        query = query.join(Project.geographies).filter(Geography.geoid.in_(geoids))
-        
+    if filters and filters.bbox:
+        query = apply_bbox_filter(query, filters.bbox)
     return [map_project(p) for p in query.all()]
 
+def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[str]:
+    query = db.query(Geography.geoid).join(Geography.projects)
+
+    #TODO: apply filters (non bbox)
+    return [row.geoid for row in query.all()]
 
 def create(db: Session, project_in: ProjectCreateRequest):
     project = Project(**project_in.model_dump())
