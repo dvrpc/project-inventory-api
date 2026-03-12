@@ -17,5 +17,6 @@ class Project(Base, TimeStampMixin):
     recommendations = relationship("Recommendation", back_populates="projects")
 
     geographies = relationship("Geography", secondary="project_geography", back_populates="projects")
-    project_geographies = relationship("ProjectGeography", back_populates="project")
-
+    project_geographies = relationship("ProjectGeography", back_populates="project", passive_deletes=True)
+    keywords = relationship("Keyword", secondary="project_keyword", back_populates="projects")
+    project_keywords = relationship("ProjectKeyword", back_populates="project", passive_deletes=True)
