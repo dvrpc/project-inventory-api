@@ -9,5 +9,4 @@ class Keyword(Base):
     keyword_id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
 
-    projects = relationship("Project", secondary="project_keyword", back_populates="keywords")
     project_keywords = relationship("ProjectKeyword", back_populates="keyword", passive_deletes=True)

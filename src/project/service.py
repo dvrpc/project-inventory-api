@@ -4,7 +4,9 @@ from typing import Optional
 from sqlalchemy.orm import Session, joinedload
 
 from src.geography.models import Geography
+from src.keyword.models import Keyword
 from src.project_geography.models import ProjectGeography
+from src.project_keyword.models import ProjectKeyword
 from .schema import ProjectCreateRequest, ProjectFilters, ProjectUpdateRequest, ProjectResponse
 from .models import Project
 from src.gis.service import get_geoids_in_bounding_box
@@ -22,8 +24,8 @@ def map_project(project: Project) -> ProjectResponse:
         product=selected_product,
         needs=project.needs,
         recommendations=project.recommendations,
-        geographies=project.geographies,
-        keywords=project.keywords
+        geographies=[pg.geography for pg in project.project_geographies],
+        keywords=[pk.keyword for pk in project.project_keywords]
     )
 
 def get_unmapped(db : Session, project_id: int):
@@ -35,6 +37,8 @@ def get(db : Session, project_id: int):
             .options(
                 joinedload(Project.product),
                 joinedload(Project.external_product),
+                joinedload(Project.project_geographies).joinedload(ProjectGeography.geography),
+                joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
                 )
                 .filter(Project.project_id == project_id)
                 .one_or_none()
@@ -53,6 +57,16 @@ def apply_geographies_filter(query, geographies: str, db: Session):
     geoids = [g.strip() for g in geographies.split(",")]
     expanded_geoids = expand_geoids(geoids, db)
     return query.filter(Geography.geoid.in_(expanded_geoids))
+
+def apply_keywords_filter(query, keywords: str, db: Session):
+    keyword_ids = [k.strip() for k in keywords.split(",")]
+    return (
+        query
+        .join(Project.project_keywords)
+        .join(ProjectKeyword.keyword)
+        .filter(Keyword.keyword_id.in_(keyword_ids))
+        .distinct()
+    )
 
 def expand_geoids(geoids: list[str], db: Session) -> list[str]:
     county_geoids = [g for g in geoids if len(g) == 5]
@@ -75,17 +89,21 @@ def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[Proje
     if filters:
         needs_geography_join = filters.bbox or filters.geographies
         if needs_geography_join:
-            query = query.join(Project.geographies)
+            query = query.join(Project.project_geographies).join(ProjectGeography.geography).distinct()
+
 
         if filters.bbox:
             query = apply_bbox_filter(query, filters.bbox)
         if filters.geographies:
             query = apply_geographies_filter(query, filters.geographies, db)
+        if filters.keywords:
+            query = apply_keywords_filter(query, filters.keywords, db)
 
     return [map_project(p) for p in query.all()]
 
 def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[str]:
-    query = db.query(Geography.geoid).join(Geography.projects)
+    query = db.query(Geography.geoid).join(Geography.project_geographies).join(ProjectGeography.project)
+
 
     #TODO: apply filters (non bbox)
     return [row.geoid for row in query.all()]

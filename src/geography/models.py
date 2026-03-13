@@ -12,5 +12,4 @@ class Geography(Base):
     dvrpc_reg = Column(Boolean(create_constraint=True), nullable=False, default=False)
 
 
-    projects = relationship("Project", secondary="project_geography", back_populates="geographies")
     project_geographies = relationship("ProjectGeography", back_populates="geography", passive_deletes=True)
