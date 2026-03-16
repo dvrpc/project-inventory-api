@@ -7,7 +7,6 @@ from src.database.core import get_db
 
 router = APIRouter()
 
-# router.py
 @router.get("/", response_model=List[ProjectResponse])
 def get_projects(filters: ProjectFilters = Depends(ProjectFilters.as_query), db: Session = Depends(get_db)):
     return get_all(db, filters)

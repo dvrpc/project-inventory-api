@@ -82,30 +82,47 @@ def expand_geoids(geoids: list[str], db: Session) -> list[str]:
 
     return list(set(municipality_geoids + county_geoids))
 
+def apply_filters(query, filters: ProjectFilters, db: Session):
+    needs_geography_join = filters.bbox or filters.geographies
+    if needs_geography_join:
+        query = (
+            query
+            .join(Project.project_geographies)
+            .join(ProjectGeography.geography)
+            .distinct()
+        )
+
+    if filters.bbox:
+        query = apply_bbox_filter(query, filters.bbox)
+    if filters.geographies:
+        query = apply_geographies_filter(query, filters.geographies, db)
+    if filters.keywords:
+        query = apply_keywords_filter(query, filters.keywords, db)
+
+    return query
+
+
 def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[ProjectResponse]:
     query = db.query(Project)
 
-    #TODO: Think of a more efficient way to apply filters, bbox changes constantly but others are more rigid
     if filters:
-        needs_geography_join = filters.bbox or filters.geographies
-        if needs_geography_join:
-            query = query.join(Project.project_geographies).join(ProjectGeography.geography).distinct()
-
-
-        if filters.bbox:
-            query = apply_bbox_filter(query, filters.bbox)
-        if filters.geographies:
-            query = apply_geographies_filter(query, filters.geographies, db)
-        if filters.keywords:
-            query = apply_keywords_filter(query, filters.keywords, db)
+        query = apply_filters(query, filters, db)
 
     return [map_project(p) for p in query.all()]
 
+
 def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[str]:
-    query = db.query(Geography.geoid).join(Geography.project_geographies).join(ProjectGeography.project)
+    query = (
+        db.query(Geography.geoid)
+        .join(Geography.project_geographies)
+        .join(ProjectGeography.project)
+    )
+    print(filters)
+    if filters:
+        project_query = apply_filters(db.query(Project.project_id), filters, db)
+        matching_ids = [row.project_id for row in project_query.all()]
+        query = query.filter(Project.project_id.in_(matching_ids))
 
-
-    #TODO: apply filters (non bbox)
     return [row.geoid for row in query.all()]
 
 def create(db: Session, project_in: ProjectCreateRequest):

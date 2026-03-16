@@ -34,7 +34,6 @@ class ProjectUpdateRequest(BaseModel):
     external_product_id: Optional[int] = None
     internal: Optional[bool] = None
 
-# schema.py
 class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
     geographies: Optional[str] = None

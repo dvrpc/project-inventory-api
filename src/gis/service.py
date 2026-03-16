@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 from src.database.gis  import SessionLocal
 from sqlalchemy import text
 from pathlib import Path
+from src.project.schema import ProjectFilters
 import src.project.service as project_service
 import json
-from collections import Counter
+from collections import Counter, defaultdict
 
 current_dir = Path(__file__).parent.absolute()
 
@@ -29,37 +30,44 @@ def get_geoids_in_bounding_box(min_lon: float, min_lat: float, max_lon: float, m
         })
         return [row.geoid for row in result]
     
-def get_county_counts_geojson(db: Session):
+def get_county_counts_geojson(db: Session, filters: ProjectFilters):
     json_file_path = current_dir / 'geojson' / 'county_centroids.geojson'
     with open(json_file_path, 'r', encoding='utf-8') as f: 
         data = json.load(f)
 
-    geoids = project_service.get_geoids(db)
+    geoids = project_service.get_geoids(db, filters)
 
-    county_geoids = [g for g in geoids if len(g) == 5]
-    all_geoids_as_county = [g[:5] for g in geoids]
-    
-    county_counts = Counter(county_geoids)
-    total_counts = Counter(all_geoids_as_county)
+    county_geoids_by_county = defaultdict(list)
+    mcd_geoids_by_county = defaultdict(list)
+    for g in geoids:
+        if len(g) == 5:
+            county_geoids_by_county[g].append(g)
+        else:
+            mcd_geoids_by_county[g[:5]].append(g)
 
     for feature in data.get('features'):
         geoid = feature['properties']['geoid']
-        feature['properties']['county_project_count'] = county_counts.get(geoid, 0)
-        feature['properties']['total_project_count'] = total_counts.get(geoid, 0)
+        county_geoids = county_geoids_by_county.get(geoid, [])
+        mcd_geoids = mcd_geoids_by_county.get(geoid, [])
+        feature['properties']['county_project_count'] = len(county_geoids)
+        feature['properties']['total_project_count'] = len(county_geoids) + len(mcd_geoids)
+        feature['properties']['county_geoids'] = ','.join(county_geoids)
+        feature['properties']['other_geoids'] = ','.join(mcd_geoids)
     
     return data
 
-def get_mcd_phicpa_counts_geojson(db: Session):
+def get_mcd_phicpa_counts_geojson(db: Session, filters: ProjectFilters):
     json_file_path = current_dir / 'geojson' / 'mcd_phicpa_centroids.geojson'
     with open(json_file_path, 'r', encoding='utf-8') as f: 
         data = json.load(f)
 
-    geoids = project_service.get_geoids(db)
-    mcd_geoids = [g for g in geoids if len(g) > 5]
-    mcd_counts = Counter(mcd_geoids)
+    geoids = project_service.get_geoids(db, filters)
+    mcd_geoid_set = set(g for g in geoids if len(g) > 5)
 
     for feature in data.get('features'):
         geoid = feature['properties']['geoid']
-        feature['properties']['project_count'] = mcd_counts.get(geoid, 0)
+        count = 1 if geoid in mcd_geoid_set else 0
+        feature['properties']['project_count'] = count
+        feature['properties']['geoids'] = geoid if count else ''
     
     return data
