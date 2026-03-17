@@ -62,11 +62,11 @@ def get_mcd_phicpa_counts_geojson(db: Session, filters: ProjectFilters):
         data = json.load(f)
 
     geoids = project_service.get_geoids(db, filters)
-    mcd_geoid_set = set(g for g in geoids if len(g) > 5)
-
+    mcd_geoid_counts = Counter(geoids)
+    
     for feature in data.get('features'):
         geoid = feature['properties']['geoid']
-        count = 1 if geoid in mcd_geoid_set else 0
+        count = mcd_geoid_counts.get(geoid)
         feature['properties']['project_count'] = count
         feature['properties']['geoids'] = geoid if count else ''
     

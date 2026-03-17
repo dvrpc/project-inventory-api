@@ -38,3 +38,4 @@ Thumbs.db # Windows
 dist/
 build/
 *.egg-info/
+.vscode/launch.json
