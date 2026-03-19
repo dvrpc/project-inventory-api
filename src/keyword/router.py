@@ -4,6 +4,7 @@ from typing import List
 from .schema import KeywordResponse, KeywordCreateRequest, KeywordUpdateRequest
 from .service import get, get_all, create, update, delete
 from src.database.core import get_db
+from src.auth.require_admin import require_admin
 
 router = APIRouter()
 
@@ -19,11 +20,11 @@ def get_keyword(keyword_id: int, db: Session = Depends(get_db)):
     return keyword
 
 @router.post("/", response_model=KeywordResponse, status_code=201)
-def create_keyword(keyword_in: KeywordCreateRequest, db: Session = Depends(get_db)):
+def create_keyword(keyword_in: KeywordCreateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     return create(db, keyword_in)
 
 @router.put("/{keyword_id}", response_model=KeywordResponse)
-def update_keyword(keyword_id: int, keyword_in: KeywordUpdateRequest, db: Session = Depends(get_db)):
+def update_keyword(keyword_id: int, keyword_in: KeywordUpdateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     keyword = get(db, keyword_id)
     if not keyword:
         raise HTTPException(status_code=404, detail="Keyword not found")
@@ -31,7 +32,7 @@ def update_keyword(keyword_id: int, keyword_in: KeywordUpdateRequest, db: Sessio
     return update(db, keyword, keyword_in)
 
 @router.delete("/{keyword_id}")
-def delete_keyword(keyword_id: int, db: Session = Depends(get_db)):
+def delete_keyword(keyword_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     keyword = get(db, keyword_id)
 
     if not keyword:

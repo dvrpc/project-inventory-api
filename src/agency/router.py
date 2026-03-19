@@ -4,6 +4,7 @@ from typing import List
 from .schema import AgencyResponse, AgencyCreateRequest, AgencyUpdateRequest
 from .service import get, get_all, create, update, delete
 from src.database.core import get_db
+from src.auth.require_admin import require_admin
 
 router = APIRouter()
 
@@ -19,11 +20,11 @@ def get_agency(agency_id: int, db: Session = Depends(get_db)):
     return agency
 
 @router.post("/", response_model=AgencyResponse, status_code=201)
-def create_agency(agency_in: AgencyCreateRequest, db: Session = Depends(get_db)):
+def create_agency(agency_in: AgencyCreateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     return create(db, agency_in)
 
 @router.put("/{agency_id}", response_model=AgencyResponse)
-def update_agency(agency_id: int, agency_in: AgencyUpdateRequest, db: Session = Depends(get_db)):
+def update_agency(agency_id: int, agency_in: AgencyUpdateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     agency = get(db, agency_id)
     if not agency:
         raise HTTPException(status_code=404, detail="Agency not found")
@@ -31,7 +32,7 @@ def update_agency(agency_id: int, agency_in: AgencyUpdateRequest, db: Session = 
     return update(db, agency, agency_in)
 
 @router.delete("/{agency_id}")
-def delete_agency(agency_id: int, db: Session = Depends(get_db)):
+def delete_agency(agency_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     agency = get(db, agency_id)
 
     if not agency:

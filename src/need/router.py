@@ -4,6 +4,7 @@ from typing import List
 from .schema import NeedResponse, NeedCreateRequest, NeedUpdateRequest
 from .service import get, get_all, create, update, delete
 from src.database.core import get_db
+from src.auth.require_admin import require_admin
 
 router = APIRouter()
 
@@ -19,11 +20,11 @@ def get_need(need_id: int, db: Session = Depends(get_db)):
     return need
 
 @router.post("/", response_model=NeedResponse, status_code=201)
-def create_need(need_in: NeedCreateRequest, db: Session = Depends(get_db)):
+def create_need(need_in: NeedCreateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     return create(db, need_in)
 
 @router.put("/{need_id}", response_model=NeedResponse)
-def update_need(need_id: int, need_in: NeedUpdateRequest, db: Session = Depends(get_db)):
+def update_need(need_id: int, need_in: NeedUpdateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     need = get(db, need_id)
     if not need:
         raise HTTPException(status_code=404, detail="Need not found")
@@ -31,7 +32,7 @@ def update_need(need_id: int, need_in: NeedUpdateRequest, db: Session = Depends(
     return update(db, need, need_in)
 
 @router.delete("/{need_id}")
-def delete_need(need_id: int, db: Session = Depends(get_db)):
+def delete_need(need_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     need = get(db, need_id)
 
     if not need:

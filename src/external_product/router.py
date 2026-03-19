@@ -4,6 +4,7 @@ from typing import List
 from .schema import ExternalProductResponse, ExternalProductCreateRequest, ExternalProductUpdateRequest
 from .service import get, get_all, create, update, delete
 from src.database.core import get_db
+from src.auth.require_admin import require_admin
 
 router = APIRouter()
 
@@ -19,11 +20,11 @@ def get_external_product(external_product_id: int, db: Session = Depends(get_db)
     return external_product
 
 @router.post("/", response_model=ExternalProductResponse, status_code=201)
-def create_external_product(external_product_in: ExternalProductCreateRequest, db: Session = Depends(get_db)):
+def create_external_product(external_product_in: ExternalProductCreateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     return create(db, external_product_in)
 
 @router.put("/{external_product_id}", response_model=ExternalProductResponse)
-def update_external_product(external_product_id: int, external_product_in: ExternalProductUpdateRequest, db: Session = Depends(get_db)):
+def update_external_product(external_product_id: int, external_product_in: ExternalProductUpdateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     external_product = get(db, external_product_id)
     if not external_product:
         raise HTTPException(status_code=404, detail="ExternalProduct not found")
@@ -31,7 +32,7 @@ def update_external_product(external_product_id: int, external_product_in: Exter
     return update(db, external_product, external_product_in)
 
 @router.delete("/{external_product_id}")
-def delete_external_product(external_product_id: int, db: Session = Depends(get_db)):
+def delete_external_product(external_product_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     external_product = get(db, external_product_id)
 
     if not external_product:
