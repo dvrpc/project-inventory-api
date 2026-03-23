@@ -8,7 +8,6 @@ router = APIRouter()
 
 @router.get("/county_projects")
 def get_county_projects(filters: ProjectFilters = Depends(ProjectFilters.as_query), db: Session = Depends(get_db)):
-    print(filters)
     return get_county_counts_geojson(db, filters)
 
 @router.get("/mcd_phicpa_projects")
