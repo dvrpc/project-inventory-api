@@ -1,4 +1,5 @@
 
+from datetime import date
 from typing import Optional
 
 from sqlalchemy.orm import Session, joinedload
@@ -104,40 +105,27 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
 
 
 def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[ProjectResponse]:
+    query = db.query(Project)
+
     if filters:
-        id_query = apply_filters(
-            db.query(Project.project_id), filters, db
-        ).distinct()
-        matching_ids = id_query.scalar_subquery()
+        query = apply_filters(query, filters, db)
 
-        query = (
-            db.query(Project)
-            .outerjoin(Project.product)
-            .outerjoin(Project.external_product)
-            .filter(Project.project_id.in_(matching_ids))
-        )
-    else:
-        query = (
-            db.query(Project)
-            .outerjoin(Project.product)
-            .outerjoin(Project.external_product)
-        )
+    projects =[map_project(p) for p in query.all()]
 
-    # TODO: is frontend sorting faster? adding sort requires id subquery to remove distinct selects
-    # how else to optimize
-    match filters.sort:
+    # this programatic sorting is more efficent than doing it with sqlalchemy because
+    # the filter query selects distinct, which does not work with order_by. Going
+    # that dirrection required a subquery
+    match filters.sort if filters else None:
         case 'oldest':
-            query = query.order_by(Product.pub_date)
-            print('yuh')
+            projects.sort(key=lambda p: p.product.pub_date or date.min)
         case 'az':
-            query = query.order_by(Product.title)
+            projects.sort(key=lambda p: p.product.title or '')
         case 'za':
-            query = query.order_by(Product.title.desc())
-        case _:
-            print(filters.sort)
-            query = query.order_by(Product.pub_date.desc())
+            projects.sort(key=lambda p: p.product.title or '', reverse=True)
+        case _: 
+            projects.sort(key=lambda p: p.product.pub_date or date.min, reverse=True)
 
-    return [map_project(p) for p in query.all()]
+    return projects
 
 
 def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[str]:
