@@ -4,6 +4,7 @@ from typing import List, Optional
 from .schema import ProjectResponse, ProjectCreateRequest, ProjectUpdateRequest, ProjectFilters
 from .service import get, get_unmapped, get_all, create, update, delete
 from src.database.core import get_db
+from src.auth.require_admin import require_admin
 
 router = APIRouter()
 
@@ -19,11 +20,11 @@ def get_project(project_id: int, db: Session = Depends(get_db)):
     return project
 
 @router.post("/", response_model=ProjectResponse, status_code=201)
-def create_project(project_in: ProjectCreateRequest, db: Session = Depends(get_db)):
+def create_project(project_in: ProjectCreateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     return create(db, project_in)
 
 @router.put("/{project_id}", response_model=ProjectResponse)
-def update_project(project_id: int, project_in: ProjectUpdateRequest, db: Session = Depends(get_db)):
+def update_project(project_id: int, project_in: ProjectUpdateRequest, db: Session = Depends(get_db), admin=Depends(require_admin)):
     project = get(db, project_id)
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
@@ -31,7 +32,7 @@ def update_project(project_id: int, project_in: ProjectUpdateRequest, db: Sessio
     return update(db, project, project_in)
 
 @router.delete("/{project_id}")
-def delete_project(project_id: int, db: Session = Depends(get_db)):
+def delete_project(project_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)):
     project = get_unmapped(db, project_id)
 
     if not project:

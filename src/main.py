@@ -49,6 +49,12 @@ async def integrity_exception_handler(request: Request, exc: IntegrityError):
             status_code=422,
             content={"detail": "Duplicate value violates unique constraint."},
         )
+    
+    if "ORA-01791" in error_message:
+        return JSONResponse(
+            status_code=422,
+            content={"detail": "Incorrect ORDER BY clause."},
+        )
 
     return JSONResponse(
         status_code=400,
@@ -58,7 +64,8 @@ async def integrity_exception_handler(request: Request, exc: IntegrityError):
 
 @app.exception_handler(SQLAlchemyError)
 async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
-    print(exc)
+    error = exc._message()
+    log.error(error)
     return JSONResponse(
         status_code=500,
         content={"detail": "Database error."},

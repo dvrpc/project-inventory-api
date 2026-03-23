@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session, joinedload
 
 from src.geography.models import Geography
 from src.keyword.models import Keyword
+from src.product.models import Product
 from src.project_geography.models import ProjectGeography
 from src.project_keyword.models import ProjectKeyword
 from .schema import ProjectCreateRequest, ProjectFilters, ProjectUpdateRequest, ProjectResponse
@@ -103,10 +104,38 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
 
 
 def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[ProjectResponse]:
-    query = db.query(Project)
-
     if filters:
-        query = apply_filters(query, filters, db)
+        id_query = apply_filters(
+            db.query(Project.project_id), filters, db
+        ).distinct()
+        matching_ids = id_query.scalar_subquery()
+
+        query = (
+            db.query(Project)
+            .outerjoin(Project.product)
+            .outerjoin(Project.external_product)
+            .filter(Project.project_id.in_(matching_ids))
+        )
+    else:
+        query = (
+            db.query(Project)
+            .outerjoin(Project.product)
+            .outerjoin(Project.external_product)
+        )
+
+    # TODO: is frontend sorting faster? adding sort requires id subquery to remove distinct selects
+    # how else to optimize
+    match filters.sort:
+        case 'oldest':
+            query = query.order_by(Product.pub_date)
+            print('yuh')
+        case 'az':
+            query = query.order_by(Product.title)
+        case 'za':
+            query = query.order_by(Product.title.desc())
+        case _:
+            print(filters.sort)
+            query = query.order_by(Product.pub_date.desc())
 
     return [map_project(p) for p in query.all()]
 
@@ -117,7 +146,6 @@ def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[st
         .join(Geography.project_geographies)
         .join(ProjectGeography.project)
     )
-    print(filters)
     if filters:
         project_query = apply_filters(db.query(Project.project_id), filters, db)
         matching_ids = [row.project_id for row in project_query.all()]

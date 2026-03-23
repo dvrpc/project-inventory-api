@@ -38,7 +38,8 @@ class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
     geographies: Optional[str] = None
     keywords: Optional[str] = None
+    sort: Optional[str] = None
 
     @classmethod
-    def as_query(cls, bbox: Optional[str] = None, geographies: Optional[str] = None, keywords: Optional[str] = None) -> "ProjectFilters":
-        return cls(bbox=bbox, geographies=geographies, keywords=keywords)
+    def as_query(cls, bbox: Optional[str] = None, geographies: Optional[str] = None, keywords: Optional[str] = None, sort: Optional[str] = None) -> "ProjectFilters":
+        return cls(bbox=bbox, geographies=geographies, keywords=keywords, sort=sort)
