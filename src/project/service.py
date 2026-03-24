@@ -1,9 +1,7 @@
 
 from datetime import date
 from typing import Optional
-
 from sqlalchemy.orm import Session, joinedload
-
 from src.geography.models import Geography
 from src.keyword.models import Keyword
 from src.product.models import Product
@@ -12,6 +10,8 @@ from src.project_keyword.models import ProjectKeyword
 from .schema import ProjectCreateRequest, ProjectFilters, ProjectUpdateRequest, ProjectResponse
 from .models import Project
 from src.gis.service import get_geoids_in_bounding_box
+
+import time
 
 def map_project(project: Project) -> ProjectResponse:
     selected_product = (
@@ -60,6 +60,7 @@ def apply_geographies_filter(query, geographies: str, db: Session):
     expanded_geoids = expand_geoids(geoids, db)
     return query.filter(Geography.geoid.in_(expanded_geoids))
 
+
 def apply_keywords_filter(query, keywords: str, db: Session):
     keyword_ids = [k.strip() for k in keywords.split(",")]
     return (
@@ -85,6 +86,10 @@ def expand_geoids(geoids: list[str], db: Session) -> list[str]:
     return list(set(municipality_geoids + county_geoids))
 
 def apply_filters(query, filters: ProjectFilters, db: Session):
+    if filters.project:
+        query = query.filter(Project.project_id == filters.project)
+        return query
+
     needs_geography_join = filters.bbox or filters.geographies
     if needs_geography_join:
         query = (
@@ -105,16 +110,29 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
 
 
 def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[ProjectResponse]:
-    query = db.query(Project)
+    t0 = time.perf_counter()
+
+    query = db.query(Project).options(
+        joinedload(Project.product),
+        joinedload(Project.external_product),
+        joinedload(Project.project_geographies).joinedload(ProjectGeography.geography),
+        joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+    )
 
     if filters:
         query = apply_filters(query, filters, db)
 
-    projects =[map_project(p) for p in query.all()]
+    t1 = time.perf_counter()
+    print(f"[get_all] build query: {t1 - t0:.3f}s")
 
-    # this programatic sorting is more efficent than doing it with sqlalchemy because
-    # the filter query selects distinct, which does not work with order_by. Going
-    # that dirrection required a subquery
+    rows = query.all()
+    t2 = time.perf_counter()
+    print(f"[get_all] query.all() ({len(rows)} rows): {t2 - t1:.3f}s")
+
+    projects = [map_project(p) for p in rows]
+    t3 = time.perf_counter()
+    print(f"[get_all] map_project x{len(rows)}: {t3 - t2:.3f}s")
+
     match filters.sort if filters else None:
         case 'oldest':
             projects.sort(key=lambda p: p.product.pub_date or date.min)
@@ -122,8 +140,12 @@ def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[Proje
             projects.sort(key=lambda p: p.product.title or '')
         case 'za':
             projects.sort(key=lambda p: p.product.title or '', reverse=True)
-        case _: 
+        case _:
             projects.sort(key=lambda p: p.product.pub_date or date.min, reverse=True)
+
+    t4 = time.perf_counter()
+    print(f"[get_all] sort: {t4 - t3:.3f}s")
+    print(f"[get_all] total: {t4 - t0:.3f}s")
 
     return projects
 
