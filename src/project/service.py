@@ -11,7 +11,6 @@ from .schema import ProjectCreateRequest, ProjectFilters, ProjectUpdateRequest, 
 from .models import Project
 from src.gis.service import get_geoids_in_bounding_box
 
-import time
 
 def map_project(project: Project) -> ProjectResponse:
     selected_product = (
@@ -105,13 +104,13 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
         query = apply_geographies_filter(query, filters.geographies, db)
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
+    if filters.status:
+        query = query.join(Project.product).filter(Product.status == filters.status)
 
     return query
 
 
 def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[ProjectResponse]:
-    t0 = time.perf_counter()
-
     query = db.query(Project).options(
         joinedload(Project.product),
         joinedload(Project.external_product),
@@ -122,16 +121,8 @@ def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[Proje
     if filters:
         query = apply_filters(query, filters, db)
 
-    t1 = time.perf_counter()
-    print(f"[get_all] build query: {t1 - t0:.3f}s")
-
     rows = query.all()
-    t2 = time.perf_counter()
-    print(f"[get_all] query.all() ({len(rows)} rows): {t2 - t1:.3f}s")
-
     projects = [map_project(p) for p in rows]
-    t3 = time.perf_counter()
-    print(f"[get_all] map_project x{len(rows)}: {t3 - t2:.3f}s")
 
     match filters.sort if filters else None:
         case 'oldest':
@@ -142,10 +133,6 @@ def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[Proje
             projects.sort(key=lambda p: p.product.title or '', reverse=True)
         case _:
             projects.sort(key=lambda p: p.product.pub_date or date.min, reverse=True)
-
-    t4 = time.perf_counter()
-    print(f"[get_all] sort: {t4 - t3:.3f}s")
-    print(f"[get_all] total: {t4 - t0:.3f}s")
 
     return projects
 

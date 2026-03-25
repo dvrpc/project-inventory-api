@@ -10,6 +10,37 @@ from collections import Counter, defaultdict
 
 current_dir = Path(__file__).parent.absolute()
 
+# From a list of geoids (or single), finds bounding box of unioned geometries
+def get_bbox_from_geoids(geoid_list: str) -> dict | None:
+    geoids = [g.strip() for g in geoid_list.split(',')]
+
+    sql = text("""
+        SELECT 
+            ST_XMin(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS min_lng,
+            ST_YMin(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS min_lat,
+            ST_XMax(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS max_lng,
+            ST_YMax(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS max_lat
+        FROM (
+            SELECT shape FROM boundaries.countyboundaries WHERE fips = ANY(:geoids)
+            UNION ALL
+            SELECT shape FROM boundaries.dvrpc_mcd_phicpa WHERE geoid = ANY(:geoids)
+        ) combined
+    """)
+
+    with SessionLocal() as db:
+        result = db.execute(sql, {"geoids": geoids})
+        row = result.fetchone()
+
+    if row is None or row[0] is None:
+        return None
+
+    return {
+        "min_lng": row[0],
+        "min_lat": row[1],
+        "max_lng": row[2],
+        "max_lat": row[3]
+    }
+
 def get_geoids_in_bounding_box(min_lon: float, min_lat: float, max_lon: float, max_lat: float) -> list[str]:
     sql = text("""
         SELECT fips AS geoid 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from src.database.core import get_db
-from src.gis.service import get_county_counts_geojson, get_mcd_phicpa_counts_geojson
+from src.gis.service import get_county_counts_geojson, get_mcd_phicpa_counts_geojson, get_bbox_from_geoids
 from src.project.schema import ProjectFilters
 
 router = APIRouter()
@@ -13,3 +13,7 @@ def get_county_projects(filters: ProjectFilters = Depends(ProjectFilters.as_quer
 @router.get("/mcd_phicpa_projects")
 def get_county_projects(filters: ProjectFilters = Depends(ProjectFilters.as_query), db: Session = Depends(get_db)):
     return get_mcd_phicpa_counts_geojson(db, filters)
+
+@router.get("/bbox/{geoid}")
+def get_bbox(geoid: str):
+    return get_bbox_from_geoids(geoid)
