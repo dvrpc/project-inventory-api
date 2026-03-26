@@ -41,6 +41,7 @@ class ProjectFilters(BaseModel):
     sort: Optional[str] = None
     project: Optional[str] = None
     status: Optional[str] = None
+    zoom: Optional[str] = None
 
     @classmethod
     def as_query(
@@ -50,6 +51,7 @@ class ProjectFilters(BaseModel):
         keywords: Optional[str] = None, 
         status: Optional[str] = None,
         sort: Optional[str] = None, 
+        zoom: Optional[str] = None,
         project: Optional[str] = None) -> "ProjectFilters":
         
-        return cls(bbox=bbox, geographies=geographies, keywords=keywords, status=status, sort=sort, project=project)
+        return cls(bbox=bbox, geographies=geographies, keywords=keywords, status=status, zoom=zoom, sort=sort, project=project)

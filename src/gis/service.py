@@ -67,7 +67,7 @@ def get_county_counts_geojson(db: Session, filters: ProjectFilters):
         data = json.load(f)
 
     geoids = project_service.get_geoids(db, filters)
-
+    
     county_geoids_by_county = defaultdict(list)
     mcd_geoids_by_county = defaultdict(list)
     for g in geoids:

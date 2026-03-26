@@ -1,6 +1,7 @@
 
 from datetime import date
 from typing import Optional
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload
 from src.geography.models import Geography
 from src.keyword.models import Keyword
@@ -131,8 +132,23 @@ def get_all(db: Session, filters: Optional[ProjectFilters] = None) -> list[Proje
             projects.sort(key=lambda p: p.product.title or '')
         case 'za':
             projects.sort(key=lambda p: p.product.title or '', reverse=True)
-        case _:
+        case 'newest':
             projects.sort(key=lambda p: p.product.pub_date or date.min, reverse=True)
+        case _:
+            if filters.geographies:
+                county_first = len([g.strip() for g in filters.geographies.split(',')][0]) == 5
+            else:
+                zoom = int(filters.zoom) if filters.zoom else 8
+                county_first =  zoom <= 8
+
+            # TODO: sort by closest to center in extent?
+            def default_sort_key(p: ProjectResponse):
+                is_county = any(len(g.geoid) == 5 for g in p.geographies)
+                type_rank = 0 if (is_county == county_first) else 1
+                pub_date = p.product.pub_date if p.product else date.min
+                return (type_rank, -(pub_date.toordinal() if pub_date else 0))
+
+            projects.sort(key=default_sort_key)
 
     return projects
 
@@ -147,6 +163,12 @@ def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[st
         project_query = apply_filters(db.query(Project.project_id), filters, db)
         matching_ids = [row.project_id for row in project_query.all()]
         query = query.filter(Project.project_id.in_(matching_ids))
+
+        if filters.geographies:
+            geoids = [g.strip() for g in filters.geographies.split(',')]
+            query = query.filter(
+                or_(*[Geography.geoid.like(f'{geoid}%') for geoid in geoids])
+            )
 
     return [row.geoid for row in query.all()]
 
