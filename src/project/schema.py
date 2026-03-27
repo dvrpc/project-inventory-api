@@ -8,6 +8,7 @@ from src.product.schema import ProductResponse
 from src.external_product.schema import ExternalProductResponse
 from src.recommendation.schema import RecommendationResponse
 
+
 class ProjectResponse(BaseModel):
     project_id: int
     internal: bool
@@ -29,10 +30,12 @@ class ProjectCreateRequest(BaseModel):
     external_product_id: Optional[int] = None
     internal: bool
 
+
 class ProjectUpdateRequest(BaseModel):
     product_id: Optional[str] = None
     external_product_id: Optional[int] = None
     internal: Optional[bool] = None
+
 
 class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
@@ -42,16 +45,31 @@ class ProjectFilters(BaseModel):
     project: Optional[str] = None
     status: Optional[str] = None
     zoom: Optional[str] = None
+    yearFrom: Optional[str] = (None,)
+    yearTo: Optional[str] = (None,)
 
     @classmethod
     def as_query(
-        cls, 
-        bbox: Optional[str] = None, 
-        geographies: Optional[str] = None, 
-        keywords: Optional[str] = None, 
+        cls,
+        bbox: Optional[str] = None,
+        geographies: Optional[str] = None,
+        keywords: Optional[str] = None,
         status: Optional[str] = None,
-        sort: Optional[str] = None, 
+        sort: Optional[str] = None,
         zoom: Optional[str] = None,
-        project: Optional[str] = None) -> "ProjectFilters":
-        
-        return cls(bbox=bbox, geographies=geographies, keywords=keywords, status=status, zoom=zoom, sort=sort, project=project)
+        yearFrom: Optional[str] = None,
+        yearTo: Optional[str] = None,
+        project: Optional[str] = None,
+    ) -> "ProjectFilters":
+
+        return cls(
+            bbox=bbox,
+            geographies=geographies,
+            keywords=keywords,
+            status=status,
+            zoom=zoom,
+            sort=sort,
+            yearFrom=yearFrom,
+            yearTo=yearTo,
+            project=project,
+        )

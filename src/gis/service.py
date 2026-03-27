@@ -43,13 +43,21 @@ def get_bbox_from_geoids(geoid_list: str) -> dict | None:
 
 def get_geoids_in_bounding_box(min_lon: float, min_lat: float, max_lon: float, max_lat: float) -> list[str]:
     sql = text("""
-        SELECT fips AS geoid 
-        FROM boundaries.countyboundaries
-        WHERE ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326) && st_transform(shape, 4326)
-        UNION ALL
-        SELECT geoid 
-        FROM boundaries.dvrpc_mcd_phicpa
-        WHERE ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326) && st_transform(shape, 4326)
+        SELECT geoid
+        FROM (
+            SELECT fips AS geoid, st_transform(shape, 4326) AS geom
+            FROM boundaries.countyboundaries
+            WHERE ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326) && st_transform(shape, 4326)
+            UNION ALL
+            SELECT geoid, st_transform(shape, 4326) AS geom
+            FROM boundaries.dvrpc_mcd_phicpa
+            WHERE ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326) && st_transform(shape, 4326)
+        ) combined
+        ORDER BY
+            ST_Distance(
+                ST_Centroid(geom),
+                ST_SetSRID(ST_MakePoint((:min_lon + :max_lon) / 2, (:min_lat + :max_lat) / 2), 4326)
+            )
     """)
 
     with SessionLocal() as db:
