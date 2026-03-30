@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
+
 
 class ProductResponse(BaseModel):
     pub_id: str
@@ -16,6 +17,16 @@ class ProductResponse(BaseModel):
     pub_date: Optional[datetime]
     createby: Optional[str]
     status: Optional[str]
+    wpids: Optional[list[str]]
+
+    @field_validator("wpids", mode="before")
+    @classmethod
+    def extract_wpids(cls, v):
+        if not v:
+            return v
+        return [
+            item.WORKPROGRAMID if hasattr(item, "WORKPROGRAMID") else item for item in v
+        ]
 
     class Config:
         from_attributes = True

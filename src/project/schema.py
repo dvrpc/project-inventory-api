@@ -45,8 +45,9 @@ class ProjectFilters(BaseModel):
     project: Optional[str] = None
     status: Optional[str] = None
     zoom: Optional[str] = None
-    yearFrom: Optional[str] = (None,)
-    yearTo: Optional[str] = (None,)
+    wpids: Optional[str] = None
+    yearFrom: Optional[str] = None
+    yearTo: Optional[str] = None
 
     @classmethod
     def as_query(
@@ -60,6 +61,7 @@ class ProjectFilters(BaseModel):
         yearFrom: Optional[str] = None,
         yearTo: Optional[str] = None,
         project: Optional[str] = None,
+        wpids: Optional[str] = None,
     ) -> "ProjectFilters":
 
         return cls(
@@ -72,4 +74,5 @@ class ProjectFilters(BaseModel):
             yearFrom=yearFrom,
             yearTo=yearTo,
             project=project,
+            wpids=wpids,
         )

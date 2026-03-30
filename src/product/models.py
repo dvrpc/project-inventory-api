@@ -1,10 +1,12 @@
 from sqlalchemy import Column, Integer, String, Date, Numeric
+from sqlalchemy.orm import relationship
 from src.database.core import Base
+
 
 class Product(Base):
     __tablename__ = "TBLPUBLICATION"
-    __table_args__ = {'schema': 'DVRPC_PRODUCTS'}
-    
+    __table_args__ = {"schema": "DVRPC_PRODUCTS"}
+
     pub_id = Column(String(20), nullable=False)
     typecode = Column(String(5), nullable=False, primary_key=True)
     pub_num = Column(String(10), nullable=False, primary_key=True)
@@ -18,3 +20,9 @@ class Product(Base):
     pub_date = Column(Date, nullable=True)
     createby = Column(String(50), nullable=True)
     status = Column(String(30), nullable=True)
+
+    wpids = relationship(
+        "ProductWpid",
+        primaryjoin="and_(Product.pub_id == ProductWpid.PRODUCTID)",
+        foreign_keys="[ProductWpid.PRODUCTID]",
+    )

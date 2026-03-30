@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session, joinedload
 from src.geography.models import Geography
 from src.keyword.models import Keyword
 from src.product.models import Product
+from src.product_wpid.models import ProductWpid
 from src.project_geography.models import ProjectGeography
 from src.project_keyword.models import ProjectKeyword
 from .schema import (
@@ -79,6 +80,16 @@ def apply_keywords_filter(query, keywords: str, db: Session):
     )
 
 
+def apply_wpids_filter(query, wpids: str, db: Session):
+    wpid_list = [w.strip() for w in wpids.split(",")]
+    return (
+        query.join(Project.product)
+        .join(ProductWpid, Product.pub_id == ProductWpid.PRODUCTID)
+        .filter(ProductWpid.WORKPROGRAMID.in_(wpid_list))
+        .distinct()
+    )
+
+
 def expand_geoids(geoids: list[str], db: Session) -> list[str]:
     county_geoids = [g for g in geoids if len(g) == 5]
     municipality_geoids = [g for g in geoids if len(g) == 10]
@@ -113,6 +124,8 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
         query = query.filter(Product.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:
         query = query.filter(Product.pub_date <= date(int(filters.yearTo), 12, 31))
+    if filters.wpids:
+        query = apply_wpids_filter(query, filters.wpids, db)
 
     return query
 
