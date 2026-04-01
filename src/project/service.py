@@ -1,6 +1,6 @@
 from datetime import date
 from typing import Optional
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from sqlalchemy.orm import Session, joinedload
 from src.geography.models import Geography
 from src.keyword.models import Keyword
@@ -61,11 +61,21 @@ def apply_bbox_filter(query, bbox: str):
     geoids = get_geoids_in_bounding_box(
         float(coords[0]), float(coords[1]), float(coords[2]), float(coords[3])
     )
-    return query.filter(Geography.geoid.in_(geoids)), geoids
+    return (
+        query.filter(
+            or_(Geography.geoid.in_(geoids), Geography.geo_type == "regional")
+        ),
+        geoids,
+    )
 
 
 def apply_geographies_filter(query, geographies: str, db: Session):
     geoids = [g.strip() for g in geographies.split(",")]
+    is_regional = any(g == "1" for g in geoids)
+
+    if is_regional:
+        return query.filter(Geography.geo_type == "regional")
+
     expanded_geoids = expand_geoids(geoids, db)
     return query.filter(Geography.geoid.in_(expanded_geoids))
 
@@ -91,6 +101,7 @@ def apply_wpids_filter(query, wpids: str, db: Session):
 
 
 def expand_geoids(geoids: list[str], db: Session) -> list[str]:
+
     county_geoids = [g for g in geoids if len(g) == 5]
     municipality_geoids = [g for g in geoids if len(g) == 10]
 
@@ -103,7 +114,9 @@ def expand_geoids(geoids: list[str], db: Session) -> list[str]:
     return list(set(municipality_geoids + county_geoids))
 
 
-def apply_filters(query, filters: ProjectFilters, db: Session):
+def apply_filters(
+    query, filters: ProjectFilters, db: Session, is_dvrpc_user: bool = False
+):
     if filters.project:
         query = query.filter(Project.project_id == filters.project)
         return query
@@ -114,11 +127,17 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
         .join(Project.product)
         .distinct()
     )
+
+    # Non-DVRPC users can only see projects with 'live' status
+
+    if not is_dvrpc_user:
+        query = query.join(Project.product).filter(Product.status == "Live")
+
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
-    if filters.status:
+    if filters.status and is_dvrpc_user:
         query = query.join(Project.product).filter(Product.status == filters.status)
     if filters.yearFrom:
         query = query.filter(Product.pub_date >= date(int(filters.yearFrom), 1, 1))
@@ -131,7 +150,7 @@ def apply_filters(query, filters: ProjectFilters, db: Session):
 
 
 def get_all(
-    db: Session, filters: Optional[ProjectFilters] = None
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
 ) -> list[ProjectResponse]:
     ordered_geoids = None
 
@@ -143,7 +162,7 @@ def get_all(
     )
 
     if filters:
-        query = apply_filters(query, filters, db)
+        query = apply_filters(query, filters, db, is_dvrpc_user)
 
     if filters.bbox:
         query, ordered_geoids = apply_bbox_filter(query, filters.bbox)
@@ -163,13 +182,7 @@ def get_all(
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
             # Each grouping is sorted by geography proximity to the center of the bounding box
-            if filters.geographies:
-                county_first = (
-                    len([g.strip() for g in filters.geographies.split(",")][0]) == 5
-                )
-            else:
-                zoom = int(filters.zoom) if filters.zoom else 8
-                county_first = zoom <= 8
+            zoom = int(filters.zoom) if filters.zoom else 8
 
             geoid_order = (
                 {geoid: i for i, geoid in enumerate(ordered_geoids)}
@@ -178,8 +191,19 @@ def get_all(
             )
 
             def default_sort_key(p: ProjectResponse):
+                is_regional = any(g.geo_type == "regional" for g in p.geographies)
                 is_county = any(len(g.geoid) == 5 for g in p.geographies)
-                type_rank = 0 if (is_county == county_first) else 1
+                is_muni = any(len(g.geoid) == 10 for g in p.geographies)
+
+                if geoid_order and "1" in geoid_order:
+                    type_rank = 0 if is_regional else (1 if is_county else 2)
+                elif zoom <= 7:
+                    type_rank = 0 if is_regional else (1 if is_county else 2)
+                elif zoom == 8:
+                    type_rank = 0 if is_county else (1 if is_regional else 2)
+                else:  # zoom >= 9
+                    type_rank = 0 if is_muni else (1 if is_county else 2)
+
                 proximity_rank = (
                     min(
                         (
@@ -199,14 +223,18 @@ def get_all(
     return projects
 
 
-def get_geoids(db: Session, filters: Optional[ProjectFilters] = None) -> list[str]:
+def get_geoids(
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
+) -> list[str]:
     query = (
         db.query(Geography.geoid)
         .join(Geography.project_geographies)
         .join(ProjectGeography.project)
     )
     if filters:
-        project_query = apply_filters(db.query(Project.project_id), filters, db)
+        project_query = apply_filters(
+            db.query(Project.project_id), filters, db, is_dvrpc_user
+        )
         matching_ids = [row.project_id for row in project_query.all()]
         query = query.filter(Project.project_id.in_(matching_ids))
 

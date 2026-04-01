@@ -9,7 +9,7 @@ from .schema import (
 )
 from .service import get, get_unmapped, get_all, create, update, delete
 from src.database.core import get_db
-from src.auth.require_admin import require_admin
+from src.auth.validate import require_admin, get_optional_dvrpc_user
 
 router = APIRouter()
 
@@ -18,8 +18,9 @@ router = APIRouter()
 def get_projects(
     filters: ProjectFilters = Depends(ProjectFilters.as_query),
     db: Session = Depends(get_db),
+    is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),
 ):
-    return get_all(db, filters)
+    return get_all(db, filters, is_dvrpc_user)
 
 
 @router.get("/{project_id}", response_model=ProjectResponse)
