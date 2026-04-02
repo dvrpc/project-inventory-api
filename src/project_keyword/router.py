@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .schema import ProjectKeywordResponse, ProjectKeywordCreateRequest
-from .service import get, get_all, get_all_by_project, create, delete
+from src.project_keyword.schema import (
+    ProjectKeywordResponse,
+    ProjectKeywordCreateRequest,
+)
+from src.project_keyword.service import get, get_all, get_all_by_project, create, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 

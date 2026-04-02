@@ -1,8 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .schema import GeographyResponse, GeographyCreateRequest, GeographyUpdateRequest
-from .service import get, get_all, create, update, delete
+from src.geography.schema import (
+    GeographyResponse,
+    GeographyCreateRequest,
+    GeographyUpdateRequest,
+)
+from src.geography.service import get, get_all, create, update, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 

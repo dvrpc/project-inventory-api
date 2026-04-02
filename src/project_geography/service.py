@@ -1,20 +1,30 @@
-
 from sqlalchemy.orm import Session
-from .schema import ProjectGeographyCreateRequest
-from .models import ProjectGeography
+from src.project_geography.schema import ProjectGeographyCreateRequest
+from src.project_geography.models import ProjectGeography
 
 
 def get(db: Session, project_id, geography_id):
-    return db.query(ProjectGeography).filter(
-        ProjectGeography.project_id == project_id,
-        ProjectGeography.geography_id == geography_id
-    ).one_or_none()
+    return (
+        db.query(ProjectGeography)
+        .filter(
+            ProjectGeography.project_id == project_id,
+            ProjectGeography.geography_id == geography_id,
+        )
+        .one_or_none()
+    )
+
 
 def get_all(db: Session):
     return db.query(ProjectGeography).all()
 
-def get_all_by_project(db : Session, project_id: int):
-    return db.query(ProjectGeography).filter(ProjectGeography.project_id == project_id).all()
+
+def get_all_by_project(db: Session, project_id: int):
+    return (
+        db.query(ProjectGeography)
+        .filter(ProjectGeography.project_id == project_id)
+        .all()
+    )
+
 
 def create(db: Session, project_geography_in: ProjectGeographyCreateRequest):
     project_geography = ProjectGeography(**project_geography_in.model_dump())

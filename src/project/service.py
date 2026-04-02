@@ -8,13 +8,13 @@ from src.product.models import Product
 from src.product_wpid.models import ProductWpid
 from src.project_geography.models import ProjectGeography
 from src.project_keyword.models import ProjectKeyword
-from .schema import (
+from src.project.schema import (
     ProjectCreateRequest,
     ProjectFilters,
     ProjectUpdateRequest,
     ProjectResponse,
 )
-from .models import Project
+from src.project.models import Project
 from src.gis.service import get_geoids_in_bounding_box
 
 
@@ -61,6 +61,12 @@ def apply_bbox_filter(query, bbox: str):
     geoids = get_geoids_in_bounding_box(
         float(coords[0]), float(coords[1]), float(coords[2]), float(coords[3])
     )
+
+    if any(g.startswith("34") for g in geoids):
+        geoids.append("34")
+    if any(g.startswith("42") for g in geoids):
+        geoids.append("42")
+
     return (
         query.filter(
             or_(Geography.geoid.in_(geoids), Geography.geo_type == "regional")
@@ -102,8 +108,15 @@ def apply_wpids_filter(query, wpids: str, db: Session):
 
 def expand_geoids(geoids: list[str], db: Session) -> list[str]:
 
+    state_geoids = [g for g in geoids if len(g) == 2]
     county_geoids = [g for g in geoids if len(g) == 5]
     municipality_geoids = [g for g in geoids if len(g) == 10]
+
+    if state_geoids:
+        if state_geoids[0] == "42":
+            county_geoids = ["42091", "42101", "42017", "42029", "42045"]
+        elif state_geoids[0] == "34":
+            county_geoids = ["34007", "34015", "34021", "34005"]
 
     if county_geoids:
         child_geoids = (
@@ -111,7 +124,7 @@ def expand_geoids(geoids: list[str], db: Session) -> list[str]:
         )
         municipality_geoids.extend([g.geoid for g in child_geoids])
 
-    return list(set(municipality_geoids + county_geoids))
+    return list(set(state_geoids + municipality_geoids + county_geoids))
 
 
 def apply_filters(
@@ -131,14 +144,14 @@ def apply_filters(
     # Non-DVRPC users can only see projects with 'live' status
 
     if not is_dvrpc_user:
-        query = query.join(Project.product).filter(Product.status == "Live")
+        query = query.filter(Product.status == "Live")
 
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
-        query = query.join(Project.product).filter(Product.status == filters.status)
+        query = query.filter(Product.status == filters.status)
     if filters.yearFrom:
         query = query.filter(Product.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:
@@ -182,7 +195,7 @@ def get_all(
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
             # Each grouping is sorted by geography proximity to the center of the bounding box
-            zoom = int(filters.zoom) if filters.zoom else 8
+            zoom = int(filters.zoom) if filters.zoom else 7
 
             geoid_order = (
                 {geoid: i for i, geoid in enumerate(ordered_geoids)}
@@ -190,19 +203,41 @@ def get_all(
                 else None
             )
 
+            state_selected = filters.geographies and any(
+                len(g.strip()) == 2 for g in filters.geographies.split(",")
+            )
+            county_selected = filters.geographies and any(
+                len(g.strip()) == 5 for g in filters.geographies.split(",")
+            )
+
             def default_sort_key(p: ProjectResponse):
                 is_regional = any(g.geo_type == "regional" for g in p.geographies)
-                is_county = any(len(g.geoid) == 5 for g in p.geographies)
-                is_muni = any(len(g.geoid) == 10 for g in p.geographies)
+                is_state = any(g.geo_type == "state" for g in p.geographies)
+                is_county = any(g.geo_type == "county" for g in p.geographies)
+                is_muni = any(g.geo_type == "municipality" for g in p.geographies)
 
-                if geoid_order and "1" in geoid_order:
-                    type_rank = 0 if is_regional else (1 if is_county else 2)
+                if state_selected:
+                    type_rank = 0 if is_state else (1 if is_county else 2)
+                elif county_selected:
+                    type_rank = 0 if is_county else (1 if is_muni else 2)
                 elif zoom <= 7:
-                    type_rank = 0 if is_regional else (1 if is_county else 2)
+                    type_rank = (
+                        0
+                        if is_regional
+                        else (1 if is_state else (2 if is_county else 3))
+                    )
                 elif zoom == 8:
-                    type_rank = 0 if is_county else (1 if is_regional else 2)
+                    type_rank = (
+                        0
+                        if is_county
+                        else (1 if is_muni else (2 if is_regional else 3))
+                    )
                 else:  # zoom >= 9
-                    type_rank = 0 if is_muni else (1 if is_county else 2)
+                    type_rank = (
+                        0
+                        if is_muni
+                        else (1 if is_county else (2 if is_regional else 3))
+                    )
 
                 proximity_rank = (
                     min(

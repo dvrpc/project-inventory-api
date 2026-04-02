@@ -1,18 +1,18 @@
 from fastapi import APIRouter, Depends
-from .geography.router import router as geography_router
-from .agency.router import router as agency_router
-from .attachment.router import router as attachment_router
-from .contact.router import router as contact_router
-from .external_product.router import router as external_product_router
-from .need.router import router as need_router
-from .product.router import router as product_router
-from .project.router import router as project_router
-from .project_geography.router import router as project_geography_router
-from .recommendation.router import router as recommendation_router
-from .gis.router import router as geo_router
-from .keyword.router import router as keyword_router
-from .project_keyword.router import router as project_keyword_router
-from .product_wpid.router import router as product_wpid_router
+from src.geography.router import router as geography_router
+from src.agency.router import router as agency_router
+from src.attachment.router import router as attachment_router
+from src.contact.router import router as contact_router
+from src.external_product.router import router as external_product_router
+from src.need.router import router as need_router
+from src.product.router import router as product_router
+from src.project.router import router as project_router
+from src.project_geography.router import router as project_geography_router
+from src.recommendation.router import router as recommendation_router
+from src.gis.router import router as geo_router
+from src.keyword.router import router as keyword_router
+from src.project_keyword.router import router as project_keyword_router
+from src.product_wpid.router import router as product_wpid_router
 
 api_router = APIRouter()
 

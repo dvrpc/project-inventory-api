@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .schema import (
+from src.recommendation.schema import (
     RecommendationResponse,
     RecommendationCreateRequest,
     RecommendationUpdateRequest,
 )
-from .service import get, get_all, create, update, delete
+from src.recommendation.service import get, get_all, create, update, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 

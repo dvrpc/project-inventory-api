@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session, joinedload
-from .models import Product
+from src.product.models import Product
 
 
 def get(db: Session, pub_id: int):

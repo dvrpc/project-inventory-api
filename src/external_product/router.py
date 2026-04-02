@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .schema import (
+from src.external_product.schema import (
     ExternalProductResponse,
     ExternalProductCreateRequest,
     ExternalProductUpdateRequest,
 )
-from .service import get, get_all, create, update, delete
+from src.external_product.service import get, get_all, create, update, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 

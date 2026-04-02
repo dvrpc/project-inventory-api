@@ -1,8 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .schema import AttachmentResponse, AttachmentCreateRequest, AttachmentUpdateRequest
-from .service import get, get_all, create, update, delete
+from src.attachment.schema import (
+    AttachmentResponse,
+    AttachmentCreateRequest,
+    AttachmentUpdateRequest,
+)
+from src.attachment.service import get, get_all, create, update, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 

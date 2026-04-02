@@ -15,6 +15,11 @@ current_dir = Path(__file__).parent.absolute()
 def get_bbox_from_geoids(geoid_list: str) -> dict | None:
     geoids = [g.strip() for g in geoid_list.split(",")]
 
+    if geoids[0] == "42":
+        geoids = ["42091", "42101", "42017", "42029", "42045"]
+    elif geoids[0] == "34":
+        geoids = ["34007", "34015", "34021", "34005"]
+
     sql = text("""
         SELECT 
             ST_XMin(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS min_lng,
@@ -70,6 +75,22 @@ def get_geoids_in_bounding_box(
             },
         )
         return [row.geoid for row in result]
+
+
+def get_state_counts_geojson(db: Session, filters: ProjectFilters, is_dvrpc_user: bool):
+    json_file_path = current_dir / "geojson" / "state_centroids.geojson"
+    with open(json_file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    geoids = project_service.get_geoids(db, filters, is_dvrpc_user)
+    state_geoid_counts = Counter(geoids)
+
+    for feature in data.get("features"):
+        geoid = feature["properties"]["geoid"]
+        count = state_geoid_counts.get(geoid)
+        feature["properties"]["project_count"] = count
+
+    return data
 
 
 def get_county_counts_geojson(

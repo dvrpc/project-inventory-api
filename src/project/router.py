@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from .schema import (
+from src.project.schema import (
     ProjectResponse,
     ProjectCreateRequest,
     ProjectUpdateRequest,
     ProjectFilters,
 )
-from .service import get, get_unmapped, get_all, create, update, delete
+from src.project.service import get, get_unmapped, get_all, create, update, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin, get_optional_dvrpc_user
 

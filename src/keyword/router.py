@@ -1,8 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .schema import KeywordResponse, KeywordCreateRequest, KeywordUpdateRequest
-from .service import get, get_all, create, update, delete
+from src.keyword.schema import (
+    KeywordResponse,
+    KeywordCreateRequest,
+    KeywordUpdateRequest,
+)
+from src.keyword.service import get, get_all, create, update, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 

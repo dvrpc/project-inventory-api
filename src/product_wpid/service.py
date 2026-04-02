@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .models import ProductWpid
+from src.product_wpid.models import ProductWpid
 
 
 def get_all_wpids(db: Session):
