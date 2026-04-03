@@ -10,37 +10,59 @@ from collections import Counter, defaultdict
 
 current_dir = Path(__file__).parent.absolute()
 
+STATE_COUNTY_CODE_MAP = {
+    "42": ["42091", "42101", "42017", "42029", "42045"],
+    "34": ["34007", "34015", "34021", "34005"],
+}
 
-# From a list of geoids (or single), finds bounding box of unioned geometries
+
 def get_bbox_from_geoids(geoid_list: str) -> dict | None:
     geoids = [g.strip() for g in geoid_list.split(",")]
 
-    if geoids[0] == "42":
-        geoids = ["42091", "42101", "42017", "42029", "42045"]
-    elif geoids[0] == "34":
-        geoids = ["34007", "34015", "34021", "34005"]
+    if len(geoids[0]) == 2:
+        geoids = STATE_COUNTY_CODE_MAP.get(geoids[0], geoids)
 
-    sql = text("""
-        SELECT 
-            ST_XMin(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS min_lng,
-            ST_YMin(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS min_lat,
-            ST_XMax(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS max_lng,
-            ST_YMax(ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326)) AS max_lat
-        FROM (
+    with SessionLocal() as db:
+        row = (
+            db.execute(build_bbox_sql(geoids), {"geoids": geoids}).mappings().fetchone()
+        )
+
+    if row is None or row["min_lng"] is None:
+        return None
+
+    return dict(row)
+
+
+def build_bbox_sql(geoids: list[str]):
+    lengths = {len(g) for g in geoids}
+
+    if lengths == {5}:
+        source = (
+            "SELECT shape FROM boundaries.countyboundaries WHERE fips = ANY(:geoids)"
+        )
+    elif lengths == {10}:
+        source = (
+            "SELECT shape FROM boundaries.dvrpc_mcd_phicpa WHERE geoid = ANY(:geoids)"
+        )
+    else:
+        source = """
             SELECT shape FROM boundaries.countyboundaries WHERE fips = ANY(:geoids)
             UNION ALL
             SELECT shape FROM boundaries.dvrpc_mcd_phicpa WHERE geoid = ANY(:geoids)
-        ) combined
+        """
+
+    return text(f"""
+        WITH envelope AS (
+            SELECT ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326) AS bbox
+            FROM ({source}) combined
+        )
+        SELECT
+            ST_XMin(bbox) AS min_lng,
+            ST_YMin(bbox) AS min_lat,
+            ST_XMax(bbox) AS max_lng,
+            ST_YMax(bbox) AS max_lat
+        FROM envelope
     """)
-
-    with SessionLocal() as db:
-        result = db.execute(sql, {"geoids": geoids})
-        row = result.fetchone()
-
-    if row is None or row[0] is None:
-        return None
-
-    return {"min_lng": row[0], "min_lat": row[1], "max_lng": row[2], "max_lat": row[3]}
 
 
 def get_geoids_in_bounding_box(
@@ -49,19 +71,25 @@ def get_geoids_in_bounding_box(
     sql = text("""
         SELECT geoid
         FROM (
-            SELECT fips AS geoid, st_transform(shape, 4326) AS geom
+            SELECT fips AS geoid, shape
             FROM boundaries.countyboundaries
-            WHERE ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326) && st_transform(shape, 4326)
+            WHERE ST_Transform(
+                ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326), 26918
+            ) && shape
             UNION ALL
-            SELECT geoid, st_transform(shape, 4326) AS geom
+            SELECT geoid, shape
             FROM boundaries.dvrpc_mcd_phicpa
-            WHERE ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326) && st_transform(shape, 4326)
+            WHERE ST_Transform(
+                ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326), 26918
+            ) && shape
         ) combined
-        ORDER BY
-            ST_Distance(
-                ST_Centroid(geom),
-                ST_SetSRID(ST_MakePoint((:min_lon + :max_lon) / 2, (:min_lat + :max_lat) / 2), 4326)
-            )
+        CROSS JOIN LATERAL (
+            SELECT ST_Transform(
+                ST_SetSRID(ST_MakePoint((:min_lon + :max_lon) / 2, (:min_lat + :max_lat) / 2), 4326),
+                26918
+            ) AS center
+        ) c
+        ORDER BY ST_Distance(ST_Centroid(combined.shape), c.center)
     """)
 
     with SessionLocal() as db:

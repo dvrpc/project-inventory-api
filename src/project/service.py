@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Optional
 from sqlalchemy import or_, and_
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session, joinedload, selectinload
 from src.geography.models import Geography
 from src.keyword.models import Keyword
 from src.product.models import Product
@@ -99,8 +99,7 @@ def apply_keywords_filter(query, keywords: str, db: Session):
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
     return (
-        query.join(Project.product)
-        .join(ProductWpid, Product.pub_id == ProductWpid.PRODUCTID)
+        query.join(ProductWpid, Product.pub_id == ProductWpid.PRODUCTID)
         .filter(ProductWpid.WORKPROGRAMID.in_(wpid_list))
         .distinct()
     )
@@ -168,12 +167,15 @@ def get_all(
     ordered_geoids = None
 
     query = db.query(Project).options(
-        joinedload(Project.product),
+        selectinload(Project.product).selectinload(Product.wpids),
         joinedload(Project.external_product),
-        joinedload(Project.project_geographies).joinedload(ProjectGeography.geography),
-        joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+        selectinload(Project.needs),
+        selectinload(Project.recommendations),
+        selectinload(Project.project_geographies).joinedload(
+            ProjectGeography.geography
+        ),
+        selectinload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
     )
-
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)
 
@@ -267,11 +269,10 @@ def get_geoids(
         .join(ProjectGeography.project)
     )
     if filters:
-        project_query = apply_filters(
+        subquery = apply_filters(
             db.query(Project.project_id), filters, db, is_dvrpc_user
-        )
-        matching_ids = [row.project_id for row in project_query.all()]
-        query = query.filter(Project.project_id.in_(matching_ids))
+        ).subquery()
+        query = query.filter(Project.project_id.in_(subquery))
 
         if filters.geographies:
             geoids = [g.strip() for g in filters.geographies.split(",")]
