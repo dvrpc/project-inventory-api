@@ -45,7 +45,7 @@ pydantic_core==2.41.5
 Pygments==2.19.2
 pyparsing==3.3.2
 python-dotenv==1.2.1
-python-multipart==0.0.22
+python-multipart==0.0.26
 PyYAML==6.0.3
 requests==2.33.1
 requests-oauthlib==2.0.0
