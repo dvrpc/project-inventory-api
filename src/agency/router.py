@@ -9,7 +9,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[AgencyResponse])
+@router.get("", response_model=List[AgencyResponse])
 def get_agencies(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -22,7 +22,7 @@ def get_agency(agency_id: int, db: Session = Depends(get_db)):
     return agency
 
 
-@router.post("/", response_model=AgencyResponse, status_code=201)
+@router.post("", response_model=AgencyResponse, status_code=201)
 def create_agency(
     agency_in: AgencyCreateRequest,
     db: Session = Depends(get_db),

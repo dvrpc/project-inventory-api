@@ -8,7 +8,7 @@ from src.database.core import get_db
 router = APIRouter()
 
 
-@router.get("/", response_model=List[str])
+@router.get("", response_model=List[str])
 def get_all(
     db: Session = Depends(get_db),
 ):

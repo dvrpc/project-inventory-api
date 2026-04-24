@@ -13,7 +13,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[KeywordResponse])
+@router.get("", response_model=List[KeywordResponse])
 def get_keywords(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -26,7 +26,7 @@ def get_keyword(keyword_id: int, db: Session = Depends(get_db)):
     return keyword
 
 
-@router.post("/", response_model=KeywordResponse, status_code=201)
+@router.post("", response_model=KeywordResponse, status_code=201)
 def create_keyword(
     keyword_in: KeywordCreateRequest,
     db: Session = Depends(get_db),

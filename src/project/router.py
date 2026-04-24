@@ -14,7 +14,7 @@ from src.auth.validate import require_admin, get_optional_dvrpc_user
 router = APIRouter()
 
 
-@router.get("/", response_model=List[ProjectResponse])
+@router.get("", response_model=List[ProjectResponse])
 def get_projects(
     filters: ProjectFilters = Depends(ProjectFilters.as_query),
     db: Session = Depends(get_db),
@@ -31,7 +31,7 @@ def get_project(project_id: int, db: Session = Depends(get_db)):
     return project
 
 
-@router.post("/", response_model=ProjectResponse, status_code=201)
+@router.post("", response_model=ProjectResponse, status_code=201)
 def create_project(
     project_in: ProjectCreateRequest,
     db: Session = Depends(get_db),

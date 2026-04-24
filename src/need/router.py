@@ -9,7 +9,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[NeedResponse])
+@router.get("", response_model=List[NeedResponse])
 def get_needs(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -22,7 +22,7 @@ def get_need(need_id: int, db: Session = Depends(get_db)):
     return need
 
 
-@router.post("/", response_model=NeedResponse, status_code=201)
+@router.post("", response_model=NeedResponse, status_code=201)
 def create_need(
     need_in: NeedCreateRequest,
     db: Session = Depends(get_db),

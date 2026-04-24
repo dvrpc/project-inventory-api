@@ -12,7 +12,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[ProjectKeywordResponse])
+@router.get("", response_model=List[ProjectKeywordResponse])
 def get_project_geographies(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -22,7 +22,7 @@ def get_geographies_by_project(project_id: int, db: Session = Depends(get_db)):
     return get_all_by_project(db, project_id)
 
 
-@router.post("/", response_model=ProjectKeywordResponse)
+@router.post("", response_model=ProjectKeywordResponse)
 def create_project_keyword(
     project_keyword_in: ProjectKeywordCreateRequest,
     db: Session = Depends(get_db),

@@ -13,7 +13,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[AttachmentResponse])
+@router.get("", response_model=List[AttachmentResponse])
 def get_attachments(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -26,7 +26,7 @@ def get_attachment(attachment_id: int, db: Session = Depends(get_db)):
     return attachment
 
 
-@router.post("/", response_model=AttachmentResponse, status_code=201)
+@router.post("", response_model=AttachmentResponse, status_code=201)
 def create_attachment(
     attachment_in: AttachmentCreateRequest,
     db: Session = Depends(get_db),
