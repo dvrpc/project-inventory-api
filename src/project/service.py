@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from typing import Optional
 from sqlalchemy import or_, and_
 from sqlalchemy.orm import Session, joinedload, selectinload
@@ -185,15 +185,24 @@ def get_all(
     rows = query.all()
     projects = [map_project(p) for p in rows]
 
+    def normalize_date(d):
+        if d is None:
+            return datetime.min
+        if isinstance(d, datetime):
+            return d
+        return datetime(d.year, d.month, d.day)
+
     match filters.sort if filters else None:
         case "oldest":
-            projects.sort(key=lambda p: p.product.pub_date or date.min)
+            projects.sort(key=lambda p: normalize_date(p.product.pub_date))
         case "az":
             projects.sort(key=lambda p: p.product.title or "")
         case "za":
             projects.sort(key=lambda p: p.product.title or "", reverse=True)
         case "newest":
-            projects.sort(key=lambda p: p.product.pub_date or date.min, reverse=True)
+            projects.sort(
+                key=lambda p: normalize_date(p.product.pub_date), reverse=True
+            )
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
             # Each grouping is sorted by geography proximity to the center of the bounding box
