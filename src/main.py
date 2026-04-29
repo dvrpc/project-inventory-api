@@ -17,6 +17,7 @@ log = logging.getLogger(__name__)
 origins = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
+    "https://cloud.dvrpc.org/project-inventory"
 ]
 
 app.add_middleware(

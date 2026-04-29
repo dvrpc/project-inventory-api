@@ -13,7 +13,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[RecommendationResponse])
+@router.get("", response_model=List[RecommendationResponse])
 def get_recommendations(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -26,7 +26,7 @@ def get_recommendation(recommendation_id: int, db: Session = Depends(get_db)):
     return recommendation
 
 
-@router.post("/", response_model=RecommendationResponse, status_code=201)
+@router.post("", response_model=RecommendationResponse, status_code=201)
 def create_recommendation(
     recommendation_in: RecommendationCreateRequest,
     db: Session = Depends(get_db),

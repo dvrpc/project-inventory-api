@@ -13,7 +13,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[GeographyResponse])
+@router.get("", response_model=List[GeographyResponse])
 def get_geographies(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -26,7 +26,7 @@ def get_geography(geography_id: int, db: Session = Depends(get_db)):
     return geography
 
 
-@router.post("/", response_model=GeographyResponse, status_code=201)
+@router.post("", response_model=GeographyResponse, status_code=201)
 def create_geography(
     geography_in: GeographyCreateRequest,
     db: Session = Depends(get_db),

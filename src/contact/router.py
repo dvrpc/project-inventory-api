@@ -13,7 +13,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[ContactResponse])
+@router.get("", response_model=List[ContactResponse])
 def get_contacts(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -26,7 +26,7 @@ def get_contact(contact_id: int, db: Session = Depends(get_db)):
     return contact
 
 
-@router.post("/", response_model=ContactResponse, status_code=201)
+@router.post("", response_model=ContactResponse, status_code=201)
 def create_contact(
     contact_in: ContactCreateRequest,
     db: Session = Depends(get_db),

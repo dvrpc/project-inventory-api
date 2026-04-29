@@ -13,7 +13,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[ExternalProductResponse])
+@router.get("", response_model=List[ExternalProductResponse])
 def get_external_products(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -26,7 +26,7 @@ def get_external_product(external_product_id: int, db: Session = Depends(get_db)
     return external_product
 
 
-@router.post("/", response_model=ExternalProductResponse, status_code=201)
+@router.post("", response_model=ExternalProductResponse, status_code=201)
 def create_external_product(
     external_product_in: ExternalProductCreateRequest,
     db: Session = Depends(get_db),

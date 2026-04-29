@@ -18,7 +18,7 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("/", response_model=List[ProjectGeographyResponse])
+@router.get("", response_model=List[ProjectGeographyResponse])
 def get_project_geographies(db: Session = Depends(get_db)):
     return get_all(db)
 
@@ -28,7 +28,7 @@ def get_geographies_by_project(project_id: int, db: Session = Depends(get_db)):
     return get_all_by_project(db, project_id)
 
 
-@router.post("/", response_model=ProjectGeographyResponse)
+@router.post("", response_model=ProjectGeographyResponse)
 def create_project_geography(
     project_geography_in: ProjectGeographyCreateRequest,
     db: Session = Depends(get_db),
