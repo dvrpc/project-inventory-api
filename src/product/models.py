@@ -18,7 +18,8 @@ class Product(Base):
     livedate = Column(Date, nullable=True)
     lastupdatedate = Column(Date, nullable=True)
     pub_date = Column(Date, nullable=True)
-    createby = Column(String(50), nullable=True)
+    s1 = Column(String(50), nullable=True)
+    s1_id = Column(String(50), nullable=True)
     status = Column(String(30), nullable=True)
 
     wpids = relationship(

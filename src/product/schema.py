@@ -15,7 +15,8 @@ class ProductResponse(BaseModel):
     livedate: Optional[datetime]
     lastupdatedate: Optional[datetime]
     pub_date: Optional[datetime]
-    createby: Optional[str]
+    s1: Optional[str]
+    s1_id: Optional[str]
     status: Optional[str]
     wpids: Optional[list[str]]
 

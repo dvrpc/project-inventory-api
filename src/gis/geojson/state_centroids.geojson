@@ -11,7 +11,8 @@
         {
             "type": "Feature",
             "properties": {
-                "geoid": "34"
+                "geoid": "34",
+                "state": "New Jersey"
             },
             "geometry": {
                 "type": "Point",
@@ -24,7 +25,8 @@
         {
             "type": "Feature",
             "properties": {
-                "geoid": "42"
+                "geoid": "42",
+                "state": "Pennsylvania"
             },
             "geometry": {
                 "type": "Point",
