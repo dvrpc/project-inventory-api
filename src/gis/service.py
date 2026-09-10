@@ -32,6 +32,26 @@ def get_bbox_from_geoids(geoid_list: str) -> dict | None:
 
     return dict(row)
 
+def get_bbox_from_csa(pub_id: str) -> dict | None:
+    with SessionLocal() as db:
+        sql = text("""
+            SELECT ST_XMin(bbox) AS min_lng,
+                   ST_YMin(bbox) AS min_lat,
+                   ST_XMax(bbox) AS max_lng,
+                   ST_YMax(bbox) AS max_lat
+            FROM (
+                SELECT ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326) AS bbox
+                FROM planning.project_inventory_tool_custom_study_areas_polygon
+                WHERE pub_id = :pub_id
+            ) AS envelope
+        """)
+        row = db.execute(sql, {"pub_id": pub_id}).mappings().fetchone()
+
+    if row is None or row["min_lng"] is None:
+        return None
+
+    return dict(row)
+
 
 def build_bbox_sql(geoids: list[str]):
     lengths = {len(g) for g in geoids}
@@ -65,31 +85,53 @@ def build_bbox_sql(geoids: list[str]):
     """)
 
 
-def get_geoids_in_bounding_box(
+def get_bounding_box_locations(
     min_lon: float, min_lat: float, max_lon: float, max_lat: float
-) -> list[str]:
+) -> list[tuple[str, str]]:
     sql = text("""
-        SELECT geoid
-        FROM (
-            SELECT fips AS geoid, shape
-            FROM boundaries.countyboundaries
-            WHERE ST_Transform(
-                ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326), 26918
-            ) && shape
-            UNION ALL
-            SELECT geoid, shape
-            FROM boundaries.dvrpc_mcd_phicpa
-            WHERE ST_Transform(
-                ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326), 26918
-            ) && shape
-        ) combined
-        CROSS JOIN LATERAL (
+        WITH bbox AS (
             SELECT ST_Transform(
-                ST_SetSRID(ST_MakePoint((:min_lon + :max_lon) / 2, (:min_lat + :max_lat) / 2), 4326),
+                ST_MakeEnvelope(:min_lon, :min_lat, :max_lon, :max_lat, 4326),
                 26918
-            ) AS center
-        ) c
-        ORDER BY ST_Distance(ST_Centroid(combined.shape), c.center)
+            ) AS shape
+        ), center AS (
+            SELECT ST_Transform(
+                ST_SetSRID(
+                    ST_MakePoint(
+                        (:min_lon + :max_lon) / 2,
+                        (:min_lat + :max_lat) / 2
+                    ),
+                    4326
+                ),
+                26918
+            ) AS point
+        ), locations AS (
+            SELECT 'geoid' AS location_type, fips AS location_id, county.shape
+            FROM boundaries.countyboundaries AS county
+            CROSS JOIN bbox
+            WHERE county.shape && bbox.shape
+            UNION ALL
+            SELECT 'geoid' AS location_type, geoid AS location_id, municipality.shape
+            FROM boundaries.dvrpc_mcd_phicpa AS municipality
+            CROSS JOIN bbox
+            WHERE municipality.shape && bbox.shape
+            UNION ALL
+            SELECT 'csa' AS location_type, pub_id AS location_id, csa.shape
+            FROM planning.project_inventory_tool_custom_study_areas_polygon AS csa
+            CROSS JOIN bbox
+            WHERE csa.shape && bbox.shape
+        )
+        SELECT combined.location_type, combined.location_id
+        FROM locations AS combined
+        CROSS JOIN center
+        ORDER BY ST_Distance(
+            CASE
+                WHEN location_type = 'csa'
+                THEN ST_ClosestPoint(combined.shape, center.point)
+                ELSE ST_Centroid(combined.shape)
+            END,
+            center.point
+        )
     """)
 
     with SessionLocal() as db:
@@ -102,7 +144,31 @@ def get_geoids_in_bounding_box(
                 "max_lat": max_lat,
             },
         )
-        return [row.geoid for row in result]
+        return [(row.location_type, row.location_id) for row in result]
+
+
+def get_geoids_in_bounding_box(
+    min_lon: float, min_lat: float, max_lon: float, max_lat: float
+) -> list[str]:
+    return [
+        location_id
+        for location_type, location_id in get_bounding_box_locations(
+            min_lon, min_lat, max_lon, max_lat
+        )
+        if location_type == "geoid"
+    ]
+
+
+def get_custom_study_area_pub_ids_in_bounding_box(
+    min_lon: float, min_lat: float, max_lon: float, max_lat: float
+) -> list[str]:
+    return [
+        location_id
+        for location_type, location_id in get_bounding_box_locations(
+            min_lon, min_lat, max_lon, max_lat
+        )
+        if location_type == "csa"
+    ]
 
 
 def get_state_counts_geojson(db: Session, filters: ProjectFilters, is_dvrpc_user: bool):
@@ -169,3 +235,21 @@ def get_mcd_phicpa_counts_geojson(
         feature["properties"]["geoids"] = geoid if count else ""
 
     return data
+
+
+def get_csas_within_geoids(geoids: list[str]) -> list[str]:
+    normalized_geoids = [geoid.strip() for geoid in geoids]
+
+    with SessionLocal() as db:
+        sql = text("""
+            SELECT pub_id
+            FROM planning.project_inventory_tool_custom_study_areas_polygon
+            WHERE string_to_array(
+                regexp_replace(concat_ws(',', cnty_fips, mcd_geo), '\\s+', '', 'g'),
+                ','
+            ) && CAST(:geoids AS text[])
+        """)
+        result = db.execute(sql, {"geoids": normalized_geoids})
+
+    return [row.pub_id for row in result]
+

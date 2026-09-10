@@ -15,7 +15,10 @@ from src.project.schema import (
     ProjectResponse,
 )
 from src.project.models import Project
-from src.gis.service import get_geoids_in_bounding_box
+from src.gis.service import (
+    get_bounding_box_locations,
+    get_csas_within_geoids,
+)
 
 
 def map_project(project: Project) -> ProjectResponse:
@@ -58,9 +61,19 @@ def get(db: Session, project_id: int):
 
 def apply_bbox_filter(query, bbox: str):
     coords = bbox.split(",")
-    geoids = get_geoids_in_bounding_box(
+    locations = get_bounding_box_locations(
         float(coords[0]), float(coords[1]), float(coords[2]), float(coords[3])
     )
+    geoids = [
+        location_id
+        for location_type, location_id in locations
+        if location_type == "geoid"
+    ]
+    custom_study_area_pub_ids = [
+        location_id
+        for location_type, location_id in locations
+        if location_type == "csa"
+    ]
 
     if any(g.startswith("34") for g in geoids):
         geoids.append("34")
@@ -69,21 +82,37 @@ def apply_bbox_filter(query, bbox: str):
 
     return (
         query.filter(
-            or_(Geography.geoid.in_(geoids), Geography.geo_type == "regional")
+            or_(
+                Geography.geoid.in_(geoids),
+                Geography.geo_type == "regional",
+                Project.product_id.in_(custom_study_area_pub_ids),
+            )
         ),
-        geoids,
+        [location_id for _, location_id in locations],
     )
 
 
 def apply_geographies_filter(query, geographies: str, db: Session):
     geoids = [g.strip() for g in geographies.split(",")]
     is_regional = any(g == "1" for g in geoids)
+    is_custom_study_area = any(g == "0" for g in geoids)
 
     if is_regional:
         return query.filter(Geography.geo_type == "regional")
 
+    if is_custom_study_area:
+        return query.filter(Geography.geo_type == "csa")
+
     expanded_geoids = expand_geoids(geoids, db)
-    return query.filter(Geography.geoid.in_(expanded_geoids))
+    csas_within_geoids = get_csas_within_geoids(expanded_geoids)
+    print(geoids)
+    print(csas_within_geoids)
+    return query.filter(
+        or_(
+            Geography.geoid.in_(expanded_geoids),
+            Project.product_id.in_(csas_within_geoids),
+        )
+    )
 
 
 def apply_keywords_filter(query, keywords: str, db: Session):
@@ -147,6 +176,7 @@ def apply_filters(
 
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
+
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
@@ -205,7 +235,8 @@ def get_all(
             )
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
-            # Each grouping is sorted by geography proximity to the center of the bounding box
+            # Each grouping is sorted by geography proximity to the center of the bounding box,
+            # muni and csa get the same rank
             zoom = int(filters.zoom) if filters.zoom else 7
 
             geoid_order = (
@@ -226,6 +257,7 @@ def get_all(
                 is_state = any(g.geo_type == "state" for g in p.geographies)
                 is_county = any(g.geo_type == "county" for g in p.geographies)
                 is_muni = any(g.geo_type == "municipality" for g in p.geographies)
+                is_csa = any(g.geo_type == "csa" for g in p.geographies)
 
                 if state_selected:
                     type_rank = 0 if is_state else (1 if is_county else 2)
@@ -246,22 +278,30 @@ def get_all(
                 else:  # zoom >= 9
                     type_rank = (
                         0
-                        if is_muni
+                        if is_muni or is_csa
                         else (1 if is_county else (2 if is_regional else 3))
                     )
 
                 proximity_rank = (
                     min(
-                        (
+                        [
                             geoid_order[g.geoid]
                             for g in p.geographies
                             if g.geoid in geoid_order
+                        ]
+                        + (
+                            [geoid_order[p.product.pub_id]]
+                            if p.product is not None
+                            and p.product.pub_id in geoid_order
+                            else []
                         ),
                         default=float("inf"),
                     )
                     if geoid_order
                     else 0
                 )
+                # if geoid_order:
+                #     return (proximity_rank, type_rank)
                 return (type_rank, proximity_rank)
 
             projects.sort(key=default_sort_key)
