@@ -7,6 +7,7 @@ from src.gis.service import (
     get_county_counts_geojson,
     get_mcd_phicpa_counts_geojson,
     get_bbox_from_geoids,
+    get_bbox_from_csa
 )
 from src.project.schema import ProjectFilters
 
@@ -39,7 +40,11 @@ def get_mcd_phicpa_projects(
 ):
     return get_mcd_phicpa_counts_geojson(db, filters, is_dvrpc_user)
 
+@router.get("/bbox/{geoids}")
+def get_bbox_geo(geoids: str):
+    return get_bbox_from_geoids(geoids)
 
-@router.get("/bbox/{geoid}")
-def get_bbox(geoid: str):
-    return get_bbox_from_geoids(geoid)
+@router.get("/bbox/csa/{pub_id}")
+def get_bbox_csa(pub_id: str):
+    return get_bbox_from_csa(pub_id)
+

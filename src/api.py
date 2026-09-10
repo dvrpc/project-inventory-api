@@ -13,6 +13,7 @@ from src.gis.router import router as geo_router
 from src.keyword.router import router as keyword_router
 from src.project_keyword.router import router as project_keyword_router
 from src.product_wpid.router import router as product_wpid_router
+from src.csa.router import router as csa_router
 
 api_router = APIRouter()
 
@@ -40,3 +41,4 @@ api_router.include_router(
 api_router.include_router(
     product_wpid_router, prefix="/product-wpid", tags=["product-wpid"]
 )
+api_router.include_router(csa_router, prefix="/csa", tags=["csa"])
