@@ -320,7 +320,7 @@ def get_geoids(
     if filters:
         subquery = apply_filters(
             db.query(Project.project_id), filters, db, is_dvrpc_user
-        ).subquery()
+        ).scalar_subquery()
         query = query.filter(Project.project_id.in_(subquery))
 
         if filters.geographies:
