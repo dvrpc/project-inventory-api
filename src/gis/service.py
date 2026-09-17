@@ -4,9 +4,11 @@ from src.database.gis import SessionLocal
 from sqlalchemy import text
 from pathlib import Path
 from src.project.schema import ProjectFilters
+from src.project.models import Project
 import src.project.service as project_service
 import json
 from collections import Counter, defaultdict
+from src.csa.service import get_csas_by_county
 
 current_dir = Path(__file__).parent.absolute()
 
@@ -198,6 +200,35 @@ def get_county_counts_geojson(
 
     county_geoids_by_county = defaultdict(list)
     mcd_geoids_by_county = defaultdict(list)
+    csa_counts_by_county = get_csas_by_county()
+    csa_pub_ids = {
+        pub_id.strip()
+        for csa_count in csa_counts_by_county
+        for pub_id in csa_count["pub_ids"].split(",")
+    }
+    csa_projects = db.query(Project.product_id).filter(
+        Project.product_id.in_(csa_pub_ids)
+    )
+    if filters:
+        csa_projects = project_service.apply_filters(
+            csa_projects, filters, db, is_dvrpc_user
+        )
+    filtered_csa_pub_ids = {
+        product_id for (product_id,) in csa_projects.all() if product_id is not None
+    }
+    csa_project_counts_by_geoid = defaultdict(
+        int,
+        {
+            csa_count["fips"]: len(
+                {
+                    pub_id.strip() for pub_id in csa_count["pub_ids"].split(",")
+                }
+                & filtered_csa_pub_ids
+            )
+            for csa_count in csa_counts_by_county
+        },
+    )
+
     for g in geoids:
         if len(g) == 5:
             county_geoids_by_county[g].append(g)
@@ -209,9 +240,13 @@ def get_county_counts_geojson(
         county_geoids = county_geoids_by_county.get(geoid, [])
         mcd_geoids = mcd_geoids_by_county.get(geoid, [])
         feature["properties"]["county_project_count"] = len(county_geoids)
-        feature["properties"]["total_project_count"] = len(county_geoids) + len(
-            mcd_geoids
-        )
+        total_project_count = len(county_geoids) + len(mcd_geoids)
+        
+        if geoid in csa_project_counts_by_geoid:
+            total_project_count += csa_project_counts_by_geoid[geoid]
+
+        feature["properties"]["total_project_count"] = total_project_count
+
         feature["properties"]["county_geoids"] = ",".join(county_geoids)
         feature["properties"]["other_geoids"] = ",".join(mcd_geoids)
 
