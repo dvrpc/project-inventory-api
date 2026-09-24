@@ -74,6 +74,8 @@ async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
     )
 
 
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
