@@ -14,7 +14,7 @@ from src.keyword.router import router as keyword_router
 from src.project_keyword.router import router as project_keyword_router
 from src.product_wpid.router import router as product_wpid_router
 from src.csa.router import router as csa_router
-
+from src.user.router import router as user_router
 api_router = APIRouter()
 
 api_router.include_router(geography_router, prefix="/geography", tags=["geography"])
@@ -42,3 +42,4 @@ api_router.include_router(
     product_wpid_router, prefix="/product-wpid", tags=["product-wpid"]
 )
 api_router.include_router(csa_router, prefix="/csa", tags=["csa"])
+api_router.include_router(user_router, prefix="/user", tags=["user"])
