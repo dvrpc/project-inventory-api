@@ -26,17 +26,17 @@ api_router.include_router(geography_router, prefix="/geography", tags=["geograph
 # api_router.include_router(need_router, prefix="/need", tags=["need"])
 api_router.include_router(product_router, prefix="/product", tags=["product"])
 api_router.include_router(product_router, prefix="/product", tags=["product"])
-api_router.include_router(
-    product_geography_router, prefix="/product-geography", tags=["product-geography"]
-)
+# api_router.include_router(
+#     product_geography_router, prefix="/product-geography", tags=["product-geography"]
+# )
 # api_router.include_router(
 #     recommendation_router, prefix="/recommendation", tags=["recommendation"]
 # )
 api_router.include_router(geo_router, prefix="/gis", tags=["gis"])
 api_router.include_router(keyword_router, prefix="/keyword", tags=["keyword"])
-api_router.include_router(
-    product_keyword_router, prefix="/product-keyword", tags=["product-keyword"]
-)
+# api_router.include_router(
+#     product_keyword_router, prefix="/product-keyword", tags=["product-keyword"]
+# )
 api_router.include_router(
     product_wpid_router, prefix="/product-wpid", tags=["product-wpid"]
 )

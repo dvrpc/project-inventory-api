@@ -15,4 +15,4 @@ class Need(Base, TimeStampMixin):
     )
     description = Column(String(4000), nullable=False)
 
-    product = relationship("Product", back_populates="needs")
+    # product = relationship("Product", back_populates="needs")

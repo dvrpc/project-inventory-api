@@ -15,7 +15,7 @@ class ProductKeyword(Base):
     )
     keyword_id = Column(
         Integer,
-        ForeignKey("keyword.keyword_id", ondelete="CASCADE"),
+        ForeignKey("keyword.id", ondelete="CASCADE"),
         nullable=False,
         primary_key=True,
         index=True,

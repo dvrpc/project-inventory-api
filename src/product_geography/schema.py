@@ -2,11 +2,11 @@ from pydantic import BaseModel
 
 class ProductGeographyResponse(BaseModel):
     pub_id: str
-    geography_id: int
+    geoid: str
 
     class Config:
         from_attributes = True
 
 class ProductGeographyCreateRequest(BaseModel):
     pub_id: str
-    geography_id: int
+    geoid: str

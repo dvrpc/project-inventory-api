@@ -26,15 +26,15 @@ class Product(Base):
         primaryjoin="and_(Product.pub_id == ProductWpid.PRODUCTID)",
         foreign_keys="[ProductWpid.PRODUCTID]",
     )
-    needs = relationship(
-        "Need", back_populates="product", cascade="all, delete-orphan"
-    )
-    recommendations = relationship(
-        "Recommendation", back_populates="product", cascade="all, delete-orphan"
-    )
-    attachments = relationship(
-        "Attachment", back_populates="product", cascade="all, delete-orphan"
-    )
+    # needs = relationship(
+    #     "Need", back_populates="product", cascade="all, delete-orphan"
+    # )
+    # recommendations = relationship(
+    #     "Recommendation", back_populates="product", cascade="all, delete-orphan"
+    # )
+    # attachments = relationship(
+    #     "Attachment", back_populates="product", cascade="all, delete-orphan"
+    # )
     product_geographies = relationship(
         "ProductGeography",
         back_populates="product",

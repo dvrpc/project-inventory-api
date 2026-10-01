@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, PrimaryKeyConstraint, String
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 from src.database.core import Base
 
@@ -13,8 +13,8 @@ class ProductGeography(Base):
         primary_key=True,
         index=True,
     )
-    geography_id = Column(
-        Integer,
+    geoid = Column(
+        String(10),
         ForeignKey("geography.geoid", ondelete="CASCADE"),
         nullable=False,
         primary_key=True,

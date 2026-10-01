@@ -3,12 +3,12 @@ from src.product_geography.schema import ProductGeographyCreateRequest
 from src.product_geography.models import ProductGeography
 
 
-def get(db: Session, pub_id, geography_id):
+def get(db: Session, pub_id, geoid):
     return (
         db.query(ProductGeography)
         .filter(
             ProductGeography.pub_id == pub_id,
-            ProductGeography.geography_id == geography_id,
+            ProductGeography.geoid == geoid,
         )
         .one_or_none()
     )

@@ -38,14 +38,14 @@ def create_product_geography(
     return create(db, product_geography_in)
 
 
-@router.delete("/{pub_id}/{geography_id}")
+@router.delete("/{pub_id}/{geoid}")
 def delete_product_geography(
     pub_id: str,
-    geography_id: int,
+    geoid: str,
     db: Session = Depends(get_db),
     admin=Depends(require_admin),
 ):
-    product_geography = get(db, pub_id, geography_id)
+    product_geography = get(db, pub_id, geoid)
     if not product_geography:
         raise HTTPException(status_code=404, detail="Product Geography not found")
 

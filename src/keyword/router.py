@@ -26,37 +26,37 @@ def get_keyword(keyword_id: int, db: Session = Depends(get_db)):
     return keyword
 
 
-@router.post("", response_model=KeywordResponse, status_code=201)
-def create_keyword(
-    keyword_in: KeywordCreateRequest,
-    db: Session = Depends(get_db),
-    admin=Depends(require_admin),
-):
-    return create(db, keyword_in)
+# @router.post("", response_model=KeywordResponse, status_code=201)
+# def create_keyword(
+#     keyword_in: KeywordCreateRequest,
+#     db: Session = Depends(get_db),
+#     admin=Depends(require_admin),
+# ):
+#     return create(db, keyword_in)
 
 
-@router.put("/{keyword_id}", response_model=KeywordResponse)
-def update_keyword(
-    keyword_id: int,
-    keyword_in: KeywordUpdateRequest,
-    db: Session = Depends(get_db),
-    admin=Depends(require_admin),
-):
-    keyword = get(db, keyword_id)
-    if not keyword:
-        raise HTTPException(status_code=404, detail="Keyword not found")
+# @router.put("/{keyword_id}", response_model=KeywordResponse)
+# def update_keyword(
+#     keyword_id: int,
+#     keyword_in: KeywordUpdateRequest,
+#     db: Session = Depends(get_db),
+#     admin=Depends(require_admin),
+# ):
+#     keyword = get(db, keyword_id)
+#     if not keyword:
+#         raise HTTPException(status_code=404, detail="Keyword not found")
 
-    return update(db, keyword, keyword_in)
+#     return update(db, keyword, keyword_in)
 
 
-@router.delete("/{keyword_id}")
-def delete_keyword(
-    keyword_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)
-):
-    keyword = get(db, keyword_id)
+# @router.delete("/{keyword_id}")
+# def delete_keyword(
+#     keyword_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)
+# ):
+#     keyword = get(db, keyword_id)
 
-    if not keyword:
-        raise HTTPException(status_code=404, detail="Keyword not found")
+#     if not keyword:
+#         raise HTTPException(status_code=404, detail="Keyword not found")
 
-    delete(db, keyword)
-    return {"detail": "Keyword deleted successfully"}
+#     delete(db, keyword)
+#     return {"detail": "Keyword deleted successfully"}
