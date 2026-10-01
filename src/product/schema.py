@@ -1,6 +1,8 @@
 from pydantic import BaseModel, field_validator
 from typing import Optional
 from datetime import datetime
+from src.geography.schema import GeographyResponse
+from src.keyword.schema import KeywordResponse
 
 
 class ProductResponse(BaseModel):
@@ -31,3 +33,49 @@ class ProductResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ProductDetailResponse(ProductResponse):
+    geographies: list[GeographyResponse] = []
+    keywords: list[KeywordResponse] = []
+
+
+class ProductFilters(BaseModel):
+    bbox: Optional[str] = None
+    geographies: Optional[str] = None
+    keywords: Optional[str] = None
+    sort: Optional[str] = None
+    product: Optional[str] = None
+    status: Optional[str] = None
+    zoom: Optional[str] = None
+    wpids: Optional[str] = None
+    yearFrom: Optional[str] = None
+    yearTo: Optional[str] = None
+
+    @classmethod
+    def as_query(
+        cls,
+        bbox: Optional[str] = None,
+        geographies: Optional[str] = None,
+        keywords: Optional[str] = None,
+        status: Optional[str] = None,
+        sort: Optional[str] = None,
+        zoom: Optional[str] = None,
+        yearFrom: Optional[str] = None,
+        yearTo: Optional[str] = None,
+        product: Optional[str] = None,
+        wpids: Optional[str] = None,
+    ) -> "ProductFilters":
+
+        return cls(
+            bbox=bbox,
+            geographies=geographies,
+            keywords=keywords,
+            status=status,
+            zoom=zoom,
+            sort=sort,
+            yearFrom=yearFrom,
+            yearTo=yearTo,
+            product=product,
+            wpids=wpids,
+        )

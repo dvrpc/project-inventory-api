@@ -9,14 +9,14 @@ from src.gis.service import (
     get_bbox_from_geoids,
     get_bbox_from_csa
 )
-from src.project.schema import ProjectFilters
+from src.product.schema import ProductFilters
 
 router = APIRouter()
 
 
 @router.get("/state_projects")
 def get_state_projects(
-    filters: ProjectFilters = Depends(ProjectFilters.as_query),
+    filters: ProductFilters = Depends(ProductFilters.as_query),
     db: Session = Depends(get_db),
     is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),
 ):
@@ -25,7 +25,7 @@ def get_state_projects(
 
 @router.get("/county_projects")
 def get_county_projects(
-    filters: ProjectFilters = Depends(ProjectFilters.as_query),
+    filters: ProductFilters = Depends(ProductFilters.as_query),
     db: Session = Depends(get_db),
     is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),
 ):
@@ -34,7 +34,7 @@ def get_county_projects(
 
 @router.get("/mcd_phicpa_projects")
 def get_mcd_phicpa_projects(
-    filters: ProjectFilters = Depends(ProjectFilters.as_query),
+    filters: ProductFilters = Depends(ProductFilters.as_query),
     db: Session = Depends(get_db),
     is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),
 ):

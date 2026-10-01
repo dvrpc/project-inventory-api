@@ -6,7 +6,6 @@ from src.contact.router import router as contact_router
 from src.external_product.router import router as external_product_router
 from src.need.router import router as need_router
 from src.product.router import router as product_router
-from src.project.router import router as project_router
 from src.product_geography.router import router as project_geography_router
 from src.recommendation.router import router as recommendation_router
 from src.gis.router import router as geo_router
