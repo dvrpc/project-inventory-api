@@ -6,8 +6,8 @@ from src.geography.models import Geography
 from src.keyword.models import Keyword
 from src.product.models import Product
 from src.product_wpid.models import ProductWpid
-from src.project_geography.models import ProjectGeography
-from src.project_keyword.models import ProjectKeyword
+from src.product_geography.models import ProjectGeography
+from src.product_keyword.models import ProjectKeyword
 from src.project.schema import (
     ProjectCreateRequest,
     ProjectFilters,
@@ -21,19 +21,28 @@ from src.gis.service import (
 )
 
 
-def map_project(project: Project) -> ProjectResponse:
-    selected_product = project.product if project.internal else project.external_product
+def map_project(project: Project) -> ProjectResponse | None:
+    if project is None:
+        return None
+    # NOTE: agency, attachment, contact, external_product, need,
+    # recommendation and user tables do not exist yet, so they are not
+    # queried. Empty values are returned; their code is kept for later.
+    product = project.product
+    geographies = (
+        [pg.geography for pg in product.product_geographies] if product else []
+    )
+    keywords = [pk.keyword for pk in product.product_keywords] if product else []
 
     return ProjectResponse(
         project_id=project.project_id,
         internal=project.internal,
         created_at=project.created_at,
         updated_at=project.updated_at,
-        product=selected_product,
-        needs=project.needs,
-        recommendations=project.recommendations,
-        geographies=[pg.geography for pg in project.project_geographies],
-        keywords=[pk.keyword for pk in project.project_keywords],
+        product=product,
+        needs=[],
+        recommendations=[],
+        geographies=geographies,
+        keywords=keywords,
     )
 
 
@@ -45,12 +54,12 @@ def get(db: Session, project_id: int):
     project = (
         db.query(Project)
         .options(
-            joinedload(Project.product),
-            joinedload(Project.external_product),
-            joinedload(Project.project_geographies).joinedload(
-                ProjectGeography.geography
-            ),
-            joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+            joinedload(Project.product).joinedload(
+                Product.product_geographies
+            ).joinedload(ProjectGeography.geography),
+            joinedload(Project.product).joinedload(
+                Product.product_keywords
+            ).joinedload(ProjectKeyword.keyword),
         )
         .filter(Project.project_id == project_id)
         .one_or_none()
@@ -117,8 +126,9 @@ def apply_geographies_filter(query, geographies: str, db: Session):
 
 def apply_keywords_filter(query, keywords: str, db: Session):
     keyword_ids = [k.strip() for k in keywords.split(",")]
+    # NOTE: Product is already joined by apply_filters, so join outward from it.
     return (
-        query.join(Project.project_keywords)
+        query.join(Product.product_keywords)
         .join(ProjectKeyword.keyword)
         .filter(Keyword.keyword_id.in_(keyword_ids))
         .distinct()
@@ -163,9 +173,9 @@ def apply_filters(
         return query
 
     query = (
-        query.join(Project.project_geographies)
+        query.join(Project.product)
+        .join(Product.product_geographies)
         .join(ProjectGeography.geography)
-        .join(Project.product)
         .distinct()
     )
 
@@ -198,13 +208,12 @@ def get_all(
 
     query = db.query(Project).options(
         selectinload(Project.product).selectinload(Product.wpids),
-        joinedload(Project.external_product),
-        selectinload(Project.needs),
-        selectinload(Project.recommendations),
-        selectinload(Project.project_geographies).joinedload(
-            ProjectGeography.geography
-        ),
-        selectinload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+        selectinload(Project.product)
+        .selectinload(Product.product_geographies)
+        .joinedload(ProjectGeography.geography),
+        selectinload(Project.product)
+        .selectinload(Product.product_keywords)
+        .joinedload(ProjectKeyword.keyword),
     )
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)
@@ -314,8 +323,8 @@ def get_geoids(
 ) -> list[str]:
     query = (
         db.query(Geography.geoid)
-        .join(Geography.project_geographies)
-        .join(ProjectGeography.project)
+        .join(Geography.product_geographies)
+        .join(ProjectGeography.product)
     )
     if filters:
         subquery = apply_filters(

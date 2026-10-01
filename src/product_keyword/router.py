@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from src.project_keyword.schema import (
+from src.product_keyword.schema import (
     ProjectKeywordResponse,
     ProjectKeywordCreateRequest,
 )
-from src.project_keyword.service import get, get_all, get_all_by_project, create, delete
+from src.product_keyword.service import get, get_all, get_all_by_product, create, delete
 from src.database.core import get_db
 from src.auth.validate import require_admin
 
@@ -17,9 +17,10 @@ def get_project_geographies(db: Session = Depends(get_db)):
     return get_all(db)
 
 
+# TODO: rename paths /project/{project_id} -> /product/{pub_id} once frontend is updated.
 @router.get("/project/{project_id}", response_model=List[ProjectKeywordResponse])
-def get_geographies_by_project(project_id: int, db: Session = Depends(get_db)):
-    return get_all_by_project(db, project_id)
+def get_geographies_by_project(project_id: str, db: Session = Depends(get_db)):
+    return get_all_by_product(db, project_id)
 
 
 @router.post("", response_model=ProjectKeywordResponse)
@@ -33,7 +34,7 @@ def create_project_keyword(
 
 @router.delete("/{project_id}/{keyword_id}")
 def delete_project_keyword(
-    project_id: int,
+    project_id: str,
     keyword_id: int,
     db: Session = Depends(get_db),
     admin=Depends(require_admin),
