@@ -5,9 +5,8 @@ from src.database.core import Base
 
 class Product(Base):
     __tablename__ = "TBLPUBLICATION"
-    __table_args__ = {"schema": "DVRPC_PRODUCTS"}
 
-    pub_id = Column(String(20), nullable=False)
+    pub_id = Column(String(20), nullable=False, unique=True, index=True)
     typecode = Column(String(5), nullable=False, primary_key=True)
     pub_num = Column(String(10), nullable=False, primary_key=True)
     title = Column(String(250), nullable=True)
@@ -26,4 +25,25 @@ class Product(Base):
         "ProductWpid",
         primaryjoin="and_(Product.pub_id == ProductWpid.PRODUCTID)",
         foreign_keys="[ProductWpid.PRODUCTID]",
+    )
+    needs = relationship(
+        "Need", back_populates="product", cascade="all, delete-orphan"
+    )
+    recommendations = relationship(
+        "Recommendation", back_populates="product", cascade="all, delete-orphan"
+    )
+    attachments = relationship(
+        "Attachment", back_populates="product", cascade="all, delete-orphan"
+    )
+    product_geographies = relationship(
+        "ProductGeography",
+        back_populates="product",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+    product_keywords = relationship(
+        "ProductKeyword",
+        back_populates="product",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
     )

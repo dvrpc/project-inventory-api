@@ -12,4 +12,4 @@ class Geography(Base):
     dvrpc_reg = Column(Boolean(create_constraint=True), nullable=False, default=False)
 
 
-    project_geographies = relationship("ProjectGeography", back_populates="geography", passive_deletes=True)
+    product_geographies = relationship("ProductGeography", back_populates="geography", passive_deletes=True)

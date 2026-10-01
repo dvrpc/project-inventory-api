@@ -1,14 +1,14 @@
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from src.database.core import Base
 
 
-class ProjectKeyword(Base):
-    __tablename__ = "project_keyword"
+class ProductKeyword(Base):
+    __tablename__ = "product_keyword"
 
-    project_id = Column(
-        Integer,
-        ForeignKey("project.project_id", ondelete="CASCADE"),
+    pub_id = Column(
+        String(20),
+        ForeignKey("TBLPUBLICATION.pub_id"),
         nullable=False,
         primary_key=True,
         index=True,
@@ -21,5 +21,9 @@ class ProjectKeyword(Base):
         index=True,
     )
 
-    project = relationship("Project", back_populates="project_keywords")
-    keyword = relationship("Keyword", back_populates="project_keywords")
+    product = relationship("Product", back_populates="product_keywords")
+    keyword = relationship("Keyword", back_populates="product_keywords")
+
+
+# Deprecated alias - remove once services/routers are refactored to Product
+ProjectKeyword = ProductKeyword

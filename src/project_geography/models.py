@@ -3,12 +3,12 @@ from sqlalchemy.orm import relationship
 from src.database.core import Base
 
 
-class ProjectGeography(Base):
-    __tablename__ = "project_geography"
+class ProductGeography(Base):
+    __tablename__ = "product_geography"
 
-    project_id = Column(
-        String(10),
-        ForeignKey("project.project_id", ondelete="CASCADE"),
+    pub_id = Column(
+        String(20),
+        ForeignKey("TBLPUBLICATION.pub_id"),
         nullable=False,
         primary_key=True,
         index=True,
@@ -21,5 +21,9 @@ class ProjectGeography(Base):
         index=True,
     )
 
-    project = relationship("Project", back_populates="project_geographies")
-    geography = relationship("Geography", back_populates="project_geographies")
+    product = relationship("Product", back_populates="product_geographies")
+    geography = relationship("Geography", back_populates="product_geographies")
+
+
+# Deprecated alias - remove once services/routers are refactored to Product
+ProjectGeography = ProductGeography

@@ -4,13 +4,18 @@ from src.database.core import Base
 from src.models import TimeStampMixin
 
 
+# DEPRECATED: Project is being removed in favor of Product (TBLPUBLICATION.pub_id)
+# as the central object. Child tables (need, recommendation, attachment,
+# product_geography, product_keyword) now FK directly to Product.
+# This model is kept temporarily so existing service imports don't break.
+# Delete this file once services/routers are refactored.
 class Project(Base, TimeStampMixin):
     __tablename__ = "project"
 
     project_id = Column(Integer, primary_key=True, index=True)
     product_id = Column(
         String(20),
-        ForeignKey("DVRPC_PRODUCTS.TBLPUBLICATION.pub_id"),
+        ForeignKey("TBLPUBLICATION.pub_id"),
         nullable=True,
         index=True,
     )
@@ -21,21 +26,5 @@ class Project(Base, TimeStampMixin):
 
     product = relationship("Product")
     external_product = relationship("ExternalProduct")
-    needs = relationship("Need", back_populates="projects")
-    recommendations = relationship("Recommendation", back_populates="projects")
-
-    project_geographies = relationship(
-        "ProjectGeography",
-        back_populates="project",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
-
-    project_keywords = relationship(
-        "ProjectKeyword",
-        back_populates="project",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
 
     __table_args__ = (Index("ix_project_product_internal", "product_id", "internal"),)
