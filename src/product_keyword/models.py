@@ -26,4 +26,4 @@ class ProductKeyword(Base):
 
 
 # Deprecated alias - remove once services/routers are refactored to Product
-ProjectKeyword = ProductKeyword
+ProductKeyword = ProductKeyword

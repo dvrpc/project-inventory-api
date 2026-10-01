@@ -4,7 +4,7 @@ from datetime import datetime
 
 class AttachmentResponse(BaseModel):
     attachment_id: int
-    project_id: Optional[int]
+    pub_id: Optional[int]
     file_name: str
     mime_type: Optional[str]
     file_size: Optional[int]
@@ -15,14 +15,14 @@ class AttachmentResponse(BaseModel):
         from_attributes = True
 
 class AttachmentCreateRequest(BaseModel):
-    project_id: Optional[int] = None
+    pub_id: Optional[int] = None
     file_name: str
     mime_type: Optional[str] = None
     file_size: Optional[int] = None
     file_content: Optional[bytes] = None
 
 class AttachmentUpdateRequest(BaseModel):
-    project_id: Optional[int] = None
+    pub_id: Optional[int] = None
     file_name: Optional[str] = None
     mime_type: Optional[str] = None
     file_size: Optional[int] = None

@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from src.product_keyword.schema import (
-    ProjectKeywordResponse,
-    ProjectKeywordCreateRequest,
+    ProductKeywordResponse,
+    ProductKeywordCreateRequest,
 )
 from src.product_keyword.service import get, get_all, get_all_by_product, create, delete
 from src.database.core import get_db
@@ -12,36 +12,36 @@ from src.auth.validate import require_admin
 router = APIRouter()
 
 
-@router.get("", response_model=List[ProjectKeywordResponse])
-def get_project_geographies(db: Session = Depends(get_db)):
+@router.get("", response_model=List[ProductKeywordResponse])
+def get_product_geographies(db: Session = Depends(get_db)):
     return get_all(db)
 
 
-# TODO: rename paths /project/{project_id} -> /product/{pub_id} once frontend is updated.
-@router.get("/project/{project_id}", response_model=List[ProjectKeywordResponse])
-def get_geographies_by_project(project_id: str, db: Session = Depends(get_db)):
-    return get_all_by_product(db, project_id)
+# TODO: rename paths /product/{pub_id} -> /product/{pub_id} once frontend is updated.
+@router.get("/product/{pub_id}", response_model=List[ProductKeywordResponse])
+def get_geographies_by_product(pub_id: str, db: Session = Depends(get_db)):
+    return get_all_by_product(db, pub_id)
 
 
-@router.post("", response_model=ProjectKeywordResponse)
-def create_project_keyword(
-    project_keyword_in: ProjectKeywordCreateRequest,
+@router.post("", response_model=ProductKeywordResponse)
+def create_product_keyword(
+    product_keyword_in: ProductKeywordCreateRequest,
     db: Session = Depends(get_db),
     admin=Depends(require_admin),
 ):
-    return create(db, project_keyword_in)
+    return create(db, product_keyword_in)
 
 
-@router.delete("/{project_id}/{keyword_id}")
-def delete_project_keyword(
-    project_id: str,
+@router.delete("/{pub_id}/{keyword_id}")
+def delete_product_keyword(
+    pub_id: str,
     keyword_id: int,
     db: Session = Depends(get_db),
     admin=Depends(require_admin),
 ):
-    project_keyword = get(db, project_id, keyword_id)
-    if not project_keyword:
-        raise HTTPException(status_code=404, detail="Project Keyword not found")
+    product_keyword = get(db, pub_id, keyword_id)
+    if not product_keyword:
+        raise HTTPException(status_code=404, detail="Product Keyword not found")
 
-    delete(db, project_keyword)
-    return {"detail": "Project Keyword deleted successfully"}
+    delete(db, product_keyword)
+    return {"detail": "Product Keyword deleted successfully"}

@@ -14,8 +14,8 @@ from src.product.schema import ProductFilters
 router = APIRouter()
 
 
-@router.get("/state_projects")
-def get_state_projects(
+@router.get("/state_products")
+def get_state_products(
     filters: ProductFilters = Depends(ProductFilters.as_query),
     db: Session = Depends(get_db),
     is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),
@@ -23,8 +23,8 @@ def get_state_projects(
     return get_state_counts_geojson(db, filters, is_dvrpc_user)
 
 
-@router.get("/county_projects")
-def get_county_projects(
+@router.get("/county_products")
+def get_county_products(
     filters: ProductFilters = Depends(ProductFilters.as_query),
     db: Session = Depends(get_db),
     is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),
@@ -32,8 +32,8 @@ def get_county_projects(
     return get_county_counts_geojson(db, filters, is_dvrpc_user)
 
 
-@router.get("/mcd_phicpa_projects")
-def get_mcd_phicpa_projects(
+@router.get("/mcd_phicpa_products")
+def get_mcd_phicpa_products(
     filters: ProductFilters = Depends(ProductFilters.as_query),
     db: Session = Depends(get_db),
     is_dvrpc_user: bool = Depends(get_optional_dvrpc_user),

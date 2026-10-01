@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from src.product_keyword.schema import ProjectKeywordCreateRequest
+from src.product_keyword.schema import ProductKeywordCreateRequest
 from src.product_keyword.models import ProductKeyword
 
 
@@ -24,14 +24,14 @@ def get_all_by_product(db: Session, pub_id: str):
     )
 
 
-def create(db: Session, project_keyword_in: ProjectKeywordCreateRequest):
-    project_keyword = ProductKeyword(**project_keyword_in.model_dump())
-    db.add(project_keyword)
+def create(db: Session, product_keyword_in: ProductKeywordCreateRequest):
+    product_keyword = ProductKeyword(**product_keyword_in.model_dump())
+    db.add(product_keyword)
     db.commit()
-    db.refresh(project_keyword)
-    return project_keyword
+    db.refresh(product_keyword)
+    return product_keyword
 
 
-def delete(db: Session, project_keyword: ProductKeyword):
-    db.delete(project_keyword)
+def delete(db: Session, product_keyword: ProductKeyword):
+    db.delete(product_keyword)
     db.commit()

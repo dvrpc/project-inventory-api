@@ -26,4 +26,4 @@ class ProductGeography(Base):
 
 
 # Deprecated alias - remove once services/routers are refactored to Product
-ProjectGeography = ProductGeography
+ProductGeography = ProductGeography
