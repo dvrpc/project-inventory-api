@@ -4,55 +4,55 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload, selectinload
 from src.geography.models import Geography
 from src.keyword.models import Keyword
-from src.product.models import Product
-from src.product_wpid.models import ProductWpid
-from src.product_geography.models import ProductGeography
-from src.product_keyword.models import ProductKeyword
-from src.product.schema import (
-    ProductDetailResponse,
-    ProductFilters,
+from src.project.models import Project
+from src.project_wpid.models import ProjectWpid
+from src.project_geography.models import ProjectGeography
+from src.project_keyword.models import ProjectKeyword
+from src.project.schema import (
+    ProjectDetailResponse,
+    ProjectFilters,
 )
 
 
-def map_product_detail(product: Product) -> ProductDetailResponse | None:
-    if product is None:
+def map_project_detail(project: Project) -> ProjectDetailResponse | None:
+    if project is None:
         return None
 
-    return ProductDetailResponse(
-        pub_id=product.pub_id,
-        typecode=product.typecode,
-        pub_num=product.pub_num,
-        title=product.title,
-        subtitle=product.subtitle,
-        abstract=product.abstract,
-        createdate=product.createdate,
-        livedate=product.livedate,
-        lastupdatedate=product.lastupdatedate,
-        pub_date=product.pub_date,
-        s1=product.s1,
-        s1_id=product.s1_id,
-        status=product.status,
-        wpids=product.wpids,
-        geographies=[pg.geography for pg in product.product_geographies],
-        keywords=[pk.keyword for pk in product.product_keywords],
+    return ProjectDetailResponse(
+        pub_id=project.pub_id,
+        typecode=project.typecode,
+        pub_num=project.pub_num,
+        title=project.title,
+        subtitle=project.subtitle,
+        abstract=project.abstract,
+        createdate=project.createdate,
+        livedate=project.livedate,
+        lastupdatedate=project.lastupdatedate,
+        pub_date=project.pub_date,
+        s1=project.s1,
+        s1_id=project.s1_id,
+        status=project.status,
+        wpids=project.wpids,
+        geographies=[pg.geography for pg in project.project_geographies],
+        keywords=[pk.keyword for pk in project.project_keywords],
     )
 
 
 def get(db: Session, pub_id: str):
-    product = (
-        db.query(Product)
+    project = (
+        db.query(Project)
         .options(
-            joinedload(Product.wpids),
-            joinedload(Product.product_geographies).joinedload(
-                ProductGeography.geography
+            joinedload(Project.wpids),
+            joinedload(Project.project_geographies).joinedload(
+                ProjectGeography.geography
             ),
-            joinedload(Product.product_keywords).joinedload(ProductKeyword.keyword),
+            joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
         )
-        .filter(Product.pub_id == pub_id)
+        .filter(Project.pub_id == pub_id)
         .one_or_none()
     )
 
-    return map_product_detail(product)
+    return map_project_detail(project)
 
 
 def apply_bbox_filter(query, bbox: str):
@@ -83,7 +83,7 @@ def apply_bbox_filter(query, bbox: str):
             or_(
                 Geography.geoid.in_(geoids),
                 Geography.geo_type == "regional",
-                Product.pub_id.in_(custom_study_area_pub_ids),
+                Project.pub_id.in_(custom_study_area_pub_ids),
             )
         ),
         [location_id for _, location_id in locations],
@@ -110,7 +110,7 @@ def apply_geographies_filter(query, geographies: str, db: Session):
     return query.filter(
         or_(
             Geography.geoid.in_(expanded_geoids),
-            Product.pub_id.in_(csas_within_geoids),
+            Project.pub_id.in_(csas_within_geoids),
         )
     )
 
@@ -118,9 +118,9 @@ def apply_geographies_filter(query, geographies: str, db: Session):
 def apply_keywords_filter(query, keywords: str, db: Session):
     keyword_ids = [k.strip() for k in keywords.split(",")]
     return (
-        query.join(Product.product_keywords)
-        .join(ProductKeyword.keyword)
-        .filter(Keyword.keyword_id.in_(keyword_ids))
+        query.join(Project.project_keywords)
+        .join(ProjectKeyword.keyword)
+        .filter(Keyword.id.in_(keyword_ids))
         .distinct()
     )
 
@@ -128,8 +128,8 @@ def apply_keywords_filter(query, keywords: str, db: Session):
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
     return (
-        query.join(ProductWpid, Product.pub_id == ProductWpid.PRODUCTID)
-        .filter(ProductWpid.WORKPROGRAMID.in_(wpid_list))
+        query.join(ProjectWpid, Project.pub_id == ProjectWpid.PRODUCTID)
+        .filter(ProjectWpid.WORKPROGRAMID.in_(wpid_list))
         .distinct()
     )
 
@@ -156,22 +156,22 @@ def expand_geoids(geoids: list[str], db: Session) -> list[str]:
 
 
 def apply_filters(
-    query, filters: ProductFilters, db: Session, is_dvrpc_user: bool = False
+    query, filters: ProjectFilters, db: Session, is_dvrpc_user: bool = False
 ):
-    if filters.product:
-        query = query.filter(Product.pub_id == filters.product)
+    if filters.project:
+        query = query.filter(Project.pub_id == filters.project)
         return query
 
     query = (
-        query.join(Product.product_geographies)
-        .join(ProductGeography.geography)
+        query.join(Project.project_geographies)
+        .join(ProjectGeography.geography)
         .distinct()
     )
 
-    # Non-DVRPC users can only see products with 'live' status
+    # Non-DVRPC users can only see projects with 'live' status
 
     if not is_dvrpc_user:
-        query = query.filter(Product.status == "Live")
+        query = query.filter(Project.status == "Live")
 
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
@@ -179,11 +179,11 @@ def apply_filters(
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
-        query = query.filter(Product.status == filters.status)
+        query = query.filter(Project.status == filters.status)
     if filters.yearFrom:
-        query = query.filter(Product.pub_date >= date(int(filters.yearFrom), 1, 1))
+        query = query.filter(Project.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:
-        query = query.filter(Product.pub_date <= date(int(filters.yearTo), 12, 31))
+        query = query.filter(Project.pub_date <= date(int(filters.yearTo), 12, 31))
     if filters.wpids:
         query = apply_wpids_filter(query, filters.wpids, db)
 
@@ -191,16 +191,16 @@ def apply_filters(
 
 
 def get_all(
-    db: Session, filters: Optional[ProductFilters] = None, is_dvrpc_user: bool = False
-) -> list[ProductDetailResponse]:
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
+) -> list[ProjectDetailResponse]:
     ordered_geoids = None
 
-    query = db.query(Product).options(
-        selectinload(Product.wpids),
-        selectinload(Product.product_geographies).joinedload(
-            ProductGeography.geography
+    query = db.query(Project).options(
+        selectinload(Project.wpids),
+        selectinload(Project.project_geographies).joinedload(
+            ProjectGeography.geography
         ),
-        selectinload(Product.product_keywords).joinedload(ProductKeyword.keyword),
+        selectinload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
     )
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)
@@ -209,7 +209,7 @@ def get_all(
         query, ordered_geoids = apply_bbox_filter(query, filters.bbox)
 
     rows = query.all()
-    products = [map_product_detail(p) for p in rows]
+    projects = [map_project_detail(p) for p in rows]
 
     def normalize_date(d):
         if d is None:
@@ -220,13 +220,13 @@ def get_all(
 
     match filters.sort if filters else None:
         case "oldest":
-            products.sort(key=lambda p: normalize_date(p.pub_date))
+            projects.sort(key=lambda p: normalize_date(p.pub_date))
         case "az":
-            products.sort(key=lambda p: p.title or "")
+            projects.sort(key=lambda p: p.title or "")
         case "za":
-            products.sort(key=lambda p: p.title or "", reverse=True)
+            projects.sort(key=lambda p: p.title or "", reverse=True)
         case "newest":
-            products.sort(
+            projects.sort(
                 key=lambda p: normalize_date(p.pub_date), reverse=True
             )
         case _:
@@ -254,7 +254,7 @@ def get_all(
                 )
             )
 
-            def default_sort_key(p: ProductDetailResponse):
+            def default_sort_key(p: ProjectDetailResponse):
                 is_regional = any(g.geo_type == "regional" for g in p.geographies)
                 is_state = any(g.geo_type == "state" for g in p.geographies)
                 is_county = any(g.geo_type == "county" for g in p.geographies)
@@ -303,24 +303,24 @@ def get_all(
                 )
                 return (type_rank, proximity_rank)
 
-            products.sort(key=default_sort_key)
+            projects.sort(key=default_sort_key)
 
-    return products
+    return projects
 
 
 def get_geoids(
-    db: Session, filters: Optional[ProductFilters] = None, is_dvrpc_user: bool = False
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
 ) -> list[str]:
     query = (
         db.query(Geography.geoid)
-        .join(Geography.product_geographies)
-        .join(ProductGeography.product)
+        .join(Geography.project_geographies)
+        .join(ProjectGeography.project)
     )
     if filters:
         subquery = apply_filters(
-            db.query(Product.pub_id), filters, db, is_dvrpc_user
+            db.query(Project.pub_id), filters, db, is_dvrpc_user
         ).scalar_subquery()
-        query = query.filter(Product.pub_id.in_(subquery))
+        query = query.filter(Project.pub_id.in_(subquery))
 
         if filters.geographies:
             geoids = [g.strip() for g in filters.geographies.split(",")]

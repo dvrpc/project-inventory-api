@@ -15,4 +15,4 @@ class Recommendation(Base, TimeStampMixin):
     )
     description = Column(String(4000), nullable=False)
 
-    # product = relationship("Product", back_populates="recommendations")
+    # project = relationship("Project", back_populates="recommendations")

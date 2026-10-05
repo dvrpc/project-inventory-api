@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from src.database.gis import SessionLocal
 from sqlalchemy import text
 from pathlib import Path
-from src.product.schema import ProductFilters
-from src.product.models import Product
-import src.product.service as product_service
+from src.project.schema import ProjectFilters
+from src.project.models import Project
+import src.project.service as project_service
 import json
 from collections import Counter, defaultdict
 from src.csa.service import get_csas_by_county
@@ -173,30 +173,30 @@ def get_custom_study_area_pub_ids_in_bounding_box(
     ]
 
 
-def get_state_counts_geojson(db: Session, filters: ProductFilters, is_dvrpc_user: bool):
+def get_state_counts_geojson(db: Session, filters: ProjectFilters, is_dvrpc_user: bool):
     json_file_path = current_dir / "geojson" / "state_centroids.geojson"
     with open(json_file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    geoids = product_service.get_geoids(db, filters, is_dvrpc_user)
+    geoids = project_service.get_geoids(db, filters, is_dvrpc_user)
     state_geoid_counts = Counter(geoids)
 
     for feature in data.get("features"):
         geoid = feature["properties"]["geoid"]
         count = state_geoid_counts.get(geoid)
-        feature["properties"]["product_count"] = count
+        feature["properties"]["project_count"] = count
 
     return data
 
 
 def get_county_counts_geojson(
-    db: Session, filters: ProductFilters, is_dvrpc_user: bool
+    db: Session, filters: ProjectFilters, is_dvrpc_user: bool
 ):
     json_file_path = current_dir / "geojson" / "county_centroids.geojson"
     with open(json_file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    geoids = product_service.get_geoids(db, filters, is_dvrpc_user)
+    geoids = project_service.get_geoids(db, filters, is_dvrpc_user)
 
     county_geoids_by_county = defaultdict(list)
     mcd_geoids_by_county = defaultdict(list)
@@ -206,17 +206,17 @@ def get_county_counts_geojson(
         for csa_count in csa_counts_by_county
         for pub_id in csa_count["pub_ids"].split(",")
     }
-    csa_products = db.query(Product.pub_id).filter(
-        Product.pub_id.in_(csa_pub_ids)
+    csa_projects = db.query(Project.pub_id).filter(
+        Project.pub_id.in_(csa_pub_ids)
     )
     if filters:
-        csa_products = product_service.apply_filters(
-            csa_products, filters, db, is_dvrpc_user
+        csa_projects = project_service.apply_filters(
+            csa_projects, filters, db, is_dvrpc_user
         )
     filtered_csa_pub_ids = {
-        pub_id for (pub_id,) in csa_products.all() if pub_id is not None
+        pub_id for (pub_id,) in csa_projects.all() if pub_id is not None
     }
-    csa_product_counts_by_geoid = defaultdict(
+    csa_project_counts_by_geoid = defaultdict(
         int,
         {
             csa_count["fips"]: len(
@@ -239,13 +239,13 @@ def get_county_counts_geojson(
         geoid = feature["properties"]["geoid"]
         county_geoids = county_geoids_by_county.get(geoid, [])
         mcd_geoids = mcd_geoids_by_county.get(geoid, [])
-        feature["properties"]["county_product_count"] = len(county_geoids)
-        total_product_count = len(county_geoids) + len(mcd_geoids)
+        feature["properties"]["county_project_count"] = len(county_geoids)
+        total_project_count = len(county_geoids) + len(mcd_geoids)
         
-        if geoid in csa_product_counts_by_geoid:
-            total_product_count += csa_product_counts_by_geoid[geoid]
+        if geoid in csa_project_counts_by_geoid:
+            total_project_count += csa_project_counts_by_geoid[geoid]
 
-        feature["properties"]["total_product_count"] = total_product_count
+        feature["properties"]["total_project_count"] = total_project_count
 
         feature["properties"]["county_geoids"] = ",".join(county_geoids)
         feature["properties"]["other_geoids"] = ",".join(mcd_geoids)
@@ -254,19 +254,19 @@ def get_county_counts_geojson(
 
 
 def get_mcd_phicpa_counts_geojson(
-    db: Session, filters: ProductFilters, is_dvrpc_user: bool
+    db: Session, filters: ProjectFilters, is_dvrpc_user: bool
 ):
     json_file_path = current_dir / "geojson" / "mcd_phicpa_centroids.geojson"
     with open(json_file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    geoids = product_service.get_geoids(db, filters, is_dvrpc_user)
+    geoids = project_service.get_geoids(db, filters, is_dvrpc_user)
     mcd_geoid_counts = Counter(geoids)
 
     for feature in data.get("features"):
         geoid = feature["properties"]["geoid"]
         count = mcd_geoid_counts.get(geoid)
-        feature["properties"]["product_count"] = count
+        feature["properties"]["project_count"] = count
         feature["properties"]["geoids"] = geoid if count else ""
 
     return data

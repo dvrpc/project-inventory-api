@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Date
 from src.database.core import Base
 
 
-class ProductWpid(Base):
+class ProjectWpid(Base):
     __tablename__ = "PRODUCTS_WPID"
 
     PRODUCTID = Column(String(20), nullable=False, primary_key=True)

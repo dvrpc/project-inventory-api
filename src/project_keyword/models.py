@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from src.database.core import Base
 
 
-class ProductKeyword(Base):
+class ProjectKeyword(Base):
     __tablename__ = "product_keyword"
 
     pub_id = Column(
@@ -21,9 +21,5 @@ class ProductKeyword(Base):
         index=True,
     )
 
-    product = relationship("Product", back_populates="product_keywords")
-    keyword = relationship("Keyword", back_populates="product_keywords")
-
-
-# Deprecated alias - remove once services/routers are refactored to Product
-ProductKeyword = ProductKeyword
+    project = relationship("Project", back_populates="project_keywords")
+    keyword = relationship("Keyword", back_populates="project_keywords")

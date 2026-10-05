@@ -18,4 +18,4 @@ class Attachment(Base, TimeStampMixin):
     file_size = Column(Integer, nullable=True)
     file_content = Column(LargeBinary, nullable=True)
 
-    # product = relationship("Product", back_populates="attachments")
+    # project = relationship("Project", back_populates="attachments")

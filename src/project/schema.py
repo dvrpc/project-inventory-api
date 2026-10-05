@@ -5,7 +5,7 @@ from src.geography.schema import GeographyResponse
 from src.keyword.schema import KeywordResponse
 
 
-class ProductResponse(BaseModel):
+class ProjectResponse(BaseModel):
     pub_id: str
     typecode: str
     pub_num: str
@@ -35,17 +35,17 @@ class ProductResponse(BaseModel):
         from_attributes = True
 
 
-class ProductDetailResponse(ProductResponse):
+class ProjectDetailResponse(ProjectResponse):
     geographies: list[GeographyResponse] = []
     keywords: list[KeywordResponse] = []
 
 
-class ProductFilters(BaseModel):
+class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
     geographies: Optional[str] = None
     keywords: Optional[str] = None
     sort: Optional[str] = None
-    product: Optional[str] = None
+    project: Optional[str] = None
     status: Optional[str] = None
     zoom: Optional[str] = None
     wpids: Optional[str] = None
@@ -63,9 +63,9 @@ class ProductFilters(BaseModel):
         zoom: Optional[str] = None,
         yearFrom: Optional[str] = None,
         yearTo: Optional[str] = None,
-        product: Optional[str] = None,
+        project: Optional[str] = None,
         wpids: Optional[str] = None,
-    ) -> "ProductFilters":
+    ) -> "ProjectFilters":
 
         return cls(
             bbox=bbox,
@@ -76,6 +76,6 @@ class ProductFilters(BaseModel):
             sort=sort,
             yearFrom=yearFrom,
             yearTo=yearTo,
-            product=product,
+            project=project,
             wpids=wpids,
         )
