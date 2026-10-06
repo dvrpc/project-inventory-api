@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 
 class ProjectGeographyResponse(BaseModel):
-    project_id: int
-    geography_id: int
+    pub_id: str
+    geoid: str
 
     class Config:
         from_attributes = True
 
 class ProjectGeographyCreateRequest(BaseModel):
-    project_id: int
-    geography_id: int
+    pub_id: str
+    geoid: str

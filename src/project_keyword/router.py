@@ -13,13 +13,13 @@ router = APIRouter()
 
 
 @router.get("", response_model=List[ProjectKeywordResponse])
-def get_project_geographies(db: Session = Depends(get_db)):
+def get_project_keywords(db: Session = Depends(get_db)):
     return get_all(db)
 
 
-@router.get("/project/{project_id}", response_model=List[ProjectKeywordResponse])
-def get_geographies_by_project(project_id: int, db: Session = Depends(get_db)):
-    return get_all_by_project(db, project_id)
+@router.get("/project/{pub_id}", response_model=List[ProjectKeywordResponse])
+def get_keywords_by_project(pub_id: str, db: Session = Depends(get_db)):
+    return get_all_by_project(db, pub_id)
 
 
 @router.post("", response_model=ProjectKeywordResponse)
@@ -31,14 +31,14 @@ def create_project_keyword(
     return create(db, project_keyword_in)
 
 
-@router.delete("/{project_id}/{keyword_id}")
+@router.delete("/{pub_id}/{keyword_id}")
 def delete_project_keyword(
-    project_id: int,
+    pub_id: str,
     keyword_id: int,
     db: Session = Depends(get_db),
     admin=Depends(require_admin),
 ):
-    project_keyword = get(db, project_id, keyword_id)
+    project_keyword = get(db, pub_id, keyword_id)
     if not project_keyword:
         raise HTTPException(status_code=404, detail="Project Keyword not found")
 

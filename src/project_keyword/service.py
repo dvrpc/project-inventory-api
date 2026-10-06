@@ -3,11 +3,11 @@ from src.project_keyword.schema import ProjectKeywordCreateRequest
 from src.project_keyword.models import ProjectKeyword
 
 
-def get(db: Session, project_id, keyword_id):
+def get(db: Session, pub_id, keyword_id):
     return (
         db.query(ProjectKeyword)
         .filter(
-            ProjectKeyword.project_id == project_id,
+            ProjectKeyword.pub_id == pub_id,
             ProjectKeyword.keyword_id == keyword_id,
         )
         .one_or_none()
@@ -18,9 +18,9 @@ def get_all(db: Session):
     return db.query(ProjectKeyword).all()
 
 
-def get_all_by_project(db: Session, project_id: int):
+def get_all_by_project(db: Session, pub_id: str):
     return (
-        db.query(ProjectKeyword).filter(ProjectKeyword.project_id == project_id).all()
+        db.query(ProjectKeyword).filter(ProjectKeyword.pub_id == pub_id).all()
     )
 
 

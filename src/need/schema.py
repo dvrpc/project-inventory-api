@@ -4,7 +4,7 @@ from datetime import datetime
 
 class NeedResponse(BaseModel):
     need_id: int
-    project_id: int
+    pub_id: int
     description: str
     created_at: datetime
     updated_at: datetime
@@ -13,9 +13,9 @@ class NeedResponse(BaseModel):
         from_attributes = True
 
 class NeedCreateRequest(BaseModel):
-    project_id: int
+    pub_id: int
     description: str
 
 class NeedUpdateRequest(BaseModel):
-    project_id: Optional[int] = None
+    pub_id: Optional[int] = None
     description: Optional[str] = None

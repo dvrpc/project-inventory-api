@@ -3,12 +3,12 @@ from src.project_geography.schema import ProjectGeographyCreateRequest
 from src.project_geography.models import ProjectGeography
 
 
-def get(db: Session, project_id, geography_id):
+def get(db: Session, pub_id, geoid):
     return (
         db.query(ProjectGeography)
         .filter(
-            ProjectGeography.project_id == project_id,
-            ProjectGeography.geography_id == geography_id,
+            ProjectGeography.pub_id == pub_id,
+            ProjectGeography.geoid == geoid,
         )
         .one_or_none()
     )
@@ -18,10 +18,10 @@ def get_all(db: Session):
     return db.query(ProjectGeography).all()
 
 
-def get_all_by_project(db: Session, project_id: int):
+def get_all_by_project(db: Session, pub_id: str):
     return (
         db.query(ProjectGeography)
-        .filter(ProjectGeography.project_id == project_id)
+        .filter(ProjectGeography.pub_id == pub_id)
         .all()
     )
 

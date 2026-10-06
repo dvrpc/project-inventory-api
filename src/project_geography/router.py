@@ -23,9 +23,9 @@ def get_project_geographies(db: Session = Depends(get_db)):
     return get_all(db)
 
 
-@router.get("/project/{project_id}", response_model=List[ProjectGeographyResponse])
-def get_geographies_by_project(project_id: int, db: Session = Depends(get_db)):
-    return get_all_by_project(db, project_id)
+@router.get("/project/{pub_id}", response_model=List[ProjectGeographyResponse])
+def get_geographies_by_project(pub_id: str, db: Session = Depends(get_db)):
+    return get_all_by_project(db, pub_id)
 
 
 @router.post("", response_model=ProjectGeographyResponse)
@@ -37,14 +37,14 @@ def create_project_geography(
     return create(db, project_geography_in)
 
 
-@router.delete("/{project_id}/{geography_id}")
+@router.delete("/{pub_id}/{geoid}")
 def delete_project_geography(
-    project_id: int,
-    geography_id: int,
+    pub_id: str,
+    geoid: str,
     db: Session = Depends(get_db),
     admin=Depends(require_admin),
 ):
-    project_geography = get(db, project_id, geography_id)
+    project_geography = get(db, pub_id, geoid)
     if not project_geography:
         raise HTTPException(status_code=404, detail="Project Geography not found")
 

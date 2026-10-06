@@ -26,37 +26,37 @@ def get_geography(geography_id: int, db: Session = Depends(get_db)):
     return geography
 
 
-@router.post("", response_model=GeographyResponse, status_code=201)
-def create_geography(
-    geography_in: GeographyCreateRequest,
-    db: Session = Depends(get_db),
-    admin=Depends(require_admin),
-):
-    return create(db, geography_in)
+# @router.post("", response_model=GeographyResponse, status_code=201)
+# def create_geography(
+#     geography_in: GeographyCreateRequest,
+#     db: Session = Depends(get_db),
+#     admin=Depends(require_admin),
+# ):
+#     return create(db, geography_in)
 
 
-@router.put("/{geography_id}", response_model=GeographyResponse)
-def update_geography(
-    geography_id: int,
-    geography_in: GeographyUpdateRequest,
-    db: Session = Depends(get_db),
-    admin=Depends(require_admin),
-):
-    geography = get(db, geography_id)
-    if not geography:
-        raise HTTPException(status_code=404, detail="Geography not found")
+# @router.put("/{geography_id}", response_model=GeographyResponse)
+# def update_geography(
+#     geography_id: int,
+#     geography_in: GeographyUpdateRequest,
+#     db: Session = Depends(get_db),
+#     admin=Depends(require_admin),
+# ):
+#     geography = get(db, geography_id)
+#     if not geography:
+#         raise HTTPException(status_code=404, detail="Geography not found")
 
-    return update(db, geography, geography_in)
+#     return update(db, geography, geography_in)
 
 
-@router.delete("/{geography_id}")
-def delete_geography(
-    geography_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)
-):
-    geography = get(db, geography_id)
+# @router.delete("/{geography_id}")
+# def delete_geography(
+#     geography_id: int, db: Session = Depends(get_db), admin=Depends(require_admin)
+# ):
+#     geography = get(db, geography_id)
 
-    if not geography:
-        raise HTTPException(status_code=404, detail="Geography not found")
+#     if not geography:
+#         raise HTTPException(status_code=404, detail="Geography not found")
 
-    delete(db, geography)
-    return {"detail": "Geography deleted successfully"}
+#     delete(db, geography)
+#     return {"detail": "Geography deleted successfully"}

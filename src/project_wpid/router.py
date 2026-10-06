@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 
-from src.product_wpid.service import get_all_wpids
+from src.project_wpid.service import get_all_wpids
 from src.database.core import get_db
 
 router = APIRouter()

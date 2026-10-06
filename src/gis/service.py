@@ -206,15 +206,15 @@ def get_county_counts_geojson(
         for csa_count in csa_counts_by_county
         for pub_id in csa_count["pub_ids"].split(",")
     }
-    csa_projects = db.query(Project.product_id).filter(
-        Project.product_id.in_(csa_pub_ids)
+    csa_projects = db.query(Project.pub_id).filter(
+        Project.pub_id.in_(csa_pub_ids)
     )
     if filters:
         csa_projects = project_service.apply_filters(
             csa_projects, filters, db, is_dvrpc_user
         )
     filtered_csa_pub_ids = {
-        product_id for (product_id,) in csa_projects.all() if product_id is not None
+        pub_id for (pub_id,) in csa_projects.all() if pub_id is not None
     }
     csa_project_counts_by_geoid = defaultdict(
         int,

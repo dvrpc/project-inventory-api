@@ -12,4 +12,3 @@ class Agency(Base, TimeStampMixin):
     email = Column(String(250), nullable=True)
     phone = Column(String(5200), nullable=True)
 
-    external_products = relationship("ExternalProduct", back_populates="agency")

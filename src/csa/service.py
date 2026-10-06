@@ -10,7 +10,6 @@ def get_csa_polygon(pub_id: str):
         """)
     with SessionLocal() as db:
         result = db.execute(sql, {"pub_id": pub_id})
-        print(result)
         row = result.mappings().fetchone()
         return dict(row) if row is not None else None
 

@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 class KeywordResponse(BaseModel):
-    keyword_id: int
+    id: int
     name: str
 
     class Config:

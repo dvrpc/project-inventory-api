@@ -4,7 +4,7 @@ from src.keyword.models import Keyword
 
 
 def get(db: Session, keyword_id: int):
-    return db.query(Keyword).filter(Keyword.keyword_id == keyword_id).one_or_none()
+    return db.query(Keyword).filter(Keyword.id == keyword_id).one_or_none()
 
 
 def get_all(db: Session):

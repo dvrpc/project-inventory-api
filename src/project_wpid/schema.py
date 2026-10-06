@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import datetime
 
 
-class ProductWpidResponse(BaseModel):
+class ProjectWpidResponse(BaseModel):
     PRODUCTID: str
     WORKPROGRAMID: str
     ID: int

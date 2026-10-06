@@ -1,65 +1,63 @@
 from datetime import date, datetime
 from typing import Optional
-from sqlalchemy import or_, and_
+from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload, selectinload
 from src.geography.models import Geography
 from src.keyword.models import Keyword
-from src.product.models import Product
-from src.product_wpid.models import ProductWpid
+from src.project.models import Project
+from src.project_wpid.models import ProjectWpid
 from src.project_geography.models import ProjectGeography
 from src.project_keyword.models import ProjectKeyword
 from src.project.schema import (
-    ProjectCreateRequest,
+    ProjectDetailResponse,
     ProjectFilters,
-    ProjectUpdateRequest,
-    ProjectResponse,
-)
-from src.project.models import Project
-from src.gis.service import (
-    get_bounding_box_locations,
-    get_csas_within_geoids,
 )
 
 
-def map_project(project: Project) -> ProjectResponse:
-    selected_product = project.product if project.internal else project.external_product
+def map_project_detail(project: Project) -> ProjectDetailResponse | None:
+    if project is None:
+        return None
 
-    return ProjectResponse(
-        project_id=project.project_id,
-        internal=project.internal,
-        created_at=project.created_at,
-        updated_at=project.updated_at,
-        product=selected_product,
-        needs=project.needs,
-        recommendations=project.recommendations,
+    return ProjectDetailResponse(
+        pub_id=project.pub_id,
+        typecode=project.typecode,
+        pub_num=project.pub_num,
+        title=project.title,
+        subtitle=project.subtitle,
+        abstract=project.abstract,
+        createdate=project.createdate,
+        livedate=project.livedate,
+        lastupdatedate=project.lastupdatedate,
+        pub_date=project.pub_date,
+        s1=project.s1,
+        s1_id=project.s1_id,
+        status=project.status,
+        wpids=project.wpids,
         geographies=[pg.geography for pg in project.project_geographies],
         keywords=[pk.keyword for pk in project.project_keywords],
     )
 
 
-def get_unmapped(db: Session, project_id: int):
-    return db.query(Project).filter(Project.project_id == project_id).one_or_none()
-
-
-def get(db: Session, project_id: int):
+def get(db: Session, pub_id: str):
     project = (
         db.query(Project)
         .options(
-            joinedload(Project.product),
-            joinedload(Project.external_product),
+            joinedload(Project.wpids),
             joinedload(Project.project_geographies).joinedload(
                 ProjectGeography.geography
             ),
             joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
         )
-        .filter(Project.project_id == project_id)
+        .filter(Project.pub_id == pub_id)
         .one_or_none()
     )
 
-    return map_project(project)
+    return map_project_detail(project)
 
 
 def apply_bbox_filter(query, bbox: str):
+    from src.gis.service import get_bounding_box_locations
+
     coords = bbox.split(",")
     locations = get_bounding_box_locations(
         float(coords[0]), float(coords[1]), float(coords[2]), float(coords[3])
@@ -85,7 +83,7 @@ def apply_bbox_filter(query, bbox: str):
             or_(
                 Geography.geoid.in_(geoids),
                 Geography.geo_type == "regional",
-                Project.product_id.in_(custom_study_area_pub_ids),
+                Project.pub_id.in_(custom_study_area_pub_ids),
             )
         ),
         [location_id for _, location_id in locations],
@@ -93,6 +91,8 @@ def apply_bbox_filter(query, bbox: str):
 
 
 def apply_geographies_filter(query, geographies: str, db: Session):
+    from src.gis.service import get_csas_within_geoids
+
     geoids = [g.strip() for g in geographies.split(",")]
     is_regional = any(g == "1" for g in geoids)
     is_custom_study_area = any(g == "0" for g in geoids)
@@ -105,12 +105,11 @@ def apply_geographies_filter(query, geographies: str, db: Session):
 
     expanded_geoids = expand_geoids(geoids, db)
     csas_within_geoids = get_csas_within_geoids(expanded_geoids)
-    print(geoids)
-    print(csas_within_geoids)
+   
     return query.filter(
         or_(
             Geography.geoid.in_(expanded_geoids),
-            Project.product_id.in_(csas_within_geoids),
+            Project.pub_id.in_(csas_within_geoids),
         )
     )
 
@@ -120,7 +119,7 @@ def apply_keywords_filter(query, keywords: str, db: Session):
     return (
         query.join(Project.project_keywords)
         .join(ProjectKeyword.keyword)
-        .filter(Keyword.keyword_id.in_(keyword_ids))
+        .filter(Keyword.id.in_(keyword_ids))
         .distinct()
     )
 
@@ -128,8 +127,8 @@ def apply_keywords_filter(query, keywords: str, db: Session):
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
     return (
-        query.join(ProductWpid, Product.pub_id == ProductWpid.PRODUCTID)
-        .filter(ProductWpid.WORKPROGRAMID.in_(wpid_list))
+        query.join(ProjectWpid, Project.pub_id == ProjectWpid.PRODUCTID)
+        .filter(ProjectWpid.WORKPROGRAMID.in_(wpid_list))
         .distinct()
     )
 
@@ -159,20 +158,19 @@ def apply_filters(
     query, filters: ProjectFilters, db: Session, is_dvrpc_user: bool = False
 ):
     if filters.project:
-        query = query.filter(Project.project_id == filters.project)
+        query = query.filter(Project.pub_id == filters.project)
         return query
 
     query = (
         query.join(Project.project_geographies)
         .join(ProjectGeography.geography)
-        .join(Project.product)
         .distinct()
     )
 
     # Non-DVRPC users can only see projects with 'live' status
 
     if not is_dvrpc_user:
-        query = query.filter(Product.status == "Live")
+        query = query.filter(Project.status == "Live")
 
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
@@ -180,11 +178,11 @@ def apply_filters(
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
-        query = query.filter(Product.status == filters.status)
+        query = query.filter(Project.status == filters.status)
     if filters.yearFrom:
-        query = query.filter(Product.pub_date >= date(int(filters.yearFrom), 1, 1))
+        query = query.filter(Project.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:
-        query = query.filter(Product.pub_date <= date(int(filters.yearTo), 12, 31))
+        query = query.filter(Project.pub_date <= date(int(filters.yearTo), 12, 31))
     if filters.wpids:
         query = apply_wpids_filter(query, filters.wpids, db)
 
@@ -193,14 +191,11 @@ def apply_filters(
 
 def get_all(
     db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
-) -> list[ProjectResponse]:
+) -> list[ProjectDetailResponse]:
     ordered_geoids = None
 
     query = db.query(Project).options(
-        selectinload(Project.product).selectinload(Product.wpids),
-        joinedload(Project.external_product),
-        selectinload(Project.needs),
-        selectinload(Project.recommendations),
+        selectinload(Project.wpids),
         selectinload(Project.project_geographies).joinedload(
             ProjectGeography.geography
         ),
@@ -209,11 +204,11 @@ def get_all(
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)
 
-    if filters.bbox:
+    if filters and filters.bbox:
         query, ordered_geoids = apply_bbox_filter(query, filters.bbox)
 
     rows = query.all()
-    projects = [map_project(p) for p in rows]
+    projects = [map_project_detail(p) for p in rows]
 
     def normalize_date(d):
         if d is None:
@@ -224,20 +219,20 @@ def get_all(
 
     match filters.sort if filters else None:
         case "oldest":
-            projects.sort(key=lambda p: normalize_date(p.product.pub_date))
+            projects.sort(key=lambda p: normalize_date(p.pub_date))
         case "az":
-            projects.sort(key=lambda p: p.product.title or "")
+            projects.sort(key=lambda p: p.title or "")
         case "za":
-            projects.sort(key=lambda p: p.product.title or "", reverse=True)
+            projects.sort(key=lambda p: p.title or "", reverse=True)
         case "newest":
             projects.sort(
-                key=lambda p: normalize_date(p.product.pub_date), reverse=True
+                key=lambda p: normalize_date(p.pub_date), reverse=True
             )
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
             # Each grouping is sorted by geography proximity to the center of the bounding box,
             # muni and csa get the same rank
-            zoom = int(filters.zoom) if filters.zoom else 7
+            zoom = int(filters.zoom) if filters and filters.zoom else 7
 
             geoid_order = (
                 {geoid: i for i, geoid in enumerate(ordered_geoids)}
@@ -245,14 +240,20 @@ def get_all(
                 else None
             )
 
-            state_selected = filters.geographies and any(
-                len(g.strip()) == 2 for g in filters.geographies.split(",")
+            state_selected = (
+                filters.geographies
+                and any(
+                    len(g.strip()) == 2 for g in filters.geographies.split(",")
+                )
             )
-            county_selected = filters.geographies and any(
-                len(g.strip()) == 5 for g in filters.geographies.split(",")
+            county_selected = (
+                filters.geographies
+                and any(
+                    len(g.strip()) == 5 for g in filters.geographies.split(",")
+                )
             )
 
-            def default_sort_key(p: ProjectResponse):
+            def default_sort_key(p: ProjectDetailResponse):
                 is_regional = any(g.geo_type == "regional" for g in p.geographies)
                 is_state = any(g.geo_type == "state" for g in p.geographies)
                 is_county = any(g.geo_type == "county" for g in p.geographies)
@@ -290,9 +291,8 @@ def get_all(
                             if g.geoid in geoid_order
                         ]
                         + (
-                            [geoid_order[p.product.pub_id]]
-                            if p.product is not None
-                            and p.product.pub_id in geoid_order
+                            [geoid_order[p.pub_id]]
+                            if p.pub_id in geoid_order
                             else []
                         ),
                         default=float("inf"),
@@ -300,8 +300,6 @@ def get_all(
                     if geoid_order
                     else 0
                 )
-                # if geoid_order:
-                #     return (proximity_rank, type_rank)
                 return (type_rank, proximity_rank)
 
             projects.sort(key=default_sort_key)
@@ -319,9 +317,9 @@ def get_geoids(
     )
     if filters:
         subquery = apply_filters(
-            db.query(Project.project_id), filters, db, is_dvrpc_user
+            db.query(Project.pub_id), filters, db, is_dvrpc_user
         ).scalar_subquery()
-        query = query.filter(Project.project_id.in_(subquery))
+        query = query.filter(Project.pub_id.in_(subquery))
 
         if filters.geographies:
             geoids = [g.strip() for g in filters.geographies.split(",")]
@@ -330,27 +328,3 @@ def get_geoids(
             )
 
     return [row.geoid for row in query.all()]
-
-
-def create(db: Session, project_in: ProjectCreateRequest):
-    project = Project(**project_in.model_dump())
-    db.add(project)
-    db.commit()
-    db.refresh(project)
-    return map_project(project)
-
-
-def update(db: Session, project: Project, project_in: ProjectUpdateRequest):
-    update_data = project_in.model_dump(exclude_unset=True)
-
-    for field, value in update_data.items():
-        setattr(project, field, value)
-
-    db.commit()
-    db.refresh(project)
-    return map_project(project)
-
-
-def delete(db: Session, project: Project):
-    db.delete(project)
-    db.commit()

@@ -7,7 +7,12 @@ class Need(Base, TimeStampMixin):
     __tablename__ = "need"
 
     need_id = Column(Integer, primary_key=True, index=True)
-    project_id = Column(Integer, ForeignKey("project.project_id"), nullable=False)
+    pub_id = Column(
+        String(20),
+        ForeignKey("TBLPUBLICATION.pub_id"),
+        nullable=False,
+        index=True,
+    )
     description = Column(String(4000), nullable=False)
 
-    projects = relationship("Project", back_populates="needs")
+    # project = relationship("Project", back_populates="needs")

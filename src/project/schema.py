@@ -1,40 +1,43 @@
-from pydantic import BaseModel, Field
-from typing import Optional, Union, List
+from pydantic import BaseModel, field_validator
+from typing import Optional
 from datetime import datetime
 from src.geography.schema import GeographyResponse
 from src.keyword.schema import KeywordResponse
-from src.need.schema import NeedResponse
-from src.product.schema import ProductResponse
-from src.external_product.schema import ExternalProductResponse
-from src.recommendation.schema import RecommendationResponse
 
 
 class ProjectResponse(BaseModel):
-    project_id: int
-    internal: bool
-    created_at: datetime
-    updated_at: datetime
+    pub_id: str
+    typecode: str
+    pub_num: str
+    title: Optional[str]
+    subtitle: Optional[str]
+    keywords: Optional[str]
+    abstract: Optional[str]
+    createdate: Optional[datetime]
+    livedate: Optional[datetime]
+    lastupdatedate: Optional[datetime]
+    pub_date: Optional[datetime]
+    s1: Optional[str]
+    s1_id: Optional[str]
+    status: Optional[str]
+    wpids: Optional[list[str]]
 
-    product: Optional[Union[ProductResponse, ExternalProductResponse]]
-    needs: List[NeedResponse] = Field(default_factory=list)
-    recommendations: List[RecommendationResponse] = Field(default_factory=list)
-    geographies: List[GeographyResponse] = Field(default_factory=list)
-    keywords: List[KeywordResponse] = Field(default_factory=list)
+    @field_validator("wpids", mode="before")
+    @classmethod
+    def extract_wpids(cls, v):
+        if not v:
+            return v
+        return [
+            item.WORKPROGRAMID if hasattr(item, "WORKPROGRAMID") else item for item in v
+        ]
 
     class Config:
         from_attributes = True
 
 
-class ProjectCreateRequest(BaseModel):
-    product_id: Optional[str] = None
-    external_product_id: Optional[int] = None
-    internal: bool
-
-
-class ProjectUpdateRequest(BaseModel):
-    product_id: Optional[str] = None
-    external_product_id: Optional[int] = None
-    internal: Optional[bool] = None
+class ProjectDetailResponse(ProjectResponse):
+    geographies: list[GeographyResponse] = []
+    keywords: list[KeywordResponse] = []
 
 
 class ProjectFilters(BaseModel):
