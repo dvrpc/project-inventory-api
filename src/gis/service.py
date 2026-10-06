@@ -43,7 +43,7 @@ def get_bbox_from_csa(pub_id: str) -> dict | None:
                    ST_YMax(bbox) AS max_lat
             FROM (
                 SELECT ST_Transform(ST_SetSRID(ST_Extent(shape), 26918), 4326) AS bbox
-                FROM planning.product_inventory_tool_custom_study_areas_polygon
+                FROM planning.project_inventory_tool_custom_study_areas_polygon
                 WHERE pub_id = :pub_id
             ) AS envelope
         """)
@@ -119,7 +119,7 @@ def get_bounding_box_locations(
             WHERE municipality.shape && bbox.shape
             UNION ALL
             SELECT 'csa' AS location_type, pub_id AS location_id, csa.shape
-            FROM planning.product_inventory_tool_custom_study_areas_polygon AS csa
+            FROM planning.project_inventory_tool_custom_study_areas_polygon AS csa
             CROSS JOIN bbox
             WHERE csa.shape && bbox.shape
         )
@@ -278,7 +278,7 @@ def get_csas_within_geoids(geoids: list[str]) -> list[str]:
     with SessionLocal() as db:
         sql = text("""
             SELECT pub_id
-            FROM planning.product_inventory_tool_custom_study_areas_polygon
+            FROM planning.project_inventory_tool_custom_study_areas_polygon
             WHERE string_to_array(
                 regexp_replace(concat_ws(',', cnty_fips, mcd_geo), '\\s+', '', 'g'),
                 ','

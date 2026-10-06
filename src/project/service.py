@@ -105,8 +105,7 @@ def apply_geographies_filter(query, geographies: str, db: Session):
 
     expanded_geoids = expand_geoids(geoids, db)
     csas_within_geoids = get_csas_within_geoids(expanded_geoids)
-    print(geoids)
-    print(csas_within_geoids)
+   
     return query.filter(
         or_(
             Geography.geoid.in_(expanded_geoids),

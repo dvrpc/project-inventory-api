@@ -40,4 +40,4 @@ api_router.include_router(
     project_wpid_router, prefix="/project-wpid", tags=["project-wpid"]
 )
 api_router.include_router(csa_router, prefix="/csa", tags=["csa"])
-# api_router.include_router(user_router, prefix="/user", tags=["user"])
+api_router.include_router(user_router, prefix="/user", tags=["user"])
