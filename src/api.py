@@ -11,6 +11,7 @@ from src.gis.router import router as geo_router
 from src.keyword.router import router as keyword_router
 from src.project_keyword.router import router as project_keyword_router
 from src.project_wpid.router import router as project_wpid_router
+from src.topic.router import router as topic_router
 from src.csa.router import router as csa_router
 from src.user.router import router as user_router
 api_router = APIRouter()
@@ -35,6 +36,10 @@ api_router.include_router(geo_router, prefix="/gis", tags=["gis"])
 api_router.include_router(keyword_router, prefix="/keyword", tags=["keyword"])
 # api_router.include_router(
 #     project_keyword_router, prefix="/project-keyword", tags=["project-keyword"]
+# )
+api_router.include_router(topic_router, prefix="/topic", tags=["topic"])
+# api_router.include_router(
+#     project_topic_router, prefix="/project-topic", tags=["project-topic"]
 # )
 api_router.include_router(
     project_wpid_router, prefix="/project-wpid", tags=["project-wpid"]

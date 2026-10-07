@@ -8,6 +8,7 @@ from src.project.models import Project
 from src.project_wpid.models import ProjectWpid
 from src.project_geography.models import ProjectGeography
 from src.project_keyword.models import ProjectKeyword
+from src.project_topic.models import ProjectTopic
 from src.project.schema import (
     ProjectDetailResponse,
     ProjectFilters,
@@ -35,6 +36,7 @@ def map_project_detail(project: Project) -> ProjectDetailResponse | None:
         wpids=project.wpids,
         geographies=[pg.geography for pg in project.project_geographies],
         keywords=[pk.keyword for pk in project.project_keywords],
+        topics=[pt.topic for pt in project.project_topics],
     )
 
 
@@ -47,6 +49,7 @@ def get(db: Session, pub_id: str):
                 ProjectGeography.geography
             ),
             joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+            joinedload(Project.project_topics).joinedload(ProjectTopic.topic),
         )
         .filter(Project.pub_id == pub_id)
         .one_or_none()
@@ -200,6 +203,7 @@ def get_all(
             ProjectGeography.geography
         ),
         selectinload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+        selectinload(Project.project_topics).joinedload(ProjectTopic.topic),
     )
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)

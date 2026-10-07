@@ -3,6 +3,7 @@ from typing import Optional
 from datetime import datetime
 from src.geography.schema import GeographyResponse
 from src.keyword.schema import KeywordResponse
+from src.topic.schema import TopicResponse
 
 
 class ProjectResponse(BaseModel):
@@ -38,6 +39,7 @@ class ProjectResponse(BaseModel):
 class ProjectDetailResponse(ProjectResponse):
     geographies: list[GeographyResponse] = []
     keywords: list[KeywordResponse] = []
+    topics: list[TopicResponse] = []
 
 
 class ProjectFilters(BaseModel):
