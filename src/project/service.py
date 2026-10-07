@@ -13,6 +13,7 @@ from src.project.schema import (
     ProjectDetailResponse,
     ProjectFilters,
 )
+from src.topic.models import Topic
 
 
 def map_project_detail(project: Project) -> ProjectDetailResponse | None:
@@ -126,6 +127,16 @@ def apply_keywords_filter(query, keywords: str, db: Session):
         .distinct()
     )
 
+def apply_topics_filter(query, topics: str, db: Session):
+    topic_ids = [t.strip() for t in topics.split(",")]
+    print(topic_ids)
+    return (
+        query.join(Project.project_topics)
+        .join(ProjectTopic.topic)
+        .filter(Topic.topic_id.in_(topic_ids))
+        .distinct()
+    )
+
 
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
@@ -175,9 +186,11 @@ def apply_filters(
     if not is_dvrpc_user:
         query = query.filter(Project.status == "Live")
 
+    print(f"Filters: {filters}")
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
-
+    if filters.topics:
+        query = apply_topics_filter(query, filters.topics, db)
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:

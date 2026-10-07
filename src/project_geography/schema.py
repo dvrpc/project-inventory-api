@@ -7,6 +7,3 @@ class ProjectGeographyResponse(BaseModel):
     class Config:
         from_attributes = True
 
-class ProjectGeographyCreateRequest(BaseModel):
-    pub_id: str
-    geoid: str

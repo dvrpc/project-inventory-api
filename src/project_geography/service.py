@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from src.project_geography.schema import ProjectGeographyCreateRequest
 from src.project_geography.models import ProjectGeography
 
 
@@ -25,15 +24,3 @@ def get_all_by_project(db: Session, pub_id: str):
         .all()
     )
 
-
-def create(db: Session, project_geography_in: ProjectGeographyCreateRequest):
-    project_geography = ProjectGeography(**project_geography_in.model_dump())
-    db.add(project_geography)
-    db.commit()
-    db.refresh(project_geography)
-    return project_geography
-
-
-def delete(db: Session, project_geography: ProjectGeography):
-    db.delete(project_geography)
-    db.commit()

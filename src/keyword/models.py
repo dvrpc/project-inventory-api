@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from src.database.core import Base
-from src.models import TimeStampMixin
 
 class Keyword(Base):
     __tablename__ = "keyword"

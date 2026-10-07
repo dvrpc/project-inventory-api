@@ -8,8 +8,3 @@ class KeywordResponse(BaseModel):
     class Config:
         from_attributes = True
 
-class KeywordCreateRequest(BaseModel):
-    name: str
-
-class KeywordUpdateRequest(BaseModel):
-    name: Optional[str] = None
