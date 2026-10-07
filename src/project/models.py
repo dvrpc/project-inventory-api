@@ -47,3 +47,9 @@ class Project(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+    project_topics = relationship(
+        "ProjectTopic",
+        back_populates="project",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

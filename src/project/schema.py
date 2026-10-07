@@ -3,6 +3,7 @@ from typing import Optional
 from datetime import datetime
 from src.geography.schema import GeographyResponse
 from src.keyword.schema import KeywordResponse
+from src.topic.schema import TopicResponse
 
 
 class ProjectResponse(BaseModel):
@@ -11,7 +12,6 @@ class ProjectResponse(BaseModel):
     pub_num: str
     title: Optional[str]
     subtitle: Optional[str]
-    keywords: Optional[str]
     abstract: Optional[str]
     createdate: Optional[datetime]
     livedate: Optional[datetime]
@@ -38,12 +38,14 @@ class ProjectResponse(BaseModel):
 class ProjectDetailResponse(ProjectResponse):
     geographies: list[GeographyResponse] = []
     keywords: list[KeywordResponse] = []
+    topics: list[TopicResponse] = []
 
 
 class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
     geographies: Optional[str] = None
     keywords: Optional[str] = None
+    topics: Optional[str] = None
     sort: Optional[str] = None
     project: Optional[str] = None
     status: Optional[str] = None
@@ -58,6 +60,7 @@ class ProjectFilters(BaseModel):
         bbox: Optional[str] = None,
         geographies: Optional[str] = None,
         keywords: Optional[str] = None,
+        topics: Optional[str] = None,
         status: Optional[str] = None,
         sort: Optional[str] = None,
         zoom: Optional[str] = None,
@@ -71,6 +74,7 @@ class ProjectFilters(BaseModel):
             bbox=bbox,
             geographies=geographies,
             keywords=keywords,
+            topics=topics,
             status=status,
             zoom=zoom,
             sort=sort,

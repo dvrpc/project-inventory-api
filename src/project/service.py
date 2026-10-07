@@ -8,10 +8,12 @@ from src.project.models import Project
 from src.project_wpid.models import ProjectWpid
 from src.project_geography.models import ProjectGeography
 from src.project_keyword.models import ProjectKeyword
+from src.project_topic.models import ProjectTopic
 from src.project.schema import (
     ProjectDetailResponse,
     ProjectFilters,
 )
+from src.topic.models import Topic
 
 
 def map_project_detail(project: Project) -> ProjectDetailResponse | None:
@@ -35,6 +37,7 @@ def map_project_detail(project: Project) -> ProjectDetailResponse | None:
         wpids=project.wpids,
         geographies=[pg.geography for pg in project.project_geographies],
         keywords=[pk.keyword for pk in project.project_keywords],
+        topics=[pt.topic for pt in project.project_topics],
     )
 
 
@@ -47,6 +50,7 @@ def get(db: Session, pub_id: str):
                 ProjectGeography.geography
             ),
             joinedload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+            joinedload(Project.project_topics).joinedload(ProjectTopic.topic),
         )
         .filter(Project.pub_id == pub_id)
         .one_or_none()
@@ -123,6 +127,16 @@ def apply_keywords_filter(query, keywords: str, db: Session):
         .distinct()
     )
 
+def apply_topics_filter(query, topics: str, db: Session):
+    topic_ids = [t.strip() for t in topics.split(",")]
+    print(topic_ids)
+    return (
+        query.join(Project.project_topics)
+        .join(ProjectTopic.topic)
+        .filter(Topic.topic_id.in_(topic_ids))
+        .distinct()
+    )
+
 
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
@@ -172,9 +186,11 @@ def apply_filters(
     if not is_dvrpc_user:
         query = query.filter(Project.status == "Live")
 
+    print(f"Filters: {filters}")
     if filters.geographies:
         query = apply_geographies_filter(query, filters.geographies, db)
-
+    if filters.topics:
+        query = apply_topics_filter(query, filters.topics, db)
     if filters.keywords:
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
@@ -200,6 +216,7 @@ def get_all(
             ProjectGeography.geography
         ),
         selectinload(Project.project_keywords).joinedload(ProjectKeyword.keyword),
+        selectinload(Project.project_topics).joinedload(ProjectTopic.topic),
     )
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)
