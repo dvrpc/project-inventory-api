@@ -130,7 +130,6 @@ def apply_geographies_filter(query, geographies: str, db: Session, show_more: bo
     if is_custom_study_area:
         return query.filter(Geography.geo_type == "csa")
 
-    print(geoids)
     if not show_more:
         geoids = expand_geoids(geoids, db)
     csas_within_geoids = get_csas_within_geoids(original_geoids if show_more else geoids)
@@ -272,7 +271,7 @@ def get_all(
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
             # Each grouping is sorted by geography proximity to the center of the bounding box,
             # muni and csa get the same rank
-            zoom = int(filters.zoom) if filters and filters.zoom else 7
+            zoom = int(filters.zoom) if filters and filters.zoom else 8
 
             geoid_order = (
                 {geoid: i for i, geoid in enumerate(ordered_geoids)}
@@ -340,7 +339,8 @@ def get_all(
                     if geoid_order
                     else 0
                 )
-                return (type_rank, proximity_rank)
+                pub_date_rank = normalize_date(p.pub_date)
+                return (type_rank, proximity_rank, -pub_date_rank.timestamp())
 
             projects.sort(key=default_sort_key)
 
