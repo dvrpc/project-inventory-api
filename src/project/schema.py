@@ -53,6 +53,7 @@ class ProjectFilters(BaseModel):
     wpids: Optional[str] = None
     yearFrom: Optional[str] = None
     yearTo: Optional[str] = None
+    showMore: Optional[bool] = False
 
     @classmethod
     def as_query(
@@ -68,6 +69,7 @@ class ProjectFilters(BaseModel):
         yearTo: Optional[str] = None,
         project: Optional[str] = None,
         wpids: Optional[str] = None,
+        showMore: Optional[bool] = False,
     ) -> "ProjectFilters":
 
         return cls(
@@ -82,4 +84,5 @@ class ProjectFilters(BaseModel):
             yearTo=yearTo,
             project=project,
             wpids=wpids,
+            showMore=showMore
         )

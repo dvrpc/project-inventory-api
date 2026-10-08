@@ -94,10 +94,33 @@ def apply_bbox_filter(query, bbox: str):
     )
 
 
-def apply_geographies_filter(query, geographies: str, db: Session):
+def apply_geographies_filter(query, geographies: str, db: Session, show_more: bool = False):
     from src.gis.service import get_csas_within_geoids
 
     geoids = [g.strip() for g in geographies.split(",")]
+
+    # skip show more if more than 1 geography is selected
+    if len(geoids) > 1:
+        show_more = False
+
+    # skip show more if no muni geoids present
+    if show_more:
+        muni_geoids = [g for g in geoids if len(g) == 10]
+        if not muni_geoids:
+            show_more = False
+
+    # Expands the geoids to include parents, for use
+    # in "show more" section.
+    original_geoids = geoids.copy()
+    if show_more:
+        show_more_geoids = []
+        for geoid in geoids:
+            if len(geoid) == 10:
+                show_more_geoids.append(geoid[0:5]) 
+                show_more_geoids.append(geoid[0:2]) 
+
+        geoids = list(set(show_more_geoids + geoids))
+
     is_regional = any(g == "1" for g in geoids)
     is_custom_study_area = any(g == "0" for g in geoids)
 
@@ -107,12 +130,14 @@ def apply_geographies_filter(query, geographies: str, db: Session):
     if is_custom_study_area:
         return query.filter(Geography.geo_type == "csa")
 
-    expanded_geoids = expand_geoids(geoids, db)
-    csas_within_geoids = get_csas_within_geoids(expanded_geoids)
+    print(geoids)
+    if not show_more:
+        geoids = expand_geoids(geoids, db)
+    csas_within_geoids = get_csas_within_geoids(original_geoids if show_more else geoids)
    
     return query.filter(
         or_(
-            Geography.geoid.in_(expanded_geoids),
+            Geography.geoid.in_(geoids),
             Project.pub_id.in_(csas_within_geoids),
         )
     )
@@ -129,7 +154,6 @@ def apply_keywords_filter(query, keywords: str, db: Session):
 
 def apply_topics_filter(query, topics: str, db: Session):
     topic_ids = [t.strip() for t in topics.split(",")]
-    print(topic_ids)
     return (
         query.join(Project.project_topics)
         .join(ProjectTopic.topic)
@@ -186,9 +210,8 @@ def apply_filters(
     if not is_dvrpc_user:
         query = query.filter(Project.status == "Live")
 
-    print(f"Filters: {filters}")
     if filters.geographies:
-        query = apply_geographies_filter(query, filters.geographies, db)
+        query = apply_geographies_filter(query, filters.geographies, db, filters.showMore)
     if filters.topics:
         query = apply_topics_filter(query, filters.topics, db)
     if filters.keywords:
@@ -221,7 +244,7 @@ def get_all(
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)
 
-    if filters and filters.bbox:
+    if filters and filters.bbox and not filters.showMore:
         query, ordered_geoids = apply_bbox_filter(query, filters.bbox)
 
     rows = query.all()
