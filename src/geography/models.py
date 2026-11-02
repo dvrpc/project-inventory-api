@@ -13,3 +13,6 @@ class Geography(Base):
 
 
     project_geographies = relationship("ProjectGeography", back_populates="geography", passive_deletes=True)
+    external_project_geographies = relationship(
+        "ExternalProjectGeography", back_populates="geography", passive_deletes=True
+    )
