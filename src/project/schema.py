@@ -17,6 +17,7 @@ class ProjectResponse(BaseModel):
     thumbnail_link: Optional[str]
     agency: Optional[str]
     funding_source: Optional[str]
+    internal: bool
     status: Optional[str]
     wpids: Optional[list[str]]
 
@@ -39,6 +40,15 @@ class ProjectDetailResponse(ProjectResponse):
     topics: list[TopicResponse] = []
 
 
+class ProjectListResponse(BaseModel):
+    items: list[ProjectDetailResponse]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
+    counts_by_geo_type: dict[str, int]
+
+
 class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
     geographies: Optional[str] = None
@@ -53,6 +63,8 @@ class ProjectFilters(BaseModel):
     yearFrom: Optional[str] = None
     yearTo: Optional[str] = None
     showMore: Optional[bool] = False
+    page: int = 1
+    page_size: int = 50
 
     @classmethod
     def as_query(
@@ -70,6 +82,8 @@ class ProjectFilters(BaseModel):
         project: Optional[str] = None,
         wpids: Optional[str] = None,
         showMore: Optional[bool] = False,
+        page: int = 1,
+        page_size: int = 50,
     ) -> "ProjectFilters":
 
         return cls(
@@ -85,5 +99,7 @@ class ProjectFilters(BaseModel):
             yearTo=yearTo,
             project=project,
             wpids=wpids,
-            showMore=showMore
+            showMore=showMore,
+            page=page,
+            page_size=page_size,
         )

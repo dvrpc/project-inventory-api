@@ -1,7 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
-from src.project.schema import ProjectDetailResponse, ProjectFilters
+from src.project.schema import (
+    ProjectDetailResponse,
+    ProjectFilters,
+    ProjectListResponse,
+)
 from src.project.service import get, get_all
 from src.database.core import get_db
 from src.auth.validate import get_optional_dvrpc_user
@@ -9,7 +12,7 @@ from src.auth.validate import get_optional_dvrpc_user
 router = APIRouter()
 
 
-@router.get("", response_model=List[ProjectDetailResponse])
+@router.get("", response_model=ProjectListResponse)
 def get_projects(
     filters: ProjectFilters = Depends(ProjectFilters.as_query),
     db: Session = Depends(get_db),

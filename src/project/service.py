@@ -13,8 +13,13 @@ from src.project_topic.models import ProjectTopic
 from src.project.schema import (
     ProjectDetailResponse,
     ProjectFilters,
+    ProjectListResponse,
 )
 from src.topic.models import Topic
+
+GEO_TYPES = ("regional", "state", "county", "municipality", "csa")
+DEFAULT_PAGE_SIZE = 50
+MAX_PAGE_SIZE = 200
 
 
 def map_project_detail(project: Project) -> ProjectDetailResponse | None:
@@ -35,6 +40,7 @@ def map_project_detail(project: Project) -> ProjectDetailResponse | None:
         status=project.status,
         agency="DVRPC",
         funding_source="DVRPC",
+        internal=True,
         wpids=project.wpids,
         project_link=product_link,
         thumbnail_link=thumbnail_link,
@@ -235,7 +241,7 @@ def apply_filters(
 
 def get_all(
     db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
-) -> list[ProjectDetailResponse]:
+) -> ProjectListResponse:
     ordered_geoids = None
 
     query = db.query(Project).options(
@@ -267,14 +273,30 @@ def get_all(
 
     match filters.sort if filters else None:
         case "oldest":
-            projects.sort(key=lambda p: normalize_date(p.pub_date))
+            projects.sort(
+                key=lambda p: (
+                    normalize_date(p.pub_date),
+                    p.id,
+                    p.internal,
+                )
+            )
         case "az":
-            projects.sort(key=lambda p: p.title or "")
+            projects.sort(
+                key=lambda p: (p.title or "", p.id, p.internal)
+            )
         case "za":
-            projects.sort(key=lambda p: p.title or "", reverse=True)
+            projects.sort(
+                key=lambda p: (p.title or "", p.id, p.internal),
+                reverse=True,
+            )
         case "newest":
             projects.sort(
-                key=lambda p: normalize_date(p.pub_date), reverse=True
+                key=lambda p: (
+                    normalize_date(p.pub_date),
+                    p.id,
+                    p.internal,
+                ),
+                reverse=True,
             )
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
@@ -352,11 +374,40 @@ def get_all(
                     else 0
                 )
                 pub_date_rank = normalize_date(p.pub_date)
-                return (type_rank, proximity_rank, -pub_date_rank.toordinal())
+                return (
+                    type_rank,
+                    proximity_rank,
+                    -pub_date_rank.toordinal(),
+                    p.id,
+                    p.internal,
+                )
 
             projects.sort(key=default_sort_key)
 
-    return projects
+    total = len(projects)
+    counts_by_geo_type = {geo_type: 0 for geo_type in GEO_TYPES}
+    for project in projects:
+        for geo_type in {geography.geo_type for geography in project.geographies}:
+            counts_by_geo_type[geo_type] = (
+                counts_by_geo_type.get(geo_type, 0) + 1
+            )
+
+    page = max(1, filters.page if filters else 1)
+    page_size = min(
+        max(1, (filters.page_size if filters else None) or DEFAULT_PAGE_SIZE),
+        MAX_PAGE_SIZE,
+    )
+    total_pages = (total + page_size - 1) // page_size if total else 0
+    start = (page - 1) * page_size
+
+    return ProjectListResponse(
+        items=projects[start : start + page_size],
+        total=total,
+        page=page,
+        page_size=page_size,
+        total_pages=total_pages,
+        counts_by_geo_type=counts_by_geo_type,
+    )
 
 
 def get_geoids(

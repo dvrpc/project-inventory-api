@@ -28,7 +28,7 @@ def map_external_project(project: ExternalProject) -> ProjectDetailResponse | No
     # )
 
     return ProjectDetailResponse(
-        id="EX-" + str(project.id),
+        id="EX" + str(project.id),
         title=project.title,
         abstract=project.abstract,
         pub_date=datetime(project.year, 1, 1) if project.year else None,
@@ -38,6 +38,7 @@ def map_external_project(project: ExternalProject) -> ProjectDetailResponse | No
         project_link=project.project_link,
         agency=project.agency,
         funding_source=project.funding_source,
+        internal=False,
         thumbnail_link=None,
         wpids=[],
         geographies=[
