@@ -7,18 +7,16 @@ from src.topic.schema import TopicResponse
 
 
 class ProjectResponse(BaseModel):
-    pub_id: str
-    typecode: str
-    pub_num: str
+    id: str
     title: Optional[str]
-    subtitle: Optional[str]
     abstract: Optional[str]
-    createdate: Optional[datetime]
-    livedate: Optional[datetime]
-    lastupdatedate: Optional[datetime]
     pub_date: Optional[datetime]
-    s1: Optional[str]
-    s1_id: Optional[str]
+    contact_name: Optional[str]
+    contact_email: Optional[str]
+    project_link: Optional[str]
+    thumbnail_link: Optional[str]
+    agency: Optional[str]
+    funding_source: Optional[str]
     status: Optional[str]
     wpids: Optional[list[str]]
 
@@ -49,6 +47,7 @@ class ProjectFilters(BaseModel):
     sort: Optional[str] = None
     project: Optional[str] = None
     status: Optional[str] = None
+    fs: Optional[str] = None
     zoom: Optional[str] = None
     wpids: Optional[str] = None
     yearFrom: Optional[str] = None
@@ -63,6 +62,7 @@ class ProjectFilters(BaseModel):
         keywords: Optional[str] = None,
         topics: Optional[str] = None,
         status: Optional[str] = None,
+        fs: Optional[str] = None,
         sort: Optional[str] = None,
         zoom: Optional[str] = None,
         yearFrom: Optional[str] = None,
@@ -78,6 +78,7 @@ class ProjectFilters(BaseModel):
             keywords=keywords,
             topics=topics,
             status=status,
+            fs=fs,
             zoom=zoom,
             sort=sort,
             yearFrom=yearFrom,

@@ -12,6 +12,7 @@ class ExternalProject(Base):
     title = Column(String(500), nullable=False)
     abstract = Column(Text, nullable=True)
     status = Column(String(20), nullable=False)
+    funding_source = Column(String(255), nullable=True)
     year = Column(Integer, nullable=True)
     project_link = Column(String(1000), nullable=True)
     agency = Column(String(255), nullable=True)

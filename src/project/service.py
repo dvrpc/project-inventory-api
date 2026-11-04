@@ -1,7 +1,8 @@
 from datetime import date, datetime
 from typing import Optional
-from sqlalchemy import or_
+from sqlalchemy import false, or_
 from sqlalchemy.orm import Session, joinedload, selectinload
+from src.external_project import service as external_project_service
 from src.geography.models import Geography
 from src.keyword.models import Keyword
 from src.project.models import Project
@@ -20,21 +21,23 @@ def map_project_detail(project: Project) -> ProjectDetailResponse | None:
     if project is None:
         return None
 
+    email = project.s1_id + '@dvrpc.org' if project.s1_id else None
+    product_link = f"https://www.dvrpc.org/products/{project.pub_id}"
+    thumbnail_link = f"https://www.dvrpc.org/asp/pubs/201px/{project.pub_id}.png"
+
     return ProjectDetailResponse(
-        pub_id=project.pub_id,
-        typecode=project.typecode,
-        pub_num=project.pub_num,
+        id=project.pub_id,
         title=project.title,
-        subtitle=project.subtitle,
         abstract=project.abstract,
-        createdate=project.createdate,
-        livedate=project.livedate,
-        lastupdatedate=project.lastupdatedate,
         pub_date=project.pub_date,
-        s1=project.s1,
-        s1_id=project.s1_id,
+        contact_name=project.s1,
+        contact_email=email,
         status=project.status,
+        agency="DVRPC",
+        funding_source="DVRPC",
         wpids=project.wpids,
+        project_link=product_link,
+        thumbnail_link=thumbnail_link,
         geographies=[pg.geography for pg in project.project_geographies],
         keywords=[pk.keyword for pk in project.project_keywords],
         topics=[pt.topic for pt in project.project_topics],
@@ -217,6 +220,9 @@ def apply_filters(
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
         query = query.filter(Project.status == filters.status)
+    if filters.fs and filters.fs != "DVRPC":
+        # Non-DVRPC funding sources only exist on external projects.
+        query = query.filter(false())
     if filters.yearFrom:
         query = query.filter(Project.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:
@@ -248,6 +254,9 @@ def get_all(
 
     rows = query.all()
     projects = [map_project_detail(p) for p in rows]
+    projects.extend(
+        external_project_service.get_all(db, filters, is_dvrpc_user)
+    )
 
     def normalize_date(d):
         if d is None:
@@ -279,16 +288,19 @@ def get_all(
                 else None
             )
 
+            selected_geographies = filters.geographies if filters else None
             state_selected = (
-                filters.geographies
+                selected_geographies
                 and any(
-                    len(g.strip()) == 2 for g in filters.geographies.split(",")
+                    len(g.strip()) == 2
+                    for g in selected_geographies.split(",")
                 )
             )
             county_selected = (
-                filters.geographies
+                selected_geographies
                 and any(
-                    len(g.strip()) == 5 for g in filters.geographies.split(",")
+                    len(g.strip()) == 5
+                    for g in selected_geographies.split(",")
                 )
             )
 
@@ -330,8 +342,8 @@ def get_all(
                             if g.geoid in geoid_order
                         ]
                         + (
-                            [geoid_order[p.pub_id]]
-                            if p.pub_id in geoid_order
+                            [geoid_order[p.id]]
+                            if p.id in geoid_order
                             else []
                         ),
                         default=float("inf"),
@@ -340,7 +352,7 @@ def get_all(
                     else 0
                 )
                 pub_date_rank = normalize_date(p.pub_date)
-                return (type_rank, proximity_rank, -pub_date_rank.timestamp())
+                return (type_rank, proximity_rank, -pub_date_rank.toordinal())
 
             projects.sort(key=default_sort_key)
 
@@ -367,4 +379,6 @@ def get_geoids(
                 or_(*[Geography.geoid.like(f"{geoid}%") for geoid in geoids])
             )
 
-    return [row.geoid for row in query.all()]
+    return [row.geoid for row in query.all()] + external_project_service.get_geoids(
+        db, filters, is_dvrpc_user
+    )
