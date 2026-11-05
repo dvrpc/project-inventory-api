@@ -16,6 +16,7 @@ class ProjectResponse(BaseModel):
     project_link: Optional[str]
     thumbnail_link: Optional[str]
     agency: Optional[str]
+    agency_group: Optional[str] = None
     funding_source: Optional[str]
     internal: bool
     status: Optional[str]
@@ -58,6 +59,7 @@ class ProjectFilters(BaseModel):
     project: Optional[str] = None
     status: Optional[str] = None
     fs: Optional[str] = None
+    ag: Optional[str] = None
     zoom: Optional[str] = None
     wpids: Optional[str] = None
     yearFrom: Optional[str] = None
@@ -75,6 +77,7 @@ class ProjectFilters(BaseModel):
         topics: Optional[str] = None,
         status: Optional[str] = None,
         fs: Optional[str] = None,
+        ag: Optional[str] = None,
         sort: Optional[str] = None,
         zoom: Optional[str] = None,
         yearFrom: Optional[str] = None,
@@ -93,6 +96,7 @@ class ProjectFilters(BaseModel):
             topics=topics,
             status=status,
             fs=fs,
+            ag=ag,
             zoom=zoom,
             sort=sort,
             yearFrom=yearFrom,

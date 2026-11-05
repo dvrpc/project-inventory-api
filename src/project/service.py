@@ -22,6 +22,9 @@ DEFAULT_PAGE_SIZE = 50
 MAX_PAGE_SIZE = 200
 
 
+
+
+
 def map_project_detail(project: Project) -> ProjectDetailResponse | None:
     if project is None:
         return None
@@ -39,6 +42,7 @@ def map_project_detail(project: Project) -> ProjectDetailResponse | None:
         contact_email=email,
         status=project.status,
         agency="DVRPC",
+        agency_group="DVRPC",
         funding_source="DVRPC",
         internal=True,
         wpids=project.wpids,
@@ -170,6 +174,15 @@ def apply_topics_filter(query, topics: str, db: Session):
     )
 
 
+def apply_agency_filter(query, agencies: str, db: Session):
+    # Internal projects are implicitly in the DVRPC agency group (id 0).
+    group_ids = [group_id.strip() for group_id in agencies.split(",")]
+    if "0" not in group_ids:
+        print("Filtering out internal projects")
+        return query.filter(false())
+    return query
+
+
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
     return (
@@ -229,6 +242,8 @@ def apply_filters(
     if filters.fs and filters.fs != "DVRPC":
         # Non-DVRPC funding sources only exist on external projects.
         query = query.filter(false())
+    if filters.ag:
+        query = apply_agency_filter(query, filters.ag, db)
     if filters.yearFrom:
         query = query.filter(Project.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:

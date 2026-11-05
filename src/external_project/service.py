@@ -4,6 +4,7 @@ from typing import Optional
 from sqlalchemy import false, or_
 from sqlalchemy.orm import Session, joinedload, selectinload
 
+from src.agency.models import Agency
 from src.external_project.models import ExternalProject
 from src.external_project_geography.models import ExternalProjectGeography
 from src.geography.models import Geography
@@ -36,7 +37,13 @@ def map_external_project(project: ExternalProject) -> ProjectDetailResponse | No
         contact_email=None,
         status=project.status,
         project_link=project.project_link,
-        agency=project.agency,
+        agency=project.agency.name if project.agency else project.agency_raw,
+        agency_group=(
+            project.agency.agency_group.name
+            if project.agency and project.agency.agency_group
+            else None
+        ),
+
         funding_source=project.funding_source,
         internal=False,
         thumbnail_link=None,
@@ -115,6 +122,18 @@ def apply_geographies_filter(
     return query.filter(Geography.geoid.in_(geoids))
 
 
+def apply_agency_filter(query, agencies: str, db: Session):
+
+    group_ids = [group_id.strip() for group_id in agencies.split(",")]
+    group_ids = [group_id for group_id in group_ids if group_id != "0"]
+
+    if not group_ids:
+        return query.filter(false())
+    return query.filter(
+        ExternalProject.agency.has(Agency.agency_group_id.in_(group_ids))
+    )
+
+
 def apply_filters(
     query, filters: ProjectFilters, db: Session, is_dvrpc_user: bool = False
 ):
@@ -126,6 +145,9 @@ def apply_filters(
         if filters.fs == "DVRPC":
             return query.filter(false())
         query = query.filter(ExternalProject.funding_source == filters.fs)
+
+    if filters.ag:
+        query = apply_agency_filter(query, filters.ag, db)
 
     # External projects have no keywords, topics, or WPIDs
     if filters.keywords or filters.topics or filters.wpids:
@@ -188,12 +210,15 @@ def get_geoids(
 def get_all(
     db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
 ) -> list[ProjectDetailResponse]:
-    query = db.query(ExternalProject).options(
-        selectinload(ExternalProject.external_project_geographies).joinedload(
-            ExternalProjectGeography.geography
+    query = (
+        db.query(ExternalProject)
+        .options(
+            selectinload(ExternalProject.external_project_geographies).joinedload(
+                ExternalProjectGeography.geography
+            ),
+            joinedload(ExternalProject.agency).joinedload(Agency.agency_group),
         )
-    ).filter(
-        ExternalProject.external_project_geographies.any()
+        .filter(ExternalProject.external_project_geographies.any())
     )
     if filters:
         query = apply_filters(query, filters, db, is_dvrpc_user)

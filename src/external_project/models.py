@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, UniqueConstraint
+from sqlalchemy import Column, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import relationship
 from src.database.core import Base
 
@@ -15,7 +15,13 @@ class ExternalProject(Base):
     funding_source = Column(String(255), nullable=True)
     year = Column(Integer, nullable=True)
     project_link = Column(String(1000), nullable=True)
-    agency = Column(String(255), nullable=True)
+    agency_id = Column(
+        Integer,
+        ForeignKey("agency.agency_id"),
+        nullable=True,
+        index=True,
+    )
+    agency = relationship("Agency", back_populates="external_projects")
 
     external_project_geographies = relationship(
         "ExternalProjectGeography",
