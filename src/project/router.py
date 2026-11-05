@@ -40,6 +40,7 @@ def export_projects(
     )
 
 
+
 @router.get("/{pub_id}", response_model=ProjectDetailResponse)
 def get_project(pub_id: str, db: Session = Depends(get_db)):
     project = get(db, pub_id)

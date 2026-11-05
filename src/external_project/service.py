@@ -138,7 +138,7 @@ def apply_filters(
     query, filters: ProjectFilters, db: Session, is_dvrpc_user: bool = False
 ):
     if filters.project:
-        return query.filter(ExternalProject.source_key == filters.project)
+        return query.filter(ExternalProject.id == filters.project.split("EX")[-1])
 
     if filters.fs:
         # DVRPC projects are internal projects only.

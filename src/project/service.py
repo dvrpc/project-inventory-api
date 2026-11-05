@@ -20,8 +20,7 @@ from src.project.schema import (
 from src.topic.models import Topic
 
 GEO_TYPES = ("regional", "state", "county", "municipality", "csa")
-DEFAULT_PAGE_SIZE = 50
-MAX_PAGE_SIZE = 200
+DEFAULT_PAGE_SIZE = 15
 
 CSV_FIELDS = (
     "id",
@@ -433,10 +432,7 @@ def get_all(
             )
 
     page = max(1, filters.page if filters else 1)
-    page_size = min(
-        max(1, (filters.page_size if filters else None) or DEFAULT_PAGE_SIZE),
-        MAX_PAGE_SIZE,
-    )
+    page_size = filters.page_size if filters else DEFAULT_PAGE_SIZE
     total_pages = (total + page_size - 1) // page_size if total else 0
     start = (page - 1) * page_size
 
@@ -448,8 +444,6 @@ def get_all(
         total_pages=total_pages,
         counts_by_geo_type=counts_by_geo_type,
     )
-
-
 
 
 
