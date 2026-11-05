@@ -1,7 +1,10 @@
 from datetime import date, datetime
+import csv
+import io
 from typing import Optional
-from sqlalchemy import or_
+from sqlalchemy import false, or_
 from sqlalchemy.orm import Session, joinedload, selectinload
+from src.external_project import service as external_project_service
 from src.geography.models import Geography
 from src.keyword.models import Keyword
 from src.project.models import Project
@@ -12,29 +15,56 @@ from src.project_topic.models import ProjectTopic
 from src.project.schema import (
     ProjectDetailResponse,
     ProjectFilters,
+    ProjectListResponse,
 )
 from src.topic.models import Topic
 
+GEO_TYPES = ("regional", "state", "county", "municipality", "csa")
+DEFAULT_PAGE_SIZE = 15
+
+CSV_FIELDS = (
+    "id",
+    "title",
+    "abstract",
+    "pub_date",
+    "contact_name",
+    "contact_email",
+    "project_link",
+    "thumbnail_link",
+    "agency",
+    "agency_group",
+    "funding_source",
+    "internal",
+    "status",
+    "wpids",
+    "geographies",
+    "keywords",
+    "topics",
+)
 
 def map_project_detail(project: Project) -> ProjectDetailResponse | None:
     if project is None:
         return None
 
+    email = project.s1_id + '@dvrpc.org' if project.s1_id else None
+    product_link = f"https://www.dvrpc.org/products/{project.pub_id}"
+    thumbnail_link = f"https://www.dvrpc.org/asp/pubs/201px/{project.pub_id}.png"
+
     return ProjectDetailResponse(
-        pub_id=project.pub_id,
-        typecode=project.typecode,
-        pub_num=project.pub_num,
+        id=project.pub_id,
         title=project.title,
-        subtitle=project.subtitle,
         abstract=project.abstract,
-        createdate=project.createdate,
-        livedate=project.livedate,
-        lastupdatedate=project.lastupdatedate,
         pub_date=project.pub_date,
-        s1=project.s1,
-        s1_id=project.s1_id,
+        contact_name=project.s1,
+        contact_email=email,
         status=project.status,
+        agency="DVRPC",
+        agency_group="DVRPC",
+        funding_source="DVRPC",
+        internal=True,
         wpids=project.wpids,
+        project_link=product_link,
+        thumbnail_link=thumbnail_link,
         geographies=[pg.geography for pg in project.project_geographies],
         keywords=[pk.keyword for pk in project.project_keywords],
         topics=[pt.topic for pt in project.project_topics],
@@ -161,6 +191,14 @@ def apply_topics_filter(query, topics: str, db: Session):
     )
 
 
+def apply_agency_filter(query, agencies: str, db: Session):
+    # Internal projects are implicitly in the DVRPC agency group (id 0).
+    group_ids = [group_id.strip() for group_id in agencies.split(",")]
+    if "0" not in group_ids:
+        return query.filter(false())
+    return query
+
+
 def apply_wpids_filter(query, wpids: str, db: Session):
     wpid_list = [w.strip() for w in wpids.split(",")]
     return (
@@ -217,6 +255,11 @@ def apply_filters(
         query = apply_keywords_filter(query, filters.keywords, db)
     if filters.status and is_dvrpc_user:
         query = query.filter(Project.status == filters.status)
+    if filters.fs and filters.fs != "DVRPC":
+        # Non-DVRPC funding sources only exist on external projects.
+        query = query.filter(false())
+    if filters.ag:
+        query = apply_agency_filter(query, filters.ag, db)
     if filters.yearFrom:
         query = query.filter(Project.pub_date >= date(int(filters.yearFrom), 1, 1))
     if filters.yearTo:
@@ -227,7 +270,7 @@ def apply_filters(
     return query
 
 
-def get_all(
+def get_all_projects(
     db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
 ) -> list[ProjectDetailResponse]:
     ordered_geoids = None
@@ -248,6 +291,9 @@ def get_all(
 
     rows = query.all()
     projects = [map_project_detail(p) for p in rows]
+    projects.extend(
+        external_project_service.get_all(db, filters, is_dvrpc_user)
+    )
 
     def normalize_date(d):
         if d is None:
@@ -258,14 +304,30 @@ def get_all(
 
     match filters.sort if filters else None:
         case "oldest":
-            projects.sort(key=lambda p: normalize_date(p.pub_date))
+            projects.sort(
+                key=lambda p: (
+                    normalize_date(p.pub_date),
+                    p.id,
+                    p.internal,
+                )
+            )
         case "az":
-            projects.sort(key=lambda p: p.title or "")
+            projects.sort(
+                key=lambda p: (p.title or "", p.id, p.internal)
+            )
         case "za":
-            projects.sort(key=lambda p: p.title or "", reverse=True)
+            projects.sort(
+                key=lambda p: (p.title or "", p.id, p.internal),
+                reverse=True,
+            )
         case "newest":
             projects.sort(
-                key=lambda p: normalize_date(p.pub_date), reverse=True
+                key=lambda p: (
+                    normalize_date(p.pub_date),
+                    p.id,
+                    p.internal,
+                ),
+                reverse=True,
             )
         case _:
             # Default geographies sort. Groups county & municipality and chooses first based on zoom level
@@ -279,16 +341,19 @@ def get_all(
                 else None
             )
 
+            selected_geographies = filters.geographies if filters else None
             state_selected = (
-                filters.geographies
+                selected_geographies
                 and any(
-                    len(g.strip()) == 2 for g in filters.geographies.split(",")
+                    len(g.strip()) == 2
+                    for g in selected_geographies.split(",")
                 )
             )
             county_selected = (
-                filters.geographies
+                selected_geographies
                 and any(
-                    len(g.strip()) == 5 for g in filters.geographies.split(",")
+                    len(g.strip()) == 5
+                    for g in selected_geographies.split(",")
                 )
             )
 
@@ -330,8 +395,8 @@ def get_all(
                             if g.geoid in geoid_order
                         ]
                         + (
-                            [geoid_order[p.pub_id]]
-                            if p.pub_id in geoid_order
+                            [geoid_order[p.id]]
+                            if p.id in geoid_order
                             else []
                         ),
                         default=float("inf"),
@@ -340,11 +405,84 @@ def get_all(
                     else 0
                 )
                 pub_date_rank = normalize_date(p.pub_date)
-                return (type_rank, proximity_rank, -pub_date_rank.timestamp())
+                return (
+                    type_rank,
+                    proximity_rank,
+                    -pub_date_rank.toordinal(),
+                    p.id,
+                    p.internal,
+                )
 
             projects.sort(key=default_sort_key)
 
     return projects
+
+
+def get_all(
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
+) -> ProjectListResponse:
+    projects = get_all_projects(db, filters, is_dvrpc_user)
+
+    total = len(projects)
+    counts_by_geo_type = {geo_type: 0 for geo_type in GEO_TYPES}
+    for project in projects:
+        for geo_type in {geography.geo_type for geography in project.geographies}:
+            counts_by_geo_type[geo_type] = (
+                counts_by_geo_type.get(geo_type, 0) + 1
+            )
+
+    page = max(1, filters.page if filters else 1)
+    page_size = filters.page_size if filters else DEFAULT_PAGE_SIZE
+    total_pages = (total + page_size - 1) // page_size if total else 0
+    start = (page - 1) * page_size
+
+    return ProjectListResponse(
+        items=projects[start : start + page_size],
+        total=total,
+        page=page,
+        page_size=page_size,
+        total_pages=total_pages,
+        counts_by_geo_type=counts_by_geo_type,
+    )
+
+
+
+def project_to_csv_row(project: ProjectDetailResponse) -> dict:
+    return {
+        "id": project.id,
+        "title": project.title,
+        "abstract": project.abstract,
+        "pub_date": (
+            project.pub_date.date().isoformat() if project.pub_date else ""
+        ),
+        "contact_name": project.contact_name,
+        "contact_email": project.contact_email,
+        "project_link": project.project_link,
+        "thumbnail_link": project.thumbnail_link,
+        "agency": project.agency,
+        "agency_group": project.agency_group,
+        "funding_source": project.funding_source,
+        "internal": project.internal,
+        "status": project.status,
+        "wpids": "; ".join(project.wpids or []),
+        "geographies": "; ".join(g.name for g in project.geographies),
+        "keywords": "; ".join(k.name for k in project.keywords),
+        "topics": "; ".join(t.topic_name for t in project.topics),
+    }
+
+
+def get_csv(
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
+) -> str:
+    projects = get_all_projects(db, filters, is_dvrpc_user)
+
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=CSV_FIELDS)
+    writer.writeheader()
+    for project in projects:
+        writer.writerow(project_to_csv_row(project))
+
+    return output.getvalue()
 
 
 def get_geoids(
@@ -367,4 +505,6 @@ def get_geoids(
                 or_(*[Geography.geoid.like(f"{geoid}%") for geoid in geoids])
             )
 
-    return [row.geoid for row in query.all()]
+    return [row.geoid for row in query.all()] + external_project_service.get_geoids(
+        db, filters, is_dvrpc_user
+    )

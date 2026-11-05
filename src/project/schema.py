@@ -7,18 +7,18 @@ from src.topic.schema import TopicResponse
 
 
 class ProjectResponse(BaseModel):
-    pub_id: str
-    typecode: str
-    pub_num: str
+    id: str
     title: Optional[str]
-    subtitle: Optional[str]
     abstract: Optional[str]
-    createdate: Optional[datetime]
-    livedate: Optional[datetime]
-    lastupdatedate: Optional[datetime]
     pub_date: Optional[datetime]
-    s1: Optional[str]
-    s1_id: Optional[str]
+    contact_name: Optional[str]
+    contact_email: Optional[str]
+    project_link: Optional[str]
+    thumbnail_link: Optional[str]
+    agency: Optional[str]
+    agency_group: Optional[str] = None
+    funding_source: Optional[str]
+    internal: bool
     status: Optional[str]
     wpids: Optional[list[str]]
 
@@ -41,6 +41,15 @@ class ProjectDetailResponse(ProjectResponse):
     topics: list[TopicResponse] = []
 
 
+class ProjectListResponse(BaseModel):
+    items: list[ProjectDetailResponse]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
+    counts_by_geo_type: dict[str, int]
+
+
 class ProjectFilters(BaseModel):
     bbox: Optional[str] = None
     geographies: Optional[str] = None
@@ -49,11 +58,15 @@ class ProjectFilters(BaseModel):
     sort: Optional[str] = None
     project: Optional[str] = None
     status: Optional[str] = None
+    fs: Optional[str] = None
+    ag: Optional[str] = None
     zoom: Optional[str] = None
     wpids: Optional[str] = None
     yearFrom: Optional[str] = None
     yearTo: Optional[str] = None
     showMore: Optional[bool] = False
+    page: int = 1
+    page_size: int = 50
 
     @classmethod
     def as_query(
@@ -63,6 +76,8 @@ class ProjectFilters(BaseModel):
         keywords: Optional[str] = None,
         topics: Optional[str] = None,
         status: Optional[str] = None,
+        fs: Optional[str] = None,
+        ag: Optional[str] = None,
         sort: Optional[str] = None,
         zoom: Optional[str] = None,
         yearFrom: Optional[str] = None,
@@ -70,6 +85,8 @@ class ProjectFilters(BaseModel):
         project: Optional[str] = None,
         wpids: Optional[str] = None,
         showMore: Optional[bool] = False,
+        page: int = 1,
+        page_size: int = 50,
     ) -> "ProjectFilters":
 
         return cls(
@@ -78,11 +95,15 @@ class ProjectFilters(BaseModel):
             keywords=keywords,
             topics=topics,
             status=status,
+            fs=fs,
+            ag=ag,
             zoom=zoom,
             sort=sort,
             yearFrom=yearFrom,
             yearTo=yearTo,
             project=project,
             wpids=wpids,
-            showMore=showMore
+            showMore=showMore,
+            page=page,
+            page_size=page_size,
         )
