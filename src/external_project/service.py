@@ -37,7 +37,7 @@ def map_external_project(project: ExternalProject) -> ProjectDetailResponse | No
         contact_email=None,
         status=project.status,
         project_link=project.project_link,
-        agency=project.agency.name if project.agency else project.agency_raw,
+        agency=project.agency.name if project.agency else None,
         agency_group=(
             project.agency.agency_group.name
             if project.agency and project.agency.agency_group

@@ -178,7 +178,6 @@ def apply_agency_filter(query, agencies: str, db: Session):
     # Internal projects are implicitly in the DVRPC agency group (id 0).
     group_ids = [group_id.strip() for group_id in agencies.split(",")]
     if "0" not in group_ids:
-        print("Filtering out internal projects")
         return query.filter(false())
     return query
 
