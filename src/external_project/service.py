@@ -14,19 +14,6 @@ from src.project.schema import ProjectDetailResponse, ProjectFilters
 def map_external_project(project: ExternalProject) -> ProjectDetailResponse | None:
     if project is None:
         return None
-    # return ProjectDetailResponse(
-    #     id=project.pub_id,
-    #     title=project.title,
-    #     abstract=project.abstract,
-    #     pub_date=project.pub_date,
-    #     contact_name=project.s1,
-    #     contact_email=email,
-    #     status=project.status,
-    #     wpids=project.wpids,
-    #     geographies=[pg.geography for pg in project.project_geographies],
-    #     keywords=[pk.keyword for pk in project.project_keywords],
-    #     topics=[pt.topic for pt in project.project_topics],
-    # )
 
     return ProjectDetailResponse(
         id="EX" + str(project.id),
