@@ -1,4 +1,6 @@
 from datetime import date, datetime
+import csv
+import io
 from typing import Optional
 from sqlalchemy import false, or_
 from sqlalchemy.orm import Session, joinedload, selectinload
@@ -21,9 +23,25 @@ GEO_TYPES = ("regional", "state", "county", "municipality", "csa")
 DEFAULT_PAGE_SIZE = 50
 MAX_PAGE_SIZE = 200
 
-
-
-
+CSV_FIELDS = (
+    "id",
+    "title",
+    "abstract",
+    "pub_date",
+    "contact_name",
+    "contact_email",
+    "project_link",
+    "thumbnail_link",
+    "agency",
+    "agency_group",
+    "funding_source",
+    "internal",
+    "status",
+    "wpids",
+    "geographies",
+    "keywords",
+    "topics",
+)
 
 def map_project_detail(project: Project) -> ProjectDetailResponse | None:
     if project is None:
@@ -253,9 +271,9 @@ def apply_filters(
     return query
 
 
-def get_all(
+def get_all_projects(
     db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
-) -> ProjectListResponse:
+) -> list[ProjectDetailResponse]:
     ordered_geoids = None
 
     query = db.query(Project).options(
@@ -398,6 +416,14 @@ def get_all(
 
             projects.sort(key=default_sort_key)
 
+    return projects
+
+
+def get_all(
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
+) -> ProjectListResponse:
+    projects = get_all_projects(db, filters, is_dvrpc_user)
+
     total = len(projects)
     counts_by_geo_type = {geo_type: 0 for geo_type in GEO_TYPES}
     for project in projects:
@@ -422,6 +448,47 @@ def get_all(
         total_pages=total_pages,
         counts_by_geo_type=counts_by_geo_type,
     )
+
+
+
+
+
+def project_to_csv_row(project: ProjectDetailResponse) -> dict:
+    return {
+        "id": project.id,
+        "title": project.title,
+        "abstract": project.abstract,
+        "pub_date": (
+            project.pub_date.date().isoformat() if project.pub_date else ""
+        ),
+        "contact_name": project.contact_name,
+        "contact_email": project.contact_email,
+        "project_link": project.project_link,
+        "thumbnail_link": project.thumbnail_link,
+        "agency": project.agency,
+        "agency_group": project.agency_group,
+        "funding_source": project.funding_source,
+        "internal": project.internal,
+        "status": project.status,
+        "wpids": "; ".join(project.wpids or []),
+        "geographies": "; ".join(g.name for g in project.geographies),
+        "keywords": "; ".join(k.name for k in project.keywords),
+        "topics": "; ".join(t.topic_name for t in project.topics),
+    }
+
+
+def get_csv(
+    db: Session, filters: Optional[ProjectFilters] = None, is_dvrpc_user: bool = False
+) -> str:
+    projects = get_all_projects(db, filters, is_dvrpc_user)
+
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=CSV_FIELDS)
+    writer.writeheader()
+    for project in projects:
+        writer.writerow(project_to_csv_row(project))
+
+    return output.getvalue()
 
 
 def get_geoids(
